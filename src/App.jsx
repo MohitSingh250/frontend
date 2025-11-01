@@ -23,7 +23,7 @@ export default function App() {
     <div className="min-h-screen bg-gray-50">
       <Header />
 
-      <main className="container mx-auto p-4">
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/daily" element={<DailyProblem />} />
@@ -34,7 +34,7 @@ export default function App() {
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="/admin/create-problem" element={<PrivateRoute><AdminCreateProblem /></PrivateRoute>} />
         </Routes>
-      </main>
+
     </div>
   );
 }

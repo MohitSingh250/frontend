@@ -15,13 +15,12 @@ export default function ProblemDetail() {
   useEffect(() => {
     api.get(`/problems/${id}`).then(r => setProblem(r.data)).catch(() => {});
     if (user) {
-      api.get(`/problems/${id}/me`).then(r => {
-      }).catch(()=>{});
+      api.get(`/problems/${id}/me`).catch(()=>{});
       api.get(`/submissions/user/${user._id}`).then(r => setSubmissions(r.data)).catch(()=>{});
     }
   }, [id, user]);
 
-  if (!problem) return <div>Loading...</div>;
+  if (!problem) return <div className="text-gray-300">Loading...</div>;
 
   const submit = async () => {
     setMsg(null);
@@ -35,25 +34,55 @@ export default function ProblemDetail() {
   };
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-xl font-bold">{problem.title}</h1>
-      <div className="text-sm text-gray-700">
-        <span className="mr-3">Difficulty: {problem.difficulty}</span>
-        {problem.topics?.map(t => <span key={t} className="mr-2 text-xs bg-gray-100 px-2 py-1 rounded">{t}</span>)}
+    <div className="space-y-6 bg-[#0f0f0f] text-gray-200 min-h-screen p-6">
+      {/* Title */}
+      <h1 className="text-2xl font-bold text-white">{problem.title}</h1>
+
+      {/* Difficulty + tags */}
+      <div className="text-sm text-gray-400 flex items-center flex-wrap gap-2">
+        <span
+          className={`px-2 py-1 rounded text-xs font-medium
+            ${problem.difficulty === 'Easy' ? 'bg-green-800 text-green-300' :
+              problem.difficulty === 'Medium' ? 'bg-yellow-700 text-yellow-300' :
+              'bg-red-800 text-red-300'}`}
+        >
+          {problem.difficulty}
+        </span>
+        {problem.topics?.map(t => (
+          <span
+            key={t}
+            className="px-2 py-1 text-xs rounded bg-[#1f1f1f] border border-[#2f2f2f] text-gray-300"
+          >
+            {t}
+          </span>
+        ))}
       </div>
 
-      <div className="bg-white p-4 rounded shadow">
-        <ReactMarkdown>{problem.statement}</ReactMarkdown>
+      {/* Problem Statement */}
+      <div className="bg-[#1a1a1a] p-5 rounded-xl border border-[#2f2f2f] shadow">
+        <div className="prose prose-invert max-w-none">
+          <ReactMarkdown>{problem.statement}</ReactMarkdown>
+        </div>
       </div>
 
-      <div className="bg-white p-4 rounded shadow">
-        <h3 className="font-semibold mb-2">Submit</h3>
+      {/* Submit Section */}
+      <div className="bg-[#1a1a1a] p-5 rounded-xl border border-[#2f2f2f] shadow">
+        <h3 className="font-semibold mb-3 text-white">Submit</h3>
 
         {problem.inputType === 'mcq_single' && (
           <div className="space-y-2">
             {problem.options?.map(o => (
-              <label key={o.id} className="block">
-                <input type="radio" name="opt" value={o.id} onChange={e => setAnswer(e.target.value)} />
+              <label
+                key={o.id}
+                className="block cursor-pointer hover:bg-[#2a2a2a] p-2 rounded transition"
+              >
+                <input
+                  type="radio"
+                  name="opt"
+                  value={o.id}
+                  onChange={e => setAnswer(e.target.value)}
+                  className="accent-indigo-500"
+                />
                 <span className="ml-2">{o.id}. {o.text}</span>
               </label>
             ))}
@@ -61,29 +90,63 @@ export default function ProblemDetail() {
         )}
 
         {problem.inputType === 'numeric' && (
-          <input value={answer} onChange={e => setAnswer(e.target.value)} placeholder="Enter numeric answer" className="border px-3 py-2 w-full" />
+          <input
+            value={answer}
+            onChange={e => setAnswer(e.target.value)}
+            placeholder="Enter numeric answer"
+            className="bg-[#0f0f0f] border border-[#2f2f2f] rounded w-full px-3 py-2 text-gray-200 focus:outline-none focus:border-indigo-500"
+          />
         )}
 
         {problem.inputType === 'manual' && (
-          <textarea value={answer} onChange={e => setAnswer(e.target.value)} className="border w-full p-2" rows={6} />
+          <textarea
+            value={answer}
+            onChange={e => setAnswer(e.target.value)}
+            className="bg-[#0f0f0f] border border-[#2f2f2f] rounded w-full p-3 text-gray-200 focus:outline-none focus:border-indigo-500"
+            rows={6}
+          />
         )}
 
-        <div className="mt-3">
-          <button onClick={submit} className="px-4 py-2 bg-indigo-600 text-white rounded">Submit</button>
-          {msg && <span className={`ml-3 ${msg.type === 'error' ? 'text-red-600' : 'text-green-600'}`}>{msg.text}</span>}
+        <div className="mt-4 flex items-center">
+          <button
+            onClick={submit}
+            className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-medium transition"
+          >
+            Submit
+          </button>
+          {msg && (
+            <span
+              className={`ml-4 text-sm font-medium ${
+                msg.type === 'error' ? 'text-red-400' : 'text-green-400'
+              }`}
+            >
+              {msg.text}
+            </span>
+          )}
         </div>
       </div>
 
+      {/* Submissions */}
       <div>
-        <h3 className="text-lg font-semibold">Your submissions</h3>
-        <div className="space-y-2 mt-2">
+        <h3 className="text-lg font-semibold mb-3 text-white">Your submissions</h3>
+        <div className="space-y-3">
           {submissions.filter(s => s.problemId === id).map(s => (
-            <div key={s._id} className="bg-white p-3 rounded shadow-sm flex justify-between">
+            <div
+              key={s._id}
+              className="bg-[#1a1a1a] p-4 rounded-xl border border-[#2f2f2f] shadow flex justify-between items-center"
+            >
               <div>
-                <div className="text-sm">Verdict: {s.isCorrect ? 'Accepted' : s.verdict || 'Pending'}</div>
-                <div className="text-xs text-gray-500">At: {new Date(s.createdAt || s.createdAt).toLocaleString()}</div>
+                <div className="text-sm font-medium">
+                  Verdict:{' '}
+                  <span className={s.isCorrect ? 'text-green-400' : 'text-yellow-400'}>
+                    {s.isCorrect ? 'Accepted' : s.verdict || 'Pending'}
+                  </span>
+                </div>
+                <div className="text-xs text-gray-500">
+                  At: {new Date(s.createdAt).toLocaleString()}
+                </div>
               </div>
-              <div className="text-xs text-gray-600">{s.score ?? 0} pts</div>
+              <div className="text-xs text-gray-400">{s.score ?? 0} pts</div>
             </div>
           ))}
         </div>

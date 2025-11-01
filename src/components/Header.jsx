@@ -6,28 +6,50 @@ export default function Header() {
   const { user, logout } = useContext(AuthContext);
 
   return (
-    <header className="bg-white shadow">
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <div className='h-3em w-100%'>
-          <Link to="/" className="w-12 h-12"><img src="." alt="logo" /></Link>
+    <header className="bg-[#1a1a1a] border-b border-neutral-800 shadow-lg text-gray-200">
+      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-md flex items-center justify-center text-black font-bold">
+              <img src="orbits.png" alt="logo" />
+            </div>
+            <span className="text-lg font-semibold tracking-wide text-white">Orbit</span>
+          </Link>
         </div>
 
-        <nav className="flex items-center space-x-4">
-          <Link to="/contests" className="text-sm">Contests</Link>
-          <Link to="/daily" className="text-sm">Daily</Link>
-          <Link to="/" className="text-sm">Problems</Link>
+        <nav className="flex items-center space-x-6 text-sm font-medium">
+          <Link to="/contests" className="hover:text-blue-400 transition">Contests</Link>
+          <Link to="/" className="hover:text-blue-400 transition">Problems</Link>
+
           {user ? (
             <>
-              <Link to="/dashboard" className="text-sm">{user.username}</Link>
-              <button onClick={logout} className="text-sm text-red-600">Logout</button>
-              {user.roles && user.roles.includes('admin') && (
-                <Link to="/admin/create-problem" className="text-sm text-indigo-600">Admin</Link>
+              <Link to="/dashboard" className="text-gray-300 hover:text-blue-400 transition">
+                {user.username}
+              </Link>
+              {user.roles?.includes('admin') && (
+                <Link
+                  to="/admin/create-problem"
+                  className="text-amber-400 hover:text-amber-300 transition"
+                >
+                  Admin
+                </Link>
               )}
+              <button
+                onClick={logout}
+                className="text-red-400 hover:text-red-300 transition"
+              >
+                Logout
+              </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="text-sm">Login</Link>
-              <Link to="/signup" className="text-sm">Signup</Link>
+              <Link to="/login" className="hover:text-blue-400 transition">Login</Link>
+              <Link
+                to="/signup"
+                className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded-md transition"
+              >
+                Sign up
+              </Link>
             </>
           )}
         </nav>

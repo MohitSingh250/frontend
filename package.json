@@ -10,13 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.12.2",
     "@tailwindcss/vite": "^4.1.13",
     "axios": "^1.12.2",
+    "date-fns": "^4.1.0",
     "katex": "^0.16.22",
     "react": "^19.1.1",
+    "react-calendar-heatmap": "^1.10.0",
     "react-dom": "^19.1.1",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.9.3",
+    "react-tooltip": "^5.30.0",
     "rehype-katex": "^7.0.1"
   },
   "devDependencies": {
