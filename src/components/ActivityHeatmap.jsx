@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 
 export default function ActivityHeatmap({ submissions }) {
+  console.log(submissions)
   const heatmapData = useMemo(() => {
     const dateMap = {};
     submissions.forEach(sub => {
@@ -52,10 +53,10 @@ export default function ActivityHeatmap({ submissions }) {
 
   const getColorClass = (count) => {
     if (count === 0) return 'bg-[#2f2f2f]';
-    if (count === 1) return 'bg-green-900';
-    if (count === 2) return 'bg-green-700';
-    if (count <= 4) return 'bg-green-600';
-    return 'bg-green-500';
+    if (count === 1) return 'bg-[#016620]';
+    if (count === 2) return 'bg-[#29C244]';
+    if (count <= 4) return 'bg-[#7FE18C]';
+    return 'bg-[#99f7a5]';
   };
 
   // Group days into weeks
@@ -133,26 +134,13 @@ export default function ActivityHeatmap({ submissions }) {
                 marginLeft:
                   i === 0
                     ? 0
-                    : `${(label.weekIndex - (monthLabels[i - 1]?.weekIndex || 0)) * 13 + 10}px`, // subtle gap between months
+                    : `${(label.weekIndex - (monthLabels[i - 1]?.weekIndex || 0)) * 13 + 10}px`, 
               }}
             >
               {label.month}
             </div>
           ))}
         </div>
-
-        {/* Grid */}
-        <div className="flex">
-          {/* Day of week labels */}
-          <div className="flex flex-col justify-between text-xs text-gray-500 mr-2 pr-1">
-            <div style={{ height: '11px' }}></div>
-            <div>Mon</div>
-            <div style={{ height: '11px' }}></div>
-            <div>Wed</div>
-            <div style={{ height: '11px' }}></div>
-            <div>Fri</div>
-            <div style={{ height: '11px' }}></div>
-          </div>
 
           {/* Grid Weeks */}
           <div className="flex gap-[2px] overflow-x-auto pb-2">
@@ -177,7 +165,7 @@ export default function ActivityHeatmap({ submissions }) {
                     return (
                       <div
                         key={dayIndex}
-                        className={`w-[11px] h-[11px] rounded-[2px] ${getColorClass(
+                        className={`w-[10px] h-[10px] rounded-[2.5px] ${getColorClass(
                           day.count
                         )} transition-all hover:ring-1 hover:ring-gray-400 cursor-pointer`}
                         title={`${day.count} submission${
@@ -190,17 +178,16 @@ export default function ActivityHeatmap({ submissions }) {
               );
             })}
           </div>
-        </div>
 
         {/* Legend */}
         <div className="flex items-center justify-end gap-2 mt-3 text-xs text-gray-500">
           <span>Less</span>
           <div className="flex gap-1">
             <div className="w-[11px] h-[11px] rounded-sm bg-[#2f2f2f]" />
-            <div className="w-[11px] h-[11px] rounded-sm bg-green-900" />
-            <div className="w-[11px] h-[11px] rounded-sm bg-green-700" />
-            <div className="w-[11px] h-[11px] rounded-sm bg-green-600" />
-            <div className="w-[11px] h-[11px] rounded-sm bg-green-500" />
+            <div className="w-[11px] h-[11px] rounded-sm bg-[#016620]" />
+            <div className="w-[11px] h-[11px] rounded-sm bg-[#29C244]" />
+            <div className="w-[11px] h-[11px] rounded-sm bg-[#7FE18C]" />
+            <div className="w-[11px] h-[11px] rounded-sm bg-[#99f7a5]" />
           </div>
           <span>More</span>
         </div>
