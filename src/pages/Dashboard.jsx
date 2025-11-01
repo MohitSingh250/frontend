@@ -11,10 +11,7 @@ export default function Dashboard() {
     api
       .get("/users/me/dashboard")
       .then((r) => {
-        console.log("📊 Dashboard data received:", r.data);
-        console.log("📊 Solved problems:", r.data.solvedProblems);
-        console.log("📊 Solved problems length:", r.data.solvedProblems?.length);
-        console.log("📊 First solved problem:", r.data.solvedProblems?.[0]);
+
         setData(r.data);
       })
       .catch((err) => {
@@ -172,19 +169,6 @@ export default function Dashboard() {
           {/* 🔥 Activity Heatmap - DEBUG VERSION */}
           <div className="bg-[#1a1a1a] rounded-xl border border-[#2f2f2f] p-5">
             <h3 className="text-gray-300 font-medium mb-4 text-xl">Activity Heatmap</h3>
-            
-            {/* Debug info */}
-            <div className="mb-4 p-3 bg-[#0f0f0f] rounded text-xs text-gray-400 font-mono">
-              <div>Has solved problems: {hasSolvedProblems ? '✅ Yes' : '❌ No'}</div>
-              <div>Count: {data.solvedProblems?.length || 0}</div>
-              <div>Has valid dates: {hasValidDates ? '✅ Yes' : '❌ No'}</div>
-              {data.solvedProblems?.[0] && (
-                <div className="mt-2">
-                  First problem: {JSON.stringify(data.solvedProblems[0])}
-                </div>
-              )}
-            </div>
-
             {hasSolvedProblems && hasValidDates ? (
               <ActivityHeatmap submissions={data.solvedProblems} />
             ) : (
