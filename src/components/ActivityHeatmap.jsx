@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 
 export default function ActivityHeatmap({ submissions }) {
-  console.log(submissions)
+  // --- Step 1: Compute heatmap data
   const heatmapData = useMemo(() => {
     const dateMap = {};
-    submissions.forEach(sub => {
+    submissions.forEach((sub) => {
       if (sub.solvedAt) {
         const date = new Date(sub.solvedAt).toDateString();
         dateMap[date] = (dateMap[date] || 0) + 1;
@@ -38,10 +38,11 @@ export default function ActivityHeatmap({ submissions }) {
       days.push({
         date: new Date(d),
         count,
-        dateStr
+        dateStr,
       });
     }
 
+    // Calculate current streak
     for (let i = days.length - 1; i >= 0; i--) {
       if (days[i].count > 0) currentStreak++;
       else break;
@@ -49,16 +50,17 @@ export default function ActivityHeatmap({ submissions }) {
 
     return { days, activeDays, maxStreak, currentStreak, totalSubmissions };
   }, [submissions]);
-  console.log(heatmapData.days)
 
+  // --- Step 2: Color scale
   const getColorClass = (count) => {
-    if (count === 0) return 'bg-[#2f2f2f]';
-    if (count === 1) return 'bg-[#016620]';
-    if (count === 2) return 'bg-[#29C244]';
-    if (count <= 4) return 'bg-[#7FE18C]';
-    return 'bg-[#99f7a5]';
+    if (count === 0) return "bg-[#2f2f2f]";
+    if (count === 1) return "bg-[#016620]";
+    if (count === 2) return "bg-[#29C244]";
+    if (count <= 4) return "bg-[#7FE18C]";
+    return "bg-[#99f7a5]";
   };
 
+  // --- Step 3: Group into weeks for vertical columns
   const weeks = useMemo(() => {
     const weekArray = [];
     let currentWeek = [];
@@ -84,20 +86,22 @@ export default function ActivityHeatmap({ submissions }) {
 
     return weekArray;
   }, [heatmapData.days]);
-  console.log(weeks)
 
+  // --- Step 4: Month labels
   const monthLabels = useMemo(() => {
     const labels = [];
     let lastMonth = -1;
 
     weeks.forEach((week, weekIndex) => {
-      const firstDay = week.find(d => d !== null);
+      const firstDay = week.find((d) => d !== null);
       if (firstDay) {
         const month = firstDay.date.getMonth();
         if (month !== lastMonth) {
           labels.push({
-            month: firstDay.date.toLocaleDateString('en-US', { month: 'short' }),
-            weekIndex
+            month: firstDay.date.toLocaleDateString("en-US", {
+              month: "short",
+            }),
+            weekIndex,
           });
           lastMonth = month;
         }
@@ -105,20 +109,33 @@ export default function ActivityHeatmap({ submissions }) {
     });
     return labels;
   }, [weeks]);
-  console.log(monthLabels)
-  
+
+  // --- Step 5: Render
   return (
     <div className="w-full">
       {/* Stats Header */}
       <div className="flex items-center justify-between mb-3 text-sm">
         <div className="flex items-center gap-2">
           <span className="text-gray-300">
-            <span className="font-semibold text-white">{heatmapData.totalSubmissions}</span> submissions in the past one year
+            <span className="font-semibold text-white">
+              {heatmapData.totalSubmissions}
+            </span>{" "}
+            submissions in the past one year
           </span>
         </div>
         <div className="flex items-center gap-5 text-gray-400">
-          <span>Total active days: <span className="font-semibold text-white">{heatmapData.activeDays}</span></span>
-          <span>Max streak: <span className="font-semibold text-white">{heatmapData.maxStreak}</span></span>
+          <span>
+            Total active days:{" "}
+            <span className="font-semibold text-white">
+              {heatmapData.activeDays}
+            </span>
+          </span>
+          <span>
+            Max streak:{" "}
+            <span className="font-semibold text-white">
+              {heatmapData.maxStreak}
+            </span>
+          </span>
         </div>
       </div>
 
@@ -134,7 +151,11 @@ export default function ActivityHeatmap({ submissions }) {
                 marginLeft:
                   i === 0
                     ? 0
-                    : `${(label.weekIndex - (monthLabels[i - 1]?.weekIndex || 0)) * 9.5}px`, 
+                    : `${
+                        (label.weekIndex -
+                          (monthLabels[i - 1]?.weekIndex || 0)) *
+                        9.5
+                      }px`,
               }}
             >
               {label.month}
@@ -142,43 +163,46 @@ export default function ActivityHeatmap({ submissions }) {
           ))}
         </div>
 
-          {/* Grid Weeks */}
-          <div className="flex gap-[2px] overflow-x-auto pb-2">
-            {weeks.map((week, weekIndex) => {
-              const firstDay = week.find(d => d !== null);
-              const prevWeek = weeks[weekIndex - 1];
-              const prevMonth =
-                prevWeek?.find(d => d !== null)?.date.getMonth() ?? null;
-              const isNewMonth =
-                firstDay && firstDay.date.getMonth() !== prevMonth;
+        {/* Grid Weeks */}
+        <div className="flex gap-[2px] overflow-x-auto pb-2">
+          {weeks.map((week, weekIndex) => (
+            <div key={weekIndex} className="flex flex-col gap-[2px]">
+              {[0, 1, 2, 3, 4, 5, 6].map((dayIndex) => {
+                const day = week[dayIndex];
+                if (!day)
+                  return (
+                    <div key={dayIndex} className="w-[10px] h-[10px]" />
+                  );
 
-              return (
-                <div
-                  key={weekIndex}
-                  className="flex flex-col gap-[2px]"
-                  style={{ marginLeft: isNewMonth ? '10px' : '0' }}
-                >
-                  {[0, 1, 2, 3, 4, 5, 6].map((dayIndex) => {
-                    const day = week[dayIndex];
-                    if (!day)
-                      return <div key={dayIndex} className="w-[11px] h-[11px]" />;
-                    return (
-                      <div
-                        key={dayIndex}
-                        className={`w-[10px] h-[10px] rounded-[2.5px] ${getColorClass(
-                          day.count
-                        )} transition-all hover:ring-1 hover:ring-gray-400 cursor-pointer`}
-                        title={`${day.count} submission${
-                          day.count !== 1 ? 's' : ''
-                        } on ${day.date.toLocaleDateString()}`}
-                      />
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
+                // 👇 Check if month changed since previous day
+                const prevDay =
+                  weekIndex > 0
+                    ? weeks[weekIndex - 1]?.[dayIndex]
+                    : null;
+                const isNewMonth =
+                  prevDay &&
+                  prevDay.date.getMonth() !== day.date.getMonth();
 
+                return (
+                  <div
+                    key={dayIndex}
+                    className={`w-[10px] h-[10px] rounded-[2.5px] ${getColorClass(
+                      day.count
+                    )} transition-all hover:ring-1 hover:ring-gray-400 cursor-pointer`}
+                    title={`${day.count} submission${
+                      day.count !== 1 ? "s" : ""
+                    } on ${day.date.toLocaleDateString()}`}
+                    style={{
+                      marginLeft: isNewMonth ? "8px" : "0",
+                    }}
+                  />
+                );
+              })}
+            </div>
+          ))}
+        </div>
+
+        {/* Legend */}
         <div className="flex items-center justify-end gap-2 mt-3 text-xs text-gray-500">
           <span>Less</span>
           <div className="flex gap-1">
