@@ -105,23 +105,8 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
-
-          {/* Languages */}
-          <div className="bg-[#1a1a1a] rounded-xl border border-[#2f2f2f] p-5">
-            <h3 className="text-gray-300 font-medium mb-3">Languages</h3>
-            {data.languages?.map((lang) => (
-              <div
-                key={lang.name}
-                className="flex justify-between text-sm text-gray-400 py-1"
-              >
-                <span>{lang.name}</span>
-                <span>{lang.solved} problems solved</span>
-              </div>
-            ))}
-          </div>
         </aside>
 
-        {/* ---------------- Main Section ---------------- */}
         <main className="lg:col-span-3 space-y-6">
           {/* Problems Solved */}
           <div className="bg-[#1a1a1a] rounded-xl border border-[#2f2f2f] p-5">

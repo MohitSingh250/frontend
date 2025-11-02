@@ -42,7 +42,6 @@ export default function ActivityHeatmap({ submissions }) {
       });
     }
 
-    // current streak
     for (let i = days.length - 1; i >= 0; i--) {
       if (days[i].count > 0) currentStreak++;
       else break;
@@ -50,6 +49,7 @@ export default function ActivityHeatmap({ submissions }) {
 
     return { days, activeDays, maxStreak, currentStreak, totalSubmissions };
   }, [submissions]);
+  console.log(heatmapData.days)
 
   const getColorClass = (count) => {
     if (count === 0) return 'bg-[#2f2f2f]';
@@ -59,7 +59,6 @@ export default function ActivityHeatmap({ submissions }) {
     return 'bg-[#99f7a5]';
   };
 
-  // Group days into weeks
   const weeks = useMemo(() => {
     const weekArray = [];
     let currentWeek = [];
@@ -85,8 +84,8 @@ export default function ActivityHeatmap({ submissions }) {
 
     return weekArray;
   }, [heatmapData.days]);
+  console.log(weeks)
 
-  // Month labels
   const monthLabels = useMemo(() => {
     const labels = [];
     let lastMonth = -1;
@@ -106,7 +105,8 @@ export default function ActivityHeatmap({ submissions }) {
     });
     return labels;
   }, [weeks]);
-
+  console.log(monthLabels)
+  
   return (
     <div className="w-full">
       {/* Stats Header */}
@@ -134,7 +134,7 @@ export default function ActivityHeatmap({ submissions }) {
                 marginLeft:
                   i === 0
                     ? 0
-                    : `${(label.weekIndex - (monthLabels[i - 1]?.weekIndex || 0)) * 13 + 10}px`, 
+                    : `${(label.weekIndex - (monthLabels[i - 1]?.weekIndex || 0)) * 9.5}px`, 
               }}
             >
               {label.month}
@@ -179,7 +179,6 @@ export default function ActivityHeatmap({ submissions }) {
             })}
           </div>
 
-        {/* Legend */}
         <div className="flex items-center justify-end gap-2 mt-3 text-xs text-gray-500">
           <span>Less</span>
           <div className="flex gap-1">
