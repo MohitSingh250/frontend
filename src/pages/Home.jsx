@@ -48,7 +48,6 @@ export default function Home() {
 
         {/* ✅ Sticky sidebar */}
         <aside className="hidden xl:block w-[360px] bg-neutral-900 border border-neutral-800 rounded-2xl shadow-md p-5 mt-15 ">
-          <h2 className="text-xl font-semibold mb-4 text-white text-center">📅 Daily Progress</h2>
           <Calendar />
         </aside>
       </main>
