@@ -105,6 +105,32 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
+
+          {/* Topic Performance */}
+          {data.topicStats && Object.keys(data.topicStats).length > 0 && (
+            <div className="bg-[#1a1a1a] rounded-xl border border-[#2f2f2f] p-5">
+              <h3 className="text-gray-300 font-medium mb-4">Topic Performance</h3>
+              <div className="space-y-3">
+                {Object.entries(data.topicStats)
+                  .sort((a, b) => b[1].accuracy - a[1].accuracy)
+                  .slice(0, 8)
+                  .map(([topic, stats]) => (
+                    <div key={topic} className="flex items-center justify-between">
+                      <span className="text-sm text-gray-300">{topic}</span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs text-gray-500">
+                          {stats.correct}/{stats.attempts}
+                        </span>
+                        <span className="text-sm font-semibold text-blue-400 w-12 text-right">
+                          {stats.accuracy}%
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+          
         </aside>
 
         <main className="lg:col-span-3 space-y-6">
@@ -247,30 +273,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Topic Performance */}
-          {data.topicStats && Object.keys(data.topicStats).length > 0 && (
-            <div className="bg-[#1a1a1a] rounded-xl border border-[#2f2f2f] p-5">
-              <h3 className="text-gray-300 font-medium mb-4">Topic Performance</h3>
-              <div className="space-y-3">
-                {Object.entries(data.topicStats)
-                  .sort((a, b) => b[1].accuracy - a[1].accuracy)
-                  .slice(0, 8)
-                  .map(([topic, stats]) => (
-                    <div key={topic} className="flex items-center justify-between">
-                      <span className="text-sm text-gray-300">{topic}</span>
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs text-gray-500">
-                          {stats.correct}/{stats.attempts}
-                        </span>
-                        <span className="text-sm font-semibold text-blue-400 w-12 text-right">
-                          {stats.accuracy}%
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )}
+
         </main>
       </div>
     </div>
