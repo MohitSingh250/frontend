@@ -1,33 +1,35 @@
 import React, { useEffect, useState } from "react";
 import api from "../api";
 import ActivityHeatmap from "../components/ActivityHeatmap";
+import EditProfileModal from "../components/EditProfileModal"; // ✅ import modal
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
   const [streak, setStreak] = useState(null);
+  const [showEdit, setShowEdit] = useState(false); // ✅ modal visibility
 
   useEffect(() => {
-    // Fetch dashboard data
-    api
-      .get("/users/me/dashboard")
-      .then((r) => {
+    const fetchData = async () => {
+      try {
+        const [dashboard, streak, me] = await Promise.all([
+          api.get("/users/me/dashboard"),
+          api.get("/users/me/streak"),
+          api.get("/auth/me"),
+        ]);
 
-        setData(r.data);
-      })
-      .catch((err) => {
-        console.error("❌ Dashboard error:", err);
-      });
-
-    // Fetch streak data
-    api
-      .get("/users/me/streak")
-      .then((r) => {
-        setStreak(r.data);
-      })
-      .catch((err) => {
-        console.error("❌ Streak error:", err);
-      });
+        // Merge profile info (location, avatar, username)
+        setData({
+          ...dashboard.data,
+          ...me.data,
+        });
+        setStreak(streak.data);
+      } catch (err) {
+        console.error("❌ Dashboard fetch error:", err);
+      }
+    };
+    fetchData();
   }, []);
+
 
   if (!data)
     return (
@@ -36,12 +38,10 @@ export default function Dashboard() {
       </div>
     );
 
-  // Check if we have solved problems with dates
-  const hasSolvedProblems = data.solvedProblems && data.solvedProblems.length > 0;
-  const hasValidDates = hasSolvedProblems && data.solvedProblems.some(p => p.solvedAt);
-
-  console.log("🔍 hasSolvedProblems:", hasSolvedProblems);
-  console.log("🔍 hasValidDates:", hasValidDates);
+  const hasSolvedProblems =
+    data.solvedProblems && data.solvedProblems.length > 0;
+  const hasValidDates =
+    hasSolvedProblems && data.solvedProblems.some((p) => p.solvedAt);
 
   return (
     <div className="min-h-screen bg-[#0f0f0f] text-gray-200">
@@ -58,13 +58,21 @@ export default function Dashboard() {
               />
               <div>
                 <h2 className="font-semibold text-white">{data.username}</h2>
-                <p className="text-sm text-gray-400">Rating: {data.rating || 0}</p>
+                <p className="text-sm text-gray-400">
+                  Rating: {data.rating || 0}
+                </p>
               </div>
             </div>
-            <button className="w-full mt-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg font-medium text-white">
+            {/* ✅ Edit button triggers modal */}
+            <button
+              onClick={() => setShowEdit(true)}
+              className="w-full mt-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg font-medium text-white"
+            >
               Edit Profile
             </button>
-            <p className="mt-3 text-gray-400 text-sm">📍 {data.country || "Unknown"}</p>
+            <p className="mt-3 text-gray-400 text-sm">
+              📍 {data.location || "Unknown"}
+            </p>
           </div>
 
           {/* Streak Section */}
@@ -88,7 +96,8 @@ export default function Dashboard() {
                 </div>
                 {streak.lastSolvedAt && (
                   <div className="text-xs text-gray-500 mt-2">
-                    Last solved: {new Date(streak.lastSolvedAt).toLocaleDateString()}
+                    Last solved:{" "}
+                    {new Date(streak.lastSolvedAt).toLocaleDateString()}
                   </div>
                 )}
               </div>
@@ -109,13 +118,18 @@ export default function Dashboard() {
           {/* Topic Performance */}
           {data.topicStats && Object.keys(data.topicStats).length > 0 && (
             <div className="bg-[#1a1a1a] rounded-xl border border-[#2f2f2f] p-5">
-              <h3 className="text-gray-300 font-medium mb-4">Topic Performance</h3>
+              <h3 className="text-gray-300 font-medium mb-4">
+                Topic Performance
+              </h3>
               <div className="space-y-3">
                 {Object.entries(data.topicStats)
                   .sort((a, b) => b[1].accuracy - a[1].accuracy)
                   .slice(0, 8)
                   .map(([topic, stats]) => (
-                    <div key={topic} className="flex items-center justify-between">
+                    <div
+                      key={topic}
+                      className="flex items-center justify-between"
+                    >
                       <span className="text-sm text-gray-300">{topic}</span>
                       <div className="flex items-center gap-3">
                         <span className="text-xs text-gray-500">
@@ -130,13 +144,15 @@ export default function Dashboard() {
               </div>
             </div>
           )}
-          
         </aside>
 
+        {/* ---------------- Main ---------------- */}
         <main className="lg:col-span-3 space-y-6">
           {/* Problems Solved */}
           <div className="bg-[#1a1a1a] rounded-xl border border-[#2f2f2f] p-5">
-            <h3 className="text-gray-300 font-medium mb-4 text-xl">Problems Solved</h3>
+            <h3 className="text-gray-300 font-medium mb-4 text-xl">
+              Problems Solved
+            </h3>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-4xl font-bold text-green-400">
@@ -177,16 +193,18 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* 🔥 Activity Heatmap - DEBUG VERSION */}
+          {/* Activity Heatmap */}
           <div className="bg-[#1a1a1a] rounded-xl border border-[#2f2f2f] p-5">
-            <h3 className="text-gray-300 font-medium mb-4 text-xl">Activity Heatmap</h3>
+            <h3 className="text-gray-300 font-medium mb-4 text-xl">
+              Activity Heatmap
+            </h3>
             {hasSolvedProblems && hasValidDates ? (
               <ActivityHeatmap submissions={data.solvedProblems} />
             ) : (
               <div className="text-center py-8">
                 <div className="text-gray-400 mb-2">
-                  {!hasSolvedProblems 
-                    ? "No problems solved yet. Start solving to see your activity!" 
+                  {!hasSolvedProblems
+                    ? "No problems solved yet. Start solving to see your activity!"
                     : "No valid date information found for solved problems."}
                 </div>
                 <div className="text-xs text-gray-500">
@@ -199,16 +217,22 @@ export default function Dashboard() {
           {/* Contest Rating */}
           {data.contestRating !== undefined && (
             <div className="bg-[#1a1a1a] rounded-xl border border-[#2f2f2f] p-5">
-              <h3 className="text-gray-300 font-medium mb-4">Contest Rating</h3>
+              <h3 className="text-gray-300 font-medium mb-4">
+                Contest Rating
+              </h3>
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-2xl font-bold text-white">{data.contestRating}</p>
+                  <p className="text-2xl font-bold text-white">
+                    {data.contestRating}
+                  </p>
                   <p className="text-sm text-gray-400">
                     Global Rank: {data.globalRank}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-gray-400">Attended: {data.attended}</p>
+                  <p className="text-sm text-gray-400">
+                    Attended: {data.attended}
+                  </p>
                   <p className="text-sm text-gray-400">
                     Top {data.percentile || "—"}%
                   </p>
@@ -272,10 +296,16 @@ export default function Dashboard() {
               )}
             </div>
           </div>
-
-
         </main>
       </div>
+
+      {/* ✅ Modal rendering */}
+      {showEdit && (
+        <EditProfileModal
+          user={data}
+          onClose={() => setShowEdit(false)}
+          onUpdated={(updated) => setData((prev) => ({ ...prev, ...updated }))}
+        />)}
     </div>
   );
 }

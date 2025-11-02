@@ -174,7 +174,6 @@ export default function ActivityHeatmap({ submissions }) {
                     <div key={dayIndex} className="w-[10px] h-[10px]" />
                   );
 
-                // 👇 Check if month changed since previous day
                 const prevDay =
                   weekIndex > 0
                     ? weeks[weekIndex - 1]?.[dayIndex]

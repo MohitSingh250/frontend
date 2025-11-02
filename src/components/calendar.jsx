@@ -56,9 +56,9 @@ const Calendar = () => {
   ).getDate();
 
   return (
-    <div className="bg-[#1a1a1a] text-gray-200 rounded-2xl p-5 w-full max-w-md mx-auto shadow-[0_4px_20px_rgba(0,0,0,0.6)] border border-neutral-800">
+    <div className="bg-[#1a1a1a] text-gray-200 rounded-2xl p-5 w-full max-w-md mx-auto shadow-[0_4px_20px_rgba(0,0,0,0.6)] border border-neutral-800 sticky top-15">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 ">
         <h2 className="text-lg font-semibold text-white">
           {today.toLocaleString("default", { month: "long" })} {today.getFullYear()}
         </h2>

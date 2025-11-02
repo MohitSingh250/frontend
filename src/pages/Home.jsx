@@ -19,13 +19,14 @@ export default function Home() {
     setHasMore(res.data && res.data.length >= 20);
   };
 
-  useEffect(() => { fetchProblems(); }, [filters, page]);
+  useEffect(() => {
+    fetchProblems();
+  }, [filters, page]);
 
   return (
-    <div className="flex min-h-screen w-full bg-[#0e0e0e] text-gray-200 overflow-hidden">
-      <Sidebar />
-      <main className="flex-1 flex flex-col lg:flex-row gap-8 p-8 w-full overflow-x-hidden">
-        <section className="flex-1 w-full overflow-y-auto">
+    <div className="flex min-h-screen w-full bg-[#0e0e0e] text-gray-200">
+      <main className="flex-1 flex flex-col lg:flex-row gap-8 p-8 w-full">
+        <section className="flex-1 w-full">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-3xl font-bold text-white tracking-tight">Problems</h1>
           </div>
@@ -45,7 +46,8 @@ export default function Home() {
           </div>
         </section>
 
-        <aside className="hidden xl:block w-[360px] bg-neutral-900 border border-neutral-800 rounded-2xl shadow-md p-5 h-fit sticky top-8">
+        {/* ✅ Sticky sidebar */}
+        <aside className="hidden xl:block w-[360px] bg-neutral-900 border border-neutral-800 rounded-2xl shadow-md p-5 mt-15 ">
           <h2 className="text-xl font-semibold mb-4 text-white text-center">📅 Daily Progress</h2>
           <Calendar />
         </aside>
