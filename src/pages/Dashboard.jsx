@@ -17,11 +17,13 @@ export default function Dashboard() {
           api.get("/auth/me"),
         ]);
 
-        // Merge profile info (location, avatar, username)
-        setData({
-          ...dashboard.data,
-          ...me.data,
-        });
+      setData({
+        ...dashboard.data,
+        username: me.data.username,
+        location: me.data.location,
+        avatar: me.data.avatar,
+      });
+
         setStreak(streak.data);
       } catch (err) {
         console.error("❌ Dashboard fetch error:", err);
