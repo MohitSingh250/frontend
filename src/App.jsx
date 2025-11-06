@@ -7,7 +7,7 @@ import Signup from './pages/Signup';
 import ProblemDetail from './pages/ProblemDetail';
 import Dashboard from './pages/Dashboard';
 import DailyProblem from './pages/DailyProblem';
-
+import Contests from './pages/Contest';
 import AdminCreateProblem from './pages/AdminCreateProblem';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
@@ -27,6 +27,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/daily" element={<DailyProblem />} />
+          <Route path="/contests" element={<Contests />} />
           <Route path="/problems/:id" element={<ProblemDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

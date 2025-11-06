@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import ProfileMenu from "./ProfileMenu";
 import { AuthContext } from "../context/AuthContext";
@@ -6,6 +6,37 @@ import { AuthContext } from "../context/AuthContext";
 export default function Header() {
   const { user, logout } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
+  const menuRef = useRef(null)
+
+  useEffect(()=>{
+    if(!open) return 
+    const timer = setTimeout(() => {
+      setOpen(false)
+    }, 3000);
+    return ()=>clearTimeout(timer)
+  },[open])
+
+  // useEffect(()=>{
+  //   const handleClick = ()=>{
+  //     setOpen(false)
+  //   }
+
+  //   window.addEventListener("click",handleClick)
+  //   return ()=>{
+  //     window.removeEventListener("click",handleClick)
+  //   }
+  //   },[])
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   return (
     <header className="bg-[#1a1a1a] border-b border-neutral-800 shadow-lg text-gray-200 relative">
@@ -30,7 +61,7 @@ export default function Header() {
           </Link>
 
           {user ? (
-            <div className="relative">
+            <div ref={menuRef} className="relative">
               <img
                 src={user.avatar || "https://via.placeholder.com/80"}
                 alt={user.username}
