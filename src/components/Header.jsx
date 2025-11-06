@@ -12,8 +12,8 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         {/* Left: Logo */}
         <Link to="/" className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-md flex items-center justify-center text-black font-bold">
-            <img src="orbits.png" alt="logo" className="w-6 h-6" />
+          <div className="w-8 h-8 bg-gradient-to-br rounded-md flex items-center justify-center text-black font-bold">
+            <img src="orbits.png" alt="logo" className="w-10 h-10 rounded-full" />
           </div>
           <span className="text-lg font-semibold tracking-wide text-white">
             Orbit

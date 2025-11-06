@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function ProblemFilters({ filters, setFilters }) {
+  console.log(filters)
   return (
     <div className="bg-[#1E1E1E] border border-[#2A2A2A] rounded-xl p-4 mb-5 flex flex-wrap items-center gap-3 shadow-sm">
       {/* Search input */}
