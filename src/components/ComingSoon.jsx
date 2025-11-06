@@ -35,15 +35,7 @@ export default function ContestComingSoon() {
         }}
       />
 
-      {/* Horizon Glow */}
-      <div className="absolute bottom-0 left-0 right-0 h-[300px] overflow-hidden pointer-events-none">
-        <div className="absolute bottom-0 -left-1/2 -right-1/2 h-full rounded-[50%] animate-glow"
-          style={{
-            background: 'linear-gradient(to top, transparent 0%, rgba(255,140,0,0.15) 40%, rgba(255,140,0,0.3) 50%, rgba(255,140,0,0.15) 60%, transparent 100%)',
-            transform: 'translateY(50%)',
-          }}
-        />
-      </div>
+
 
       {/* Scan Lines */}
       <div className="absolute inset-0 pointer-events-none animate-scan"
@@ -55,20 +47,19 @@ export default function ContestComingSoon() {
 
       {/* Content */}
       <div className="relative z-10 text-center max-w-3xl flex flex-col items-center justify-center px-4">
-        <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-400/30 px-4 py-2 rounded-full text-sm mb-8 text-orange-300">
-          <span className="text-base">⚡</span>
+        <div className="inline-flex items-center gap-2 bg-gray-500/10 border border-gray-400/30 px-4 py-2 rounded-full text-sm mb-8 text-white-300">
           <span>Contest Coming Soon</span>
         </div>
 
         <h1 className="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight leading-tight text-white">
-          Get ready to <span className="text-orange-400 italic">create</span> and <span className="text-orange-400 italic">compete</span>
+          Get ready to <span className="text-gray-500 italic">create</span> and <span className="text-gray-500 italic">compete</span>
         </h1>
 
         <p className="text-base md:text-xl text-gray-400 mb-8">
-          The ultimate web-design contest launches soon.
+          The contest launches soon.
         </p>
 
-        <button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-8 py-3 rounded-full text-white font-semibold text-base shadow-lg shadow-orange-900/40 transition-all duration-300">
+        <button className="bg-gradient-to-r px-8 py-3 rounded-full text-white font-semibold text-base shadow-lg shadow-white-900/20 transition-all border-r-2 duration-300">
           Notify Me
         </button>
       </div>
