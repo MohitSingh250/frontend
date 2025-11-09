@@ -11,7 +11,7 @@ const Calendar = () => {
   const [expanded, setExpanded] = useState(false);
 
   const getDateKey = (date) => date.toLocaleDateString("en-CA");
-
+  console.log("hlo")
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
     handleResize();
