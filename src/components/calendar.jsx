@@ -93,7 +93,7 @@ const Calendar = () => {
       {isMobile ? (
         <div
           className={`
-            fixed bottom-0 left-0 w-full z-50 bg-[var(--dark-slate-gray)]/95 
+            fixed bottom-0 left-0 w-full z-50 bg-[var(--dark-slate-gray)]/95
             text-[var(--white)] rounded-t-3xl border-t border-[var(--dark-pastel-green)]/30
             shadow-xl transition-transform duration-300 ease-out
             ${expanded ? "translate-y-0" : "translate-y-full"}
@@ -229,11 +229,24 @@ const Calendar = () => {
                     />
                   )}
                 </div>
+                
               );
+              
             })}
+            
           </div>
+          
         </div>
+        
       )}
+       {streak && (
+              <div className="mt-4 text-sm text-center">
+                <span className="text-[var(--white)]/60">Streak: </span>
+                <span className="text-[var(--dark-pastel-green)] font-semibold">
+                  {streak.currentStreak} days
+                </span>
+              </div>
+            )}
     </>
   );
 };

@@ -79,7 +79,7 @@ export default function Home() {
         </section>
 
         {/* 🖥️ Sidebar (Visible only on desktop) */}
-        <aside className="hidden xl:block w-[360px] bg-[var(--dark-slate-gray)]/80 border border-[var(--dark-pastel-green)]/20 rounded-2xl shadow-md p-5">
+        <aside className="hidden xl:block w-[360px]  rounded-2xl shadow-md p-5">
           <Calendar />
         </aside>
       </main>

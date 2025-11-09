@@ -40,10 +40,10 @@ export default function Header() {
             <img
               src="orbits.png"
               alt="logo"
-              className="w-10 h-10 rounded-full border border-[var(--dark-pastel-green)]/40 shadow-sm group-hover:shadow-[0_0_10px_rgba(44,188,93,0.4)] transition"
+              className="w-10 h-10 rounded-full border border-[var(--dark-pastel-green)]/40 shadow-sm group-hover:shadow-[0_0_10px_rgba(255,165,0,0.4)] transition"
             />
           </div>
-          <span className="text-lg font-semibold tracking-wide text-[var(--dark-pastel-green)] group-hover:text-[var(--aqua)] transition">
+          <span className="text-lg font-semibold tracking-wide text-[#718A9E] group-hover:text-[var(--spanish-orange)] transition">
             Orbit
           </span>
         </Link>
