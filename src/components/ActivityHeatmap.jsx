@@ -116,23 +116,23 @@ export default function ActivityHeatmap({ submissions }) {
       {/* Stats Header */}
       <div className="flex items-center justify-between mb-3 text-sm">
         <div className="flex items-center gap-2">
-          <span className="text-gray-300">
-            <span className="font-semibold text-white">
+          <span className="text-[var(--white)]">
+            <span className="font-semibold ext-[var(--white)]">
               {heatmapData.totalSubmissions}
             </span>{" "}
             submissions in the past one year
           </span>
         </div>
-        <div className="flex items-center gap-5 text-gray-400">
+        <div className="flex items-center gap-5 ext-[var(--white)]">
           <span>
             Total active days:{" "}
-            <span className="font-semibold text-white">
+            <span className="font-semibold ext-[var(--white)]">
               {heatmapData.activeDays}
             </span>
           </span>
           <span>
             Max streak:{" "}
-            <span className="font-semibold text-white">
+            <span className="font-semibold ext-[var(--white)]">
               {heatmapData.maxStreak}
             </span>
           </span>
