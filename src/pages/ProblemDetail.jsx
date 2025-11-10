@@ -13,9 +13,12 @@ export default function ProblemDetail() {
   const [submissions, setSubmissions] = useState([]);
 
   useEffect(() => {
-    api.get(`/problems/${id}`).then((r) => setProblem(r.data)).catch(() => {});
+    api
+      .get(`/problems/${id}`)
+      .then((r) => setProblem(r.data))
+      .catch(() => {});
+
     if (user) {
-      api.get(`/problems/${id}/me`).catch(() => {});
       api
         .get(`/submissions/user/${user._id}`)
         .then((r) => setSubmissions(r.data))
@@ -240,7 +243,7 @@ export default function ProblemDetail() {
                 >
                   <div>
                     <div className="text-sm font-medium">
-                      Verdict:{" "}
+                      Result:{" "}
                       <span
                         className={
                           s.isCorrect
@@ -248,7 +251,11 @@ export default function ProblemDetail() {
                             : "text-[var(--orange-peel)]"
                         }
                       >
-                        {s.isCorrect ? "Accepted" : s.verdict || "Pending"}
+                        {s.isCorrect
+                          ? "Accepted"
+                          : s.manual
+                          ? "Pending Review"
+                          : "Wrong Answer"}
                       </span>
                     </div>
                     <div className="text-xs text-[var(--white)]/50">
