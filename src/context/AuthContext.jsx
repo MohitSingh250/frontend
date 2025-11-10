@@ -9,41 +9,51 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      api.get('/auth/me')
-        .then(res => setUser(res.data))
-        .catch(() => {
-          localStorage.removeItem('token');
-          setUser(null);
-        });
-    }
-  }, []);
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    api.get('/auth/me')
+      .then(res => setUser(res.data))
+      .catch(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        setUser(null);
+      });
+  }
+}, []);
 
-  const login = async (email, password) => {
-    const res = await api.post('/auth/login', { email, password });
-    const token = res.data.token;
-    localStorage.setItem('token', token);
-    const me = await api.get('/auth/me');
-    setUser(me.data);
-    navigate('/');
-  };
 
-  const signup = async (username, email, password) => {
-    const res = await api.post('/auth/signup', { username, email, password });
-    const token = res.data.token;
-    localStorage.setItem('token', token);
-    const me = await api.get('/auth/me');
-    setUser(me.data);
-    navigate('/');
-  };
+const login = async (email, password) => {
+  const res = await api.post('/auth/login', { email, password });
+  const { token, refreshToken } = res.data;
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    setUser(null);
-    navigate('/login');
-  };
+  localStorage.setItem('token', token);
+  localStorage.setItem('refreshToken', refreshToken);
+
+  const me = await api.get('/auth/me');
+  setUser(me.data);
+  navigate('/');
+};
+
+const signup = async (username, email, password) => {
+  const res = await api.post('/auth/signup', { username, email, password });
+  const { token, refreshToken } = res.data;
+
+  localStorage.setItem('token', token);
+  localStorage.setItem('refreshToken', refreshToken);
+
+  const me = await api.get('/auth/me');
+  setUser(me.data);
+  navigate('/');
+};
+
+
+const logout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('refreshToken');
+  setUser(null);
+  navigate('/login');
+};
 
   const googleLogin = async (googleToken) => {
   const res = await api.post('/auth/google', { token: googleToken });

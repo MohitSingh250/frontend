@@ -6,7 +6,7 @@ export default function ProblemFilters({ filters, setFilters }) {
 
   return (
     <div className="w-full">
-      {/* 🔘 Top bar (visible only on mobile) */}
+      {/* 🔘 Mobile Search + Filter Toggle */}
       <div className="flex sm:hidden items-center justify-between mb-3">
         <input
           value={filters.q}
@@ -32,7 +32,7 @@ export default function ProblemFilters({ filters, setFilters }) {
         </button>
       </div>
 
-      {/* 🧭 Filters Container */}
+      {/* 🧭 Filters Section */}
       <div
         className={`
           ${open ? "flex" : "hidden"} sm:flex
@@ -91,24 +91,10 @@ export default function ProblemFilters({ filters, setFilters }) {
           <option value="hard">Hard</option>
         </select>
 
-        {/* 🏷️ Tags input */}
-        <input
-          value={filters.tags}
-          onChange={(e) => setFilters((f) => ({ ...f, tags: e.target.value }))}
-          placeholder="Tags (comma separated)"
-          className="
-            bg-[var(--raisin-black)]/60 text-[var(--white)] placeholder-[var(--white)]/40
-            border border-[var(--dark-pastel-green)]/20 rounded-md px-3 py-2
-            focus:outline-none focus:border-[var(--dark-pastel-green)] focus:ring-1 focus:ring-[var(--dark-pastel-green)]
-            transition duration-200
-            w-full sm:w-auto
-          "
-        />
-
         {/* ❌ Reset button */}
         <button
           onClick={() =>
-            setFilters({ q: "", topic: "", difficulty: "", tags: "" })
+            setFilters({ q: "", topic: "", difficulty: "" })
           }
           className="
             w-full sm:w-auto sm:ml-auto text-center text-sm 
