@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ProfileMenu from "./ProfileMenu";
 import { AuthContext } from "../context/AuthContext";
 
+
 export default function Header() {
   const { user, logout } = useContext(AuthContext);
   const [open, setOpen] = useState(false);

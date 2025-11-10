@@ -11,7 +11,7 @@ export default function ProblemDetail() {
   const [answer, setAnswer] = useState("");
   const [msg, setMsg] = useState(null);
   const [submissions, setSubmissions] = useState([]);
-
+  const [shownHints, setShownHints] = useState(0); // 👈 count of currently visible hints
   useEffect(() => {
     api
       .get(`/problems/${id}`)
@@ -50,6 +50,18 @@ export default function ProblemDetail() {
         type: "error",
         text: err?.response?.data?.message || "Submit failed",
       });
+    }
+  };
+
+  const showNextHint = () => {
+    if (problem.hints && shownHints < problem.hints.length) {
+      setShownHints(shownHints + 1);
+    }
+  };
+
+  const hideLastHint = () => {
+    if (shownHints > 0) {
+      setShownHints(shownHints - 1);
     }
   };
 
@@ -111,6 +123,59 @@ export default function ProblemDetail() {
         >
           <ReactMarkdown>{problem.statement}</ReactMarkdown>
         </div>
+
+        {/* 💡 Multi-level Hints with Show/Hide */}
+        {problem.hints && problem.hints.length > 0 && (
+          <div className="mt-5">
+            {/* Revealed hints */}
+            {problem.hints.slice(0, shownHints).map((hint, i) => (
+              <div
+                key={hint._id}
+                className="
+                  mt-3 p-4 rounded-xl border border-[var(--orange-peel)]/20
+                  bg-[var(--raisin-black)]/60 text-[var(--white)]/85 text-sm
+                  shadow-sm transition-all duration-300
+                "
+              >
+                <h4 className="font-semibold text-[var(--orange-peel)] mb-1">
+                  Hint {hint.level}:
+                </h4>
+                <ReactMarkdown>{hint.text}</ReactMarkdown>
+              </div>
+            ))}
+
+            {/* Buttons */}
+            <div className="flex gap-3 mt-4">
+              {shownHints < problem.hints.length && (
+                <button
+                  onClick={showNextHint}
+                  className="
+                    text-sm font-medium px-4 py-2 rounded-md
+                    bg-[var(--dark-slate-gray)]/60 border border-[var(--orange-peel)]/30
+                    text-[var(--orange-peel)] hover:bg-[var(--orange-peel)]/10
+                    transition-colors duration-200
+                  "
+                >
+                  💡 Show Hint {shownHints + 1}
+                </button>
+              )}
+
+              {shownHints > 0 && (
+                <button
+                  onClick={hideLastHint}
+                  className="
+                    text-sm font-medium px-4 py-2 rounded-md
+                    bg-[var(--raisin-black)]/60 border border-[var(--alert-red)]/30
+                    text-[var(--alert-red)] hover:bg-[var(--alert-red)]/10
+                    transition-colors duration-200
+                  "
+                >
+                  Hide Hint {shownHints}
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* -------- Right Panel (Answer / Submissions) -------- */}

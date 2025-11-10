@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../api';
+import { AuthContext } from '../context/AuthContext';
 
 export default function ProblemCard({ problem }) {
-  // Difficulty color mapping based on your palette
+  const [userSubmissions, setUserSubmissions] = useState([]);
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchSubmissions = async () => {
+      try {
+        const submissions = await api.get(`/submissions/user/${user._id}`);
+        setUserSubmissions(submissions.data || []);
+      } catch (error) {
+        console.error('Error fetching submissions:', error);
+      }
+    };
+    if (user?._id) fetchSubmissions();
+  }, [user]);
+ 
   const getDifficultyStyle = (level) => {
     switch (level?.toLowerCase()) {
       case 'hard':
@@ -14,19 +30,20 @@ export default function ProblemCard({ problem }) {
         return 'bg-[var(--dark-pastel-green)]/10 text-[var(--dark-pastel-green)] border border-[var(--dark-pastel-green)]/30';
     }
   };
+   console.log(userSubmissions);
+  const problemSolved = userSubmissions.some(
+    (sub) => sub.problemId === problem._id && sub.isCorrect===true);
 
   return (
-    <div className="
-      bg-[var(--dark-slate-gray)]/80 
-      border border-[var(--dark-pastel-green)]/10 
-      rounded-2xl p-4 
-      hover:border-[var(--dark-pastel-green)]/40 
-      hover:bg-[var(--dark-slate-gray)]/90 
-      hover:shadow-lg 
-      hover:shadow-[var(--dark-pastel-green)]/10 
-      transition duration-300
-      backdrop-blur-md
-    ">
+    <div
+      className={`
+        border rounded-2xl p-4 transition duration-300 backdrop-blur-md
+        hover:shadow-lg hover:shadow-[var(--dark-pastel-green)]/10
+        ${problemSolved
+          ? 'bg-[var(--dark-pastel-green)]/20 border-[var(--dark-pastel-green)]/50 hover:bg-[var(--dark-pastel-green)]/30'
+          : 'bg-[var(--dark-slate-gray)]/80 border border-[var(--dark-pastel-green)]/10 hover:border-[var(--dark-pastel-green)]/40 hover:bg-[var(--dark-slate-gray)]/90'}
+      `}
+    >
       <div className="flex justify-between items-center">
         <h3 className="text-[15px] font-semibold text-[var(--white)]">
           <Link
@@ -38,7 +55,9 @@ export default function ProblemCard({ problem }) {
         </h3>
 
         <span
-          className={`px-2 py-[2px] rounded-md text-[11px] font-medium capitalize ${getDifficultyStyle(problem.difficulty)}`}
+          className={`px-2 py-[2px] rounded-md text-[11px] font-medium capitalize ${getDifficultyStyle(
+            problem.difficulty
+          )}`}
         >
           {problem.difficulty}
         </span>
