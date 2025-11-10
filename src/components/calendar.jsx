@@ -11,7 +11,7 @@ const Calendar = () => {
   const [expanded, setExpanded] = useState(false);
 
   const getDateKey = (date) => date.toLocaleDateString("en-CA");
-  console.log("hlo")
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
     handleResize();
@@ -52,6 +52,16 @@ const Calendar = () => {
   const isFuture = (date) => date > today;
   const isPast = (date) => date < today;
   const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+  const firstDayOfWeek = new Date(today.getFullYear(), today.getMonth(), 1).getDay(); // 0 = Sun, 1 = Mon, etc.
+
+  // Generate an array of days with correct spacing
+  const daysArray = [];
+  for (let i = 0; i < firstDayOfWeek; i++) {
+    daysArray.push(null); // empty placeholders before day 1
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    daysArray.push(d);
+  }
 
   // 📱 Floating Icon on Mobile
   if (isMobile && !expanded) {
@@ -78,10 +88,58 @@ const Calendar = () => {
     );
   }
 
-  // 🗓️ Full Calendar (Desktop or Expanded Mobile Modal)
+  // 🗓️ Calendar Grid Renderer
+  const renderDays = () => (
+    <div className="grid grid-cols-7 gap-2 text-center">
+      {daysArray.map((day, index) => {
+        if (!day)
+          return (
+            <div key={`empty-${index}`} className="h-10 w-10"></div> // empty cell
+          );
+
+        const date = new Date(today.getFullYear(), today.getMonth(), day);
+        const dateKey = getDateKey(date);
+        const isToday = dateKey === getDateKey(today);
+        const isSolved = solvedDays.has(dateKey);
+        const future = isFuture(date);
+        const past = isPast(date);
+
+        let styles = "";
+        if (future)
+          styles =
+            "bg-[var(--raisin-black)]/60 text-[var(--white)]/20 cursor-not-allowed";
+        else if (isToday)
+          styles =
+            "border-2 border-[var(--orange-peel)] text-[var(--orange-peel)] font-semibold";
+        else if (isSolved)
+          styles =
+            "bg-[var(--dark-pastel-green)]/20 text-[var(--dark-pastel-green)] border border-[var(--dark-pastel-green)]/30";
+        else if (past)
+          styles =
+            "bg-[var(--dark-slate-gray)]/60 text-[var(--white)]/40 cursor-default";
+
+        return (
+          <div
+            key={day}
+            onClick={() => !future && handleDayClick(day)}
+            className={`relative h-10 w-10 flex items-center justify-center rounded-xl select-none ${styles}`}
+          >
+            {day}
+            {isSolved && (
+              <Check
+                className="absolute bottom-1 right-1 text-[var(--dark-pastel-green)]"
+                size={14}
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  // 🖥 Desktop and 📱 Expanded View
   return (
     <>
-      {/* Overlay for mobile modal */}
       {isMobile && expanded && (
         <div
           onClick={() => setExpanded(false)}
@@ -89,7 +147,6 @@ const Calendar = () => {
         />
       )}
 
-      {/* Bottom Sheet Modal for Mobile */}
       {isMobile ? (
         <div
           className={`
@@ -119,44 +176,7 @@ const Calendar = () => {
               ))}
             </div>
 
-            {/* Days */}
-            <div className="grid grid-cols-7 gap-2 text-center">
-              {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => {
-                const date = new Date(today.getFullYear(), today.getMonth(), day);
-                const dateKey = getDateKey(date);
-                const isToday = dateKey === getDateKey(today);
-                const isSolved = solvedDays.has(dateKey);
-                const future = isFuture(date);
-                const past = isPast(date);
-
-                let styles = "";
-                if (future) styles = "bg-[var(--raisin-black)]/60 text-[var(--white)]/20";
-                else if (isToday)
-                  styles =
-                    "border-2 border-[var(--orange-peel)] text-[var(--orange-peel)] font-semibold";
-                else if (isSolved)
-                  styles =
-                    "bg-[var(--dark-pastel-green)]/20 text-[var(--dark-pastel-green)] border border-[var(--dark-pastel-green)]/30";
-                else if (past)
-                  styles = "bg-[var(--dark-slate-gray)]/60 text-[var(--white)]/40";
-
-                return (
-                  <div
-                    key={day}
-                    onClick={() => !future && handleDayClick(day)}
-                    className={`relative h-10 w-10 flex items-center justify-center rounded-xl select-none ${styles}`}
-                  >
-                    {day}
-                    {isSolved && (
-                      <Check
-                        className="absolute bottom-1 right-1 text-[var(--dark-pastel-green)]"
-                        size={14}
-                      />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+            {renderDays()}
 
             {streak && (
               <div className="mt-4 text-sm text-center">
@@ -169,7 +189,6 @@ const Calendar = () => {
           </div>
         </div>
       ) : (
-        // 💻 Desktop View
         <div
           className="
             bg-[var(--dark-slate-gray)]/80 text-[var(--white)] 
@@ -192,61 +211,19 @@ const Calendar = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-7 gap-2 text-center">
-            {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => {
-              const date = new Date(today.getFullYear(), today.getMonth(), day);
-              const dateKey = getDateKey(date);
-              const isToday = dateKey === getDateKey(today);
-              const isSolved = solvedDays.has(dateKey);
-              const future = isFuture(date);
-              const past = isPast(date);
-
-              let styles = "";
-              if (future)
-                styles =
-                  "bg-[var(--raisin-black)]/60 text-[var(--white)]/20 cursor-not-allowed";
-              else if (isToday)
-                styles =
-                  "border-2 border-[var(--orange-peel)] text-[var(--orange-peel)] font-semibold";
-              else if (isSolved)
-                styles =
-                  "bg-[var(--dark-pastel-green)]/20 text-[var(--dark-pastel-green)] border border-[var(--dark-pastel-green)]/30";
-              else if (past)
-                styles =
-                  "bg-[var(--dark-slate-gray)]/60 text-[var(--white)]/40 cursor-default";
-
-              return (
-                <div
-                  key={day}
-                  onClick={() => !future && handleDayClick(day)}
-                  className={`relative h-10 w-10 flex items-center justify-center rounded-xl select-none ${styles}`}
-                >
-                  {day}
-                  {isSolved && (
-                    <Check
-                      className="absolute bottom-1 right-1 text-[var(--dark-pastel-green)]"
-                      size={14}
-                    />
-                  )}
-                </div>
-                
-              );
-              
-            })}
-            
-          </div>
-          
+          {renderDays()}
         </div>
         
       )}
-       {streak && (
-              <div className="mt-4 text-sm text-center">
-                <span className="text-[var(--white)]/60">Streak: </span>
-                <span className="text-[var(--dark-pastel-green)] font-semibold">
-                  {streak.currentStreak} days
-                </span>
-              </div>
-            )}
+
+          {streak && (
+            <div className="mt-4 text-sm text-center">
+              <span className="text-[var(--white)]/60">Streak: </span>
+              <span className="text-[var(--dark-pastel-green)] font-semibold">
+                {streak.currentStreak} days
+              </span>
+            </div>
+          )}
     </>
   );
 };

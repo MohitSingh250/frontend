@@ -109,7 +109,7 @@ export default function Home() {
         </section>
 
         {/* 🗓️ Sidebar */}
-        <aside className="hidden xl:block w-[360px] rounded-2xl shadow-md p-5">
+        <aside className="hidden xl:block w-[360px] rounded-2xl shadow-md p-3 pt-0">
           <Calendar />
         </aside>
       </main>
