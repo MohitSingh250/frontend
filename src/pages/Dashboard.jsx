@@ -31,6 +31,8 @@ export default function Dashboard() {
     fetchData();
   }, []);
   console.log(data);
+
+
   if (!data)
     return (
       <div className="flex justify-center items-center h-64 text-[var(--white)]/50">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import api from "../api";
+import api from "../api/index";
 import { AuthContext } from "../context/AuthContext";
 import ReactMarkdown from "react-markdown";
 

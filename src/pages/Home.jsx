@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import api from "../api";
+import api from "../api/index.js";
 import ProblemCard from "../components/ProblemCard";
 import ProblemFilters from "../components/ProblemFilters";
 import Calendar from "../components/Calendar.jsx";
+
 
 export default function Home() {
   const [filters, setFilters] = useState({
@@ -17,7 +18,6 @@ export default function Home() {
   const [moreData, setMoreData] = useState(true);
   const pageSize = 20;
 
-  // ✅ Main data fetcher
   const fetchProblems = async (reset = false) => {
     try {
       setLoading(true);
@@ -68,6 +68,7 @@ export default function Home() {
       }
     }
   };
+
 
   // ♻️ Scroll listener
   useEffect(() => {

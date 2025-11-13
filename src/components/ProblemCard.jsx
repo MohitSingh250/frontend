@@ -22,7 +22,7 @@ export default function ProblemCard({ problem }) {
   const getDifficultyStyle = (level) => {
     switch (level?.toLowerCase()) {
       case 'hard':
-        return 'bg-[var(--spanish-orange)]/10 text-[var(--spanish-orange)] border border-[var(--spanish-orange)]/30';
+        return 'bg-[var(--alert-red)]/10 text-[var(--alert-red)] border border-[var(--alert-red)]/30';
       case 'medium':
         return 'bg-[var(--orange-peel)]/10 text-[var(--orange-peel)] border border-[var(--orange-peel)]/30';
       case 'easy':
