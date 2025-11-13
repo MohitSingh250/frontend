@@ -105,53 +105,65 @@ h4 {
     padding-bottom: max(env(safe-area-inset-bottom), 12px);
   }
 }
-/* Container to preserve 3D space */
-.dice-wrapper {
-  width: 50px;
-  height: 50px;
-  perspective: 600px;
+
+.animate-shuffle-wiggle {
+  animation: shuffle-wiggle 0.5s ease-in-out;
 }
 
-/* Cube core */
-.dice {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 1s cubic-bezier(.25,1,.5,1);
+/* Button pulse burst */
+@keyframes shuffle-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 8px rgba(0,255,170,0.3); }
+  50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(0,255,170,0.7); }
+  100% { transform: scale(1); box-shadow: 0 0 8px rgba(0,255,170,0.3); }
 }
 
-/* Each face */
-.dice-face {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background: white;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
-  font-weight: bold;
-  backface-visibility: hidden;
-  border: 2px solid #ddd;
+.animate-shuffle-pulse {
+  animation: shuffle-pulse 0.5s ease-in-out;
 }
 
-/* Dice layout */
-.dice-face.front  { transform: translateZ(25px); }
-.dice-face.back   { transform: rotateY(180deg) translateZ(25px); }
-.dice-face.right  { transform: rotateY(90deg) translateZ(25px); }
-.dice-face.left   { transform: rotateY(-90deg) translateZ(25px); }
-.dice-face.top    { transform: rotateX(90deg) translateZ(25px); }
-.dice-face.bottom { transform: rotateX(-90deg) translateZ(25px); }
-
-/* Glow during roll */
-.dice-roll-glow {
-  animation: glow 1.1s infinite ease-in-out;
+/* Page shake */
+@keyframes shuffle-screen-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(3px, -3px); }
+  40% { transform: translate(-3px, 3px); }
+  60% { transform: translate(3px, 3px); }
+  80% { transform: translate(-3px, -3px); }
 }
 
-@keyframes glow {
-  0% { box-shadow: 0 0 5px rgba(255,255,255,0.3); }
-  50% { box-shadow: 0 0 18px rgba(255,255,255,0.9); }
-  100% { box-shadow: 0 0 5px rgba(255,255,255,0.3); }
+.screen-shake {
+  animation: shuffle-screen-shake 0.4s ease-in-out;
+}
+
+@keyframes shuffle-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(15deg); }
+  40% { transform: rotate(-15deg); }
+  60% { transform: rotate(10deg); }
+  80% { transform: rotate(-10deg); }
+}
+
+.animate-shuffle-wiggle {
+  animation: shuffle-wiggle 0.5s ease-in-out;
+}
+
+@keyframes shuffle-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 8px rgba(0,255,170,0.3); }
+  50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(0,255,170,0.7); }
+  100% { transform: scale(1); box-shadow: 0 0 8px rgba(0,255,170,0.3); }
+}
+
+.animate-shuffle-pulse {
+  animation: shuffle-pulse 0.5s ease-in-out;
+}
+
+@keyframes shuffle-screen-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(3px, -3px); }
+  40% { transform: translate(-3px, 3px); }
+  60% { transform: translate(3px, 3px); }
+  80% { transform: translate(-3px, -3px); }
+}
+
+.screen-shake {
+  animation: shuffle-screen-shake 0.4s ease-in-out;
 }

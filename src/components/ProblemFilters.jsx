@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Filter, X } from "lucide-react";
-import RandomProblemButton from "./RandomProblemDice";
+import ShuffleRandomButton from "./RandomProblemDice";
 
 export default function ProblemFilters({ filters, setFilters }) {
   const [open, setOpen] = useState(false);
@@ -92,8 +92,9 @@ export default function ProblemFilters({ filters, setFilters }) {
           <option value="hard">Hard</option>
         </select>
 
-        {/* ❌ Reset button */}
-        <RandomProblemButton />
+        <div className="w-full sm:w-auto flex justify-center sm:justify-start">
+          <ShuffleRandomButton />
+        </div>
         <button
           onClick={() =>
             setFilters({ q: "", topic: "", difficulty: "" })
