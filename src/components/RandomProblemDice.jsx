@@ -27,7 +27,7 @@ export default function ShuffleRandomButton() {
     setTimeout(async () => {
       await fetchRandomProblem();
       setAnimating(false);
-    }, 550);
+    }, 200);
   };
 
   return (
@@ -36,7 +36,7 @@ export default function ShuffleRandomButton() {
       disabled={animating}
       className={`
         flex items-center justify-center
-        h-10 w-10 sm:h-11 sm:w-11
+        h-5 w-8 sm:h-9.5 sm:w-10
         rounded-xl border 
         bg-[var(--raisin-black)]/70 
         border-[var(--dark-pastel-green)]/30

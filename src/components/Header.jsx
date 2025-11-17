@@ -57,6 +57,18 @@ export default function Header() {
           >
             Contests
           </Link>
+          <Link to ="/ContestDetail"
+            className="hover:text-[var(--dark-pastel-green)] transition"
+          >
+            Contest Detail
+          </Link>
+          <Link to ="/ContestPage"
+            className="hover:text-[var(--dark-pastel-green)] transition"
+          >
+            ContestPage
+          </Link>
+
+          
           <Link
             to="/"
             className="hover:text-[var(--dark-pastel-green)] transition"

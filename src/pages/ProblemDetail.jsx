@@ -11,7 +11,7 @@ export default function ProblemDetail() {
   const [answer, setAnswer] = useState("");
   const [msg, setMsg] = useState(null);
   const [submissions, setSubmissions] = useState([]);
-  const [shownHints, setShownHints] = useState(0); // 👈 count of currently visible hints
+  const [shownHints, setShownHints] = useState(0); 
   useEffect(() => {
     api
       .get(`/problems/${id}`)

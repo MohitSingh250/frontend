@@ -8,9 +8,9 @@ import ProblemDetail from "./pages/ProblemDetail";
 import Dashboard from "./pages/Dashboard";
 import DailyProblem from "./pages/DailyProblem";
 import Contests from "./pages/Contest";
-import AdminCreateProblem from "./pages/AdminCreateProblem";
 import { AuthContext } from "./context/AuthContext";
-
+import ContestDetail from "./pages/ContestDetail";
+import ContestPage from "./pages/ContestPage";
 /* 🔒 Private Route */
 function PrivateRoute({ children }) {
   const { user } = useContext(AuthContext);
@@ -48,6 +48,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/daily" element={<DailyProblem />} />
           <Route path="/contests" element={<Contests />} />
+          <Route path="ContestDetail" element={<ContestDetail />} />
+          <Route path="/contestpage" element={<ContestPage />} />
           <Route path="/problems/:id" element={<ProblemDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -56,14 +58,6 @@ export default function App() {
             element={
               <PrivateRoute>
                 <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/create-problem"
-            element={
-              <PrivateRoute>
-                <AdminCreateProblem />
               </PrivateRoute>
             }
           />
