@@ -11,6 +11,7 @@ import Contests from "./pages/Contest";
 import { AuthContext } from "./context/AuthContext";
 import ContestDetail from "./pages/ContestDetail";
 import ContestPage from "./pages/ContestPage";
+import AdminDashboard from "./admin/AdminDashboard";
 /* 🔒 Private Route */
 function PrivateRoute({ children }) {
   const { user } = useContext(AuthContext);
@@ -34,17 +35,10 @@ export default function App() {
       <Header />
 
       {/* Main Content - full width, minimal padding */}
-      <main
-        className="
-          flex-1 w-full
-          bg-[var(--gradient-surface)]
-          text-[var(--white)]
-          px-2 sm:px-3 md:px-4 lg:px-6
-          py-4 sm:py-6 md:py-8
-          transition-all duration-300
-        "
-      >
+
+
         <Routes>
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/" element={<Home />} />
           <Route path="/daily" element={<DailyProblem />} />
           <Route path="/contests" element={<Contests />} />
@@ -62,7 +56,7 @@ export default function App() {
             }
           />
         </Routes>
-      </main>
+
     </div>
   );
 }
