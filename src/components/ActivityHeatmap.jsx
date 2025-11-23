@@ -140,7 +140,7 @@ export default function ActivityHeatmap({ submissions }) {
       </div>
 
       {/* Heatmap */}
-      <div className="relative bg-[#1c1c1c] p-3 rounded-xl border border-[#2a2a2a]">
+      <div className="relative bg-[var(--raisin-black)] p-3 rounded-xl">
         {/* Month labels */}
         <div className="flex mb-1 ml-8">
           {monthLabels.map((label, i) => (

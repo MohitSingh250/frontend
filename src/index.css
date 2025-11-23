@@ -5,8 +5,8 @@
 
 /* 3️⃣ THEME: Orbit (Dark + Light) */
 :root[data-theme="dark"] {
-  --raisin-black: #282828; /* main bg */
-  --dark-slate-gray: #264044; /* card bg */
+  --raisin-black: #0b0a0a; /* main bg */
+  --dark-slate-gray: #191c1d; /* card bg */
   --white: #FBFBFB; /* main text */
   --dark-pastel-green: #2CBC5D; /* success / accent */
   --aqua: #1BBBBA; /* secondary accent */

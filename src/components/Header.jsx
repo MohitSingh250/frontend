@@ -51,29 +51,18 @@ export default function Header() {
 
         {/* Right: Navigation */}
         <nav className="flex items-center space-x-6 text-sm font-medium relative">
-          <Link
-            to="/contests"
-            className="hover:text-[var(--dark-pastel-green)] transition"
-          >
-            Contests
-          </Link>
-          <Link to ="/ContestDetail"
-            className="hover:text-[var(--dark-pastel-green)] transition"
-          >
-            Contest Detail
-          </Link>
-          <Link to ="/ContestPage"
-            className="hover:text-[var(--dark-pastel-green)] transition"
-          >
-            ContestPage
-          </Link>
 
-          
           <Link
             to="/"
             className="hover:text-[var(--dark-pastel-green)] transition"
           >
             Problems
+          </Link>
+          <Link
+            to="/contests"
+            className="hover:text-[var(--dark-pastel-green)] transition"
+          >
+            contests
           </Link>
 
           {user ? (
