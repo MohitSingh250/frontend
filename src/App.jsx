@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -14,7 +14,7 @@ import AdminDashboard from "./admin/AdminDashboard";
 
 import ContestList from "./pages/contest/ContestList";
 import ContestDetail from "./pages/contest/ContestDetail";
-import ContestProblem from "./pages/contest/ContestProblem";
+import ContestArena from "./pages/contest/ContestArena";
 import ContestLeaderboard from "./pages/contest/ContestLeaderboard";
 
 function PrivateRoute({ children }) {
@@ -25,7 +25,7 @@ function PrivateRoute({ children }) {
 export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--raisin-black)] text-white">
-      <Header />
+      {!useLocation().pathname.includes("/arena") && <Header />}
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -36,19 +36,17 @@ export default function App() {
 
         <Route path="/contests" element={<ContestList />} />
         <Route path="/contest/:contestId" element={<ContestDetail />} />
-
-        <Route
-          path="/contest/:contestId/arena"
-          element={
-            <PrivateRoute>
-              <ContestProblem />
-            </PrivateRoute>
-          }
-        />
-
         <Route
           path="/contest/:contestId/leaderboard"
           element={<ContestLeaderboard />}
+        />
+        <Route 
+          path="/contest/:contestId/arena"
+          element={
+            <PrivateRoute>
+              <ContestArena />
+            </PrivateRoute>
+          }
         />
 
         <Route path="/login" element={<Login />} />

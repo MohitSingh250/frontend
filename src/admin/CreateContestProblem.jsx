@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api";
+import { Plus, Save, FileText, Trash2, CheckCircle } from "lucide-react";
 
 export default function CreateContestProblem() {
   const [contests, setContests] = useState([]);
@@ -34,10 +35,20 @@ export default function CreateContestProblem() {
     setForm({ ...form, options: updated });
   };
 
+  const removeOption = (index) => {
+    const updated = [...form.options];
+    updated.splice(index, 1);
+    // Re-index options
+    updated.forEach((opt, i) => {
+      opt.id = String.fromCharCode(65 + i);
+    });
+    setForm({ ...form, options: updated });
+  };
+
   const submit = async () => {
     try {
       await api.post(`/contests/${form.contestId}/problems`, form);
-      setMessage("Contest problem created!");
+      setMessage("🎉 Contest problem created successfully!");
       setForm({
         contestId: "",
         title: "",
@@ -50,141 +61,209 @@ export default function CreateContestProblem() {
         difficulty: "medium",
         solution: "",
       });
+      setTimeout(() => setMessage(""), 3000);
     } catch (err) {
-      setMessage(err.response?.data?.message || "Error adding problem.");
+      setMessage(err.response?.data?.message || "❌ Error adding problem.");
     }
   };
 
   return (
-    <div className="flex justify-center w-full">
-      <div className="w-full max-w-2xl bg-white shadow-lg p-8 rounded-lg space-y-6">
+    <div className="max-w-4xl mx-auto bg-[#1e2022]/40 backdrop-blur-md border border-white/5 p-8 rounded-2xl shadow-xl">
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-1">Add Contest Problem</h2>
+          <p className="text-white/50 text-sm">Create a new problem for an existing contest.</p>
+        </div>
+        <div className="p-3 rounded-xl bg-[var(--dark-pastel-green)]/10 text-[var(--dark-pastel-green)]">
+          <FileText className="w-6 h-6" />
+        </div>
+      </div>
 
-        <h1 className="text-3xl font-bold text-center">Add Contest Problem</h1>
-
-        <select
-          className="border p-3 w-full rounded"
-          name="contestId"
-          value={form.contestId}
-          onChange={handleChange}
-        >
-          <option value="">Select Contest</option>
-          {contests.map((c) => (
-            <option key={c._id} value={c._id}>
-              {c.title} (#{c.contestNumber})
-            </option>
-          ))}
-        </select>
-
-        <input
-          className="border p-3 w-full rounded"
-          name="title"
-          value={form.title}
-          placeholder="Problem Title"
-          onChange={handleChange}
-        />
-
-        <textarea
-          className="border p-3 w-full rounded"
-          name="statement"
-          rows={4}
-          value={form.statement}
-          placeholder="Problem Statement"
-          onChange={handleChange}
-        />
-
-        <select
-          className="border p-3 w-full rounded"
-          name="inputType"
-          value={form.inputType}
-          onChange={handleChange}
-        >
-          <option value="mcq_single">MCQ</option>
-          <option value="numeric">Numeric</option>
-          <option value="manual">Manual</option>
-          <option value="expression">Expression</option>
-        </select>
-
-        {form.inputType === "mcq_single" && (
-          <div className="space-y-3">
-            {form.options.map((opt, i) => (
-              <input
-                key={i}
-                className="border p-3 w-full rounded"
-                placeholder={`Option ${opt.id}`}
-                value={opt.text}
-                onChange={(e) => {
-                  const updated = [...form.options];
-                  updated[i].text = e.target.value;
-                  setForm({ ...form, options: updated });
-                }}
-              />
+      <div className="space-y-6">
+        {/* Contest Selection */}
+        <div className="space-y-2">
+          <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Select Contest</label>
+          <select
+            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--dark-pastel-green)]/50 transition-colors appearance-none"
+            name="contestId"
+            value={form.contestId}
+            onChange={handleChange}
+          >
+            <option value="">Choose a contest...</option>
+            {contests.map((c) => (
+              <option key={c._id} value={c._id}>
+                {c.title} (#{c.contestNumber})
+              </option>
             ))}
-            <button
-              onClick={addOption}
-              className="bg-gray-900 text-white px-4 py-2 rounded w-full"
+          </select>
+        </div>
+
+        {/* Title & Difficulty */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="md:col-span-2 space-y-2">
+            <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Problem Title</label>
+            <input
+              className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-[var(--dark-pastel-green)]/50 transition-colors"
+              name="title"
+              value={form.title}
+              placeholder="e.g. Projectile Motion"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Difficulty</label>
+            <select
+              className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--dark-pastel-green)]/50 transition-colors appearance-none"
+              name="difficulty"
+              value={form.difficulty}
+              onChange={handleChange}
             >
-              Add Option
-            </button>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Statement */}
+        <div className="space-y-2">
+          <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Problem Statement (Markdown)</label>
+          <textarea
+            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-[var(--dark-pastel-green)]/50 transition-colors min-h-[150px]"
+            name="statement"
+            value={form.statement}
+            placeholder="Describe the problem here..."
+            onChange={handleChange}
+          />
+        </div>
+
+        {/* Input Type & Points */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Input Type</label>
+            <select
+              className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--dark-pastel-green)]/50 transition-colors appearance-none"
+              name="inputType"
+              value={form.inputType}
+              onChange={handleChange}
+            >
+              <option value="mcq_single">MCQ (Single Correct)</option>
+              <option value="numeric">Numeric</option>
+              <option value="manual">Manual Grading</option>
+              <option value="expression">Expression</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Points</label>
+            <input
+              className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-[var(--dark-pastel-green)]/50 transition-colors"
+              name="points"
+              type="number"
+              value={form.points}
+              placeholder="1"
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        {/* MCQ Options */}
+        {form.inputType === "mcq_single" && (
+          <div className="space-y-4 p-6 rounded-xl bg-white/5 border border-white/5">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Options</label>
+              <button
+                onClick={addOption}
+                className="text-xs font-bold text-[var(--dark-pastel-green)] hover:underline flex items-center gap-1"
+              >
+                <Plus className="w-3 h-3" /> Add Option
+              </button>
+            </div>
+            
+            <div className="space-y-3">
+              {form.options.map((opt, i) => (
+                <div key={i} className="flex gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center font-bold text-white/50 shrink-0">
+                    {opt.id}
+                  </div>
+                  <input
+                    className="flex-1 bg-black/20 border border-white/10 rounded-lg px-4 text-white placeholder:text-white/20 focus:outline-none focus:border-[var(--dark-pastel-green)]/50 transition-colors"
+                    placeholder={`Option ${opt.id} text`}
+                    value={opt.text}
+                    onChange={(e) => {
+                      const updated = [...form.options];
+                      updated[i].text = e.target.value;
+                      setForm({ ...form, options: updated });
+                    }}
+                  />
+                  <button 
+                    onClick={() => removeOption(i)}
+                    className="w-10 h-10 rounded-lg bg-red-500/10 hover:bg-red-500/20 flex items-center justify-center text-red-400 transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+              {form.options.length === 0 && (
+                <div className="text-center py-4 text-white/30 text-sm italic">No options added yet.</div>
+              )}
+            </div>
           </div>
         )}
 
-        <input
-          className="border p-3 w-full rounded"
-          name="correctAnswer"
-          value={form.correctAnswer}
-          placeholder="Correct Answer"
-          onChange={handleChange}
-        />
+        {/* Correct Answer & Tolerance */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Correct Answer</label>
+            <input
+              className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-[var(--dark-pastel-green)]/50 transition-colors"
+              name="correctAnswer"
+              value={form.correctAnswer}
+              placeholder={form.inputType === 'mcq_single' ? 'e.g. A' : 'e.g. 42'}
+              onChange={handleChange}
+            />
+          </div>
 
-        {form.inputType === "numeric" && (
-          <input
-            className="border p-3 w-full rounded"
-            name="numericTolerance"
-            type="number"
-            value={form.numericTolerance}
-            placeholder="Numeric Tolerance"
+          {form.inputType === "numeric" && (
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Tolerance (+/-)</label>
+              <input
+                className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-[var(--dark-pastel-green)]/50 transition-colors"
+                name="numericTolerance"
+                type="number"
+                value={form.numericTolerance}
+                placeholder="0.001"
+                onChange={handleChange}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Solution */}
+        <div className="space-y-2">
+          <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Solution / Explanation (Optional)</label>
+          <textarea
+            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-[var(--dark-pastel-green)]/50 transition-colors"
+            name="solution"
+            rows={3}
+            value={form.solution}
+            placeholder="Explain the solution..."
             onChange={handleChange}
           />
-        )}
+        </div>
 
-        <input
-          className="border p-3 w-full rounded"
-          name="points"
-          type="number"
-          value={form.points}
-          placeholder="Points"
-          onChange={handleChange}
-        />
-
-        <select
-          className="border p-3 w-full rounded"
-          name="difficulty"
-          value={form.difficulty}
-          onChange={handleChange}
-        >
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
-
-        <textarea
-          className="border p-3 w-full rounded"
-          name="solution"
-          rows={3}
-          value={form.solution}
-          placeholder="Solution (optional)"
-          onChange={handleChange}
-        />
-
+        {/* Submit Button */}
         <button
-          className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700"
+          className="w-full mt-4 bg-[var(--dark-pastel-green)] hover:bg-[var(--dark-pastel-green)]/90 text-black p-4 rounded-xl font-bold shadow-[0_0_20px_rgba(44,188,93,0.3)] hover:shadow-[0_0_30px_rgba(44,188,93,0.5)] transition-all flex items-center justify-center gap-2"
           onClick={submit}
         >
-          Add Problem
+          <Save className="w-5 h-5" />
+          Save Problem
         </button>
 
         {message && (
-          <p className="text-center text-green-600 font-semibold">{message}</p>
+          <div className={`p-4 rounded-xl text-center font-bold ${message.includes("Error") ? "bg-red-500/10 text-red-400 border border-red-500/20" : "bg-green-500/10 text-green-400 border border-green-500/20"}`}>
+            {message}
+          </div>
         )}
       </div>
     </div>
