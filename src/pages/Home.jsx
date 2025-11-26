@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../api/index.js";
 import ProblemCard from "../components/ProblemCard";
 import ProblemFilters from "../components/ProblemFilters";
-import Calendar from "../components/Calendar.jsx";
+import Calendar from "../components/Calendar";
 
 export default function Home() {
   const [filters, setFilters] = useState({
