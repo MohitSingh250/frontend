@@ -4,7 +4,6 @@ import ProblemCard from "../components/ProblemCard";
 import ProblemFilters from "../components/ProblemFilters";
 import Calendar from "../components/Calendar.jsx";
 
-
 export default function Home() {
   const [filters, setFilters] = useState({
     q: "",
