@@ -39,7 +39,7 @@ export default function ContestList() {
   ];
 
   return (
-    <div className="min-h-screen pb-20 font-sans bg-[var(--raisin-black)] text-[var(--white)] selection:bg-[var(--dark-pastel-green)]/30 relative">
+    <div className="min-h-screen pb-20 font-sans bg-[var(--raisin-black)] text-[var(--white)] selection:bg-[var(--dark-pastel-green)]/30 relative transition-colors duration-300">
       
       {/* 1. HERO SECTION WITH BACKGROUND IMAGE */}
       <div className="relative w-full h-[500px] flex flex-col items-center justify-center text-center overflow-hidden">
@@ -61,13 +61,11 @@ export default function ContestList() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative z-10 px-4 max-w-4xl mx-auto mt-10"
         >
-
-          
-          <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-white mb-6 drop-shadow-2xl" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-[var(--white)] mb-6 drop-shadow-2xl" style={{ fontFamily: "'Playfair Display', serif" }}>
             Contests
           </h1>
           
-          <p className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="text-xl md:text-2xl text-[var(--white)]/80 max-w-2xl mx-auto leading-relaxed font-light">
             Compete in weekly challenges to prove your skills and climb the global leaderboard.
           </p>
         </motion.div>
@@ -75,7 +73,7 @@ export default function ContestList() {
 
       {/* Tab Navigation (Centered & Floating) */}
       <div className="relative z-20 -mt-12 mb-16 flex justify-center px-4">
-        <div className="p-1.5 rounded-full bg-[#1e2022]/90 border border-white/10 backdrop-blur-xl shadow-2xl flex items-center gap-1">
+        <div className="p-1.5 rounded-full bg-[var(--glass-bg)] border border-[var(--glass-border)] backdrop-blur-xl shadow-2xl flex items-center gap-1">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
             const Icon = tab.icon;
@@ -84,13 +82,13 @@ export default function ContestList() {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`relative px-8 py-3 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 flex items-center gap-2.5 ${
-                  isActive ? "text-[var(--raisin-black)]" : "text-white/60 hover:text-white"
+                  isActive ? "text-[var(--raisin-black)]" : "text-[var(--text-secondary)] hover:text-[var(--white)]"
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeTab"
-                    className="absolute inset-0 bg-white rounded-full shadow-lg"
+                    className="absolute inset-0 bg-[var(--white)] rounded-full shadow-lg"
                     transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
                   />
                 )}
@@ -133,16 +131,16 @@ export default function ContestList() {
 
 function SkeletonContestCard() {
   return (
-    <div className="h-[320px] rounded-3xl bg-[#1e2022]/50 border border-white/5 overflow-hidden relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer" />
-      <div className="h-40 bg-white/5" />
+    <div className="h-[320px] rounded-3xl bg-[var(--card-bg)] border border-[var(--card-border)] overflow-hidden relative">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--white)]/5 to-transparent animate-shimmer" />
+      <div className="h-40 bg-[var(--white)]/5" />
       <div className="p-6 space-y-4">
-        <div className="h-6 w-3/4 bg-white/10 rounded-lg" />
+        <div className="h-6 w-3/4 bg-[var(--white)]/10 rounded-lg" />
         <div className="flex gap-2">
-          <div className="h-4 w-20 bg-white/5 rounded-full" />
-          <div className="h-4 w-20 bg-white/5 rounded-full" />
+          <div className="h-4 w-20 bg-[var(--white)]/5 rounded-full" />
+          <div className="h-4 w-20 bg-[var(--white)]/5 rounded-full" />
         </div>
-        <div className="h-10 w-full bg-white/5 rounded-xl mt-4" />
+        <div className="h-10 w-full bg-[var(--white)]/5 rounded-xl mt-4" />
       </div>
     </div>
   );
@@ -150,12 +148,12 @@ function SkeletonContestCard() {
 
 function EmptyState({ tab }) {
   return (
-    <div className="col-span-full py-32 text-center rounded-3xl border border-dashed border-white/10 bg-white/[0.02]">
-      <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-6">
-        <Filter className="w-10 h-10 text-white/20" />
+    <div className="col-span-full py-32 text-center rounded-3xl border border-dashed border-[var(--card-border)] bg-[var(--card-bg)]/50">
+      <div className="w-20 h-20 rounded-full bg-[var(--white)]/5 flex items-center justify-center mx-auto mb-6">
+        <Filter className="w-10 h-10 text-[var(--text-secondary)]" />
       </div>
-      <h3 className="text-xl font-bold text-white/80 mb-2">No {tab} contests found</h3>
-      <p className="text-white/40 max-w-md mx-auto">
+      <h3 className="text-xl font-bold text-[var(--white)]/80 mb-2">No {tab} contests found</h3>
+      <p className="text-[var(--text-secondary)] max-w-md mx-auto">
         We couldn't find any contests in this category. Check back later or try a different filter.
       </p>
     </div>

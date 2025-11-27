@@ -24,6 +24,7 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.9.3",
     "react-tooltip": "^5.30.0",
+    "recharts": "^3.5.0",
     "rehype-katex": "^7.0.1"
   },
   "devDependencies": {

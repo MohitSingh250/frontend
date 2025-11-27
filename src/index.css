@@ -15,19 +15,54 @@
   --alert-red: #F53838; /* error */
   --orbit-border: rgba(44, 188, 93, 0.3); /* border */
   --orbit-shadow: rgba(0, 0, 0, 0.3);
+  
+  /* Semantic Variables */
+  --card-bg: #1e2022;
+  --card-border: rgba(255, 255, 255, 0.1);
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --hero-overlay: rgba(11, 10, 10, 0.8);
+  /* Contest Card Variables (Dark) */
+  --card-weekly-bg: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(34, 211, 238, 0.2));
+  --card-weekly-border: rgba(59, 130, 246, 0.3);
+  --card-weekly-icon: #67e8f9;
+  --card-weekly-glow: rgba(34, 211, 238, 0.3);
+  
+  --card-biweekly-bg: linear-gradient(135deg, rgba(5, 150, 105, 0.2), rgba(132, 204, 22, 0.2));
+  --card-biweekly-border: rgba(16, 185, 129, 0.3);
+  --card-biweekly-icon: #bef264;
+  --card-biweekly-glow: rgba(163, 230, 53, 0.3);
 }
 
 :root[data-theme="light"] {
-  --raisin-black: #FBFBFB;
-  --dark-slate-gray: #E5E5E5;
-  --white: #282828;
+  --raisin-black: #F5F7FA; /* Light gray bg */
+  --dark-slate-gray: #FFFFFF; /* White card bg */
+  --white: #1A1A1A; /* Dark text */
   --dark-pastel-green: #2CBC5D;
   --aqua: #1BBBBA;
   --orange-peel: #FFA218;
   --spanish-orange: #E96F1E;
   --alert-red: #F53838;
-  --orbit-border: rgba(44, 188, 93, 0.4);
-  --orbit-shadow: rgba(0, 0, 0, 0.08);
+  --orbit-border: rgba(44, 188, 93, 0.2);
+  --orbit-shadow: rgba(0, 0, 0, 0.05);
+
+  /* Semantic Variables */
+  --card-bg: #FFFFFF;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --text-secondary: rgba(0, 0, 0, 0.5);
+  --hero-overlay: rgba(255, 255, 255, 0.6);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.05);
+
+  /* Contest Card Variables (Light) */
+  --card-weekly-bg: linear-gradient(135deg, rgba(219, 234, 254, 0.8), rgba(207, 250, 254, 0.8));
+  --card-weekly-border: rgba(59, 130, 246, 0.2);
+  --card-weekly-icon: #0284c7;
+  --card-weekly-glow: rgba(34, 211, 238, 0.1);
+
+  --card-biweekly-bg: linear-gradient(135deg, rgba(209, 250, 229, 0.8), rgba(236, 252, 203, 0.8));
+  --card-biweekly-border: rgba(16, 185, 129, 0.2);
+  --card-biweekly-icon: #15803d;
+  --card-biweekly-glow: rgba(163, 230, 53, 0.1);
 }
 
 /* 4️⃣ Base UI */

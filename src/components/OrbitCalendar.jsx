@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Check, CalendarDays } from "lucide-react";
+import { Check, CalendarDays, X } from "lucide-react";
 import api from "../api";
 
-const Calendar = () => {
+const Calendar = ({ isMobileModal = false, onClose }) => {
   const [today] = useState(new Date());
   const [dailyProblem, setDailyProblem] = useState(null);
   const [solvedDays, setSolvedDays] = useState(new Set());
   const [streak, setStreak] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const [expanded, setExpanded] = useState(false);
 
   const getDateKey = (date) => date.toLocaleDateString("en-CA");
 
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 1024);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,30 +56,7 @@ const Calendar = () => {
     daysArray.push(d);
   }
 
-  // 📱 Floating Icon on Mobile
-  if (isMobile && !expanded) {
-    return (
-      <div
-        onClick={() => setExpanded(true)}
-        className="
-          fixed bottom-6 right-6 z-50 flex flex-col items-center justify-center 
-          bg-[var(--dark-slate-gray)]/90 border border-[var(--dark-pastel-green)]/30
-          rounded-full w-16 h-16 shadow-lg backdrop-blur-md 
-          hover:scale-105 transition-all cursor-pointer
-        "
-      >
-        <CalendarDays
-          className="text-[var(--dark-pastel-green)] w-8 h-8 animate-pulse"
-          strokeWidth={1.5}
-        />
-        {streak && (
-          <span className="absolute -top-2 -right-2 bg-[var(--orange-peel)] text-[var(--white)] text-xs font-bold px-2 py-0.5 rounded-full shadow">
-            {streak.currentStreak}
-          </span>
-        )}
-      </div>
-    );
-  }
+
 
   // 🗓️ Calendar Grid Renderer
   const renderDays = () => (
@@ -137,40 +107,37 @@ const Calendar = () => {
     </div>
   );
 
-  // 🖥 Desktop and 📱 Expanded View
-  return (
-    <>
-      {isMobile && expanded && (
+  // 📱 Mobile Modal View
+  if (isMobileModal) {
+    return (
+      <>
         <div
-          onClick={() => setExpanded(false)}
-          className="fixed inset-0 bg-black/50 backdrop-blur-[2px] z-40"
+          onClick={onClose}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
         />
-      )}
-
-      {isMobile ? (
         <div
-          className={`
-            fixed bottom-0 left-0 w-full z-50 bg-[var(--dark-slate-gray)]/95
-            text-[var(--white)] rounded-t-3xl border-t border-[var(--dark-pastel-green)]/30
-            shadow-xl transition-transform duration-300 ease-out
-            ${expanded ? "translate-y-0" : "translate-y-full"}
-          `}
-          style={{ maxHeight: "90vh" }}
+          className="
+            fixed bottom-0 left-0 w-full z-50 bg-[var(--dark-slate-gray)]
+            text-[var(--white)] rounded-t-3xl border-t border-[var(--card-border)]
+            shadow-2xl animate-slide-up
+          "
+          style={{ maxHeight: "85vh" }}
         >
-          <div className="relative p-5 overflow-y-auto">
+          <div className="relative p-6 overflow-y-auto">
             <button
-              onClick={() => setExpanded(false)}
-              className="absolute top-2 right-4 text-[var(--white)]/50 hover:text-[var(--aqua)] text-lg"
+              onClick={onClose}
+              className="absolute top-4 right-4 p-2 bg-[var(--raisin-black)] rounded-full text-[var(--text-secondary)] hover:text-[var(--white)]"
             >
-              ✕
+              <X size={20} />
             </button>
 
-            <h2 className="text-lg font-semibold mb-4 text-center">
+            <h2 className="text-xl font-bold mb-6 text-center flex items-center justify-center gap-2">
+              <CalendarDays className="text-[var(--orange-peel)]" />
               {today.toLocaleString("default", { month: "long" })} {today.getFullYear()}
             </h2>
 
             {/* Weekdays */}
-            <div className="grid grid-cols-7 gap-2 text-center text-sm text-[var(--white)]/50 mb-2">
+            <div className="grid grid-cols-7 gap-2 text-center text-sm font-medium text-[var(--text-secondary)] mb-3">
               {["S", "M", "T", "W", "T", "F", "S"].map((d) => (
                 <div key={d}>{d}</div>
               ))}
@@ -179,16 +146,22 @@ const Calendar = () => {
             {renderDays()}
 
             {streak && (
-              <div className="mt-4 text-sm text-center">
-                <span className="text-[var(--white)]/60">Streak: </span>
-                <span className="text-[var(--dark-pastel-green)] font-semibold">
-                  {streak.currentStreak} days
+              <div className="mt-6 flex items-center justify-center gap-3 bg-[var(--raisin-black)] p-3 rounded-xl border border-[var(--card-border)]">
+                <span className="text-[var(--text-secondary)] text-sm">Current Streak:</span>
+                <span className="text-[var(--dark-pastel-green)] font-bold text-lg">
+                  {streak.currentStreak} days 🔥
                 </span>
               </div>
             )}
           </div>
         </div>
-      ) : (
+      </>
+    );
+  }
+
+  // 🖥 Desktop Widget View
+  return (
+    <>
         <div
           className="
             bg-[var(--dark-slate-gray)]/80 text-[var(--white)] 
@@ -214,8 +187,6 @@ const Calendar = () => {
           {renderDays()}
         </div>
         
-      )}
-
           {streak && (
             <div className="mt-4 text-sm text-center">
               <span className="text-[var(--white)]/60">Streak: </span>
