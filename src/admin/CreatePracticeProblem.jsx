@@ -7,6 +7,7 @@ export default function CreatePracticeProblem() {
   const [form, setForm] = useState({
     title: "",
     statement: "",
+    subject: "Physics",
     topics: [],
     tags: [],
     difficulty: "medium",
@@ -65,6 +66,7 @@ export default function CreatePracticeProblem() {
       setForm({
         title: "",
         statement: "",
+        subject: "Physics",
         topics: [],
         tags: [],
         difficulty: "medium",
@@ -108,6 +110,19 @@ export default function CreatePracticeProblem() {
               placeholder="e.g. Rotational Dynamics"
               onChange={handleChange}
             />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Subject</label>
+            <select
+              className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--dark-pastel-green)]/50 transition-colors appearance-none"
+              name="subject"
+              value={form.subject}
+              onChange={handleChange}
+            >
+              <option value="Physics">Physics</option>
+              <option value="Chemistry">Chemistry</option>
+              <option value="Maths">Maths</option>
+            </select>
           </div>
           <div className="space-y-2">
             <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Difficulty</label>

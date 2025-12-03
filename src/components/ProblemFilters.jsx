@@ -20,10 +20,10 @@ export default function ProblemFilters({ filters, setFilters }) {
          {topics.map((t) => (
             <button
                key={t.id}
-               onClick={() => setFilters(prev => ({ ...prev, topic: t.id === 'all' ? '' : t.id }))}
+               onClick={() => setFilters(prev => ({ ...prev, subject: t.id === 'all' ? '' : t.label }))}
                className={`
                   flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-all border
-                  ${(filters.topic === t.id || (t.id === 'all' && !filters.topic))
+                  ${(filters.subject === t.label || (t.id === 'all' && !filters.subject))
                      ? 'bg-[var(--white)] text-[var(--raisin-black)] border-[var(--white)] shadow-md' 
                      : 'bg-[var(--card-bg)] text-[var(--text-secondary)] border-[var(--card-border)] hover:bg-[var(--white)]/10 hover:text-[var(--white)]'}
                `}

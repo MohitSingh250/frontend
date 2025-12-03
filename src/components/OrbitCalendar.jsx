@@ -138,8 +138,8 @@ const Calendar = ({ isMobileModal = false, onClose }) => {
 
             {/* Weekdays */}
             <div className="grid grid-cols-7 gap-2 text-center text-sm font-medium text-[var(--text-secondary)] mb-3">
-              {["S", "M", "T", "W", "T", "F", "S"].map((d) => (
-                <div key={d}>{d}</div>
+              {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
+                <div key={`${d}-${i}`}>{d}</div>
               ))}
             </div>
 
@@ -179,8 +179,8 @@ const Calendar = ({ isMobileModal = false, onClose }) => {
           </div>
 
           <div className="grid grid-cols-7 gap-2 text-center text-sm text-[var(--white)]/50 mb-2">
-            {["S", "M", "T", "W", "T", "F", "S"].map((d) => (
-              <div key={d}>{d}</div>
+            {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
+              <div key={`${d}-${i}`}>{d}</div>
             ))}
           </div>
 

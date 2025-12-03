@@ -11,6 +11,7 @@ import { Loader2 } from "lucide-react";
 export default function Home() {
   const [filters, setFilters] = useState({
     q: "",
+    subject: "",
     topic: "",
     difficulty: "",
   });
@@ -42,7 +43,17 @@ export default function Home() {
 
       const params = { ...filters, page, limit: pageSize };
       const res = await api.get("/problems", { params });
-      const data = res.data || [];
+      
+      let data = [];
+      let total = 0;
+
+      // Handle both old (array) and new (object) response formats
+      if (Array.isArray(res.data)) {
+        data = res.data;
+      } else if (res.data && Array.isArray(res.data.problems)) {
+        data = res.data.problems;
+        total = res.data.total;
+      }
 
       if (Array.isArray(data)) {
         setLoadedData((prev) =>
