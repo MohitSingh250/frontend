@@ -83,34 +83,36 @@ export default function ProblemFilters({ filters, setFilters }) {
   return (
     <div className="space-y-4 mb-4">
       {/* JEE Topics Row */}
-      <div className="flex flex-wrap gap-3 text-xs text-[var(--text-secondary)]">
-         {displayTopics.map((topic) => (
-           <button
-             key={topic.id}
-             onClick={() => handleTopicClick(topic.id)}
-             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer ${
-               filters.topic === topic.id
-                 ? "bg-[var(--brand-orange)] text-white"
-                 : "hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]"
-             }`}
-           >
-             {topic.label}
-             <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
-               filters.topic === topic.id
-                 ? "bg-white/20"
-                 : "bg-[var(--bg-tertiary)]"
-             }`}>
-               {topic.count}
-             </span>
-           </button>
-         ))}
-         <button 
-           onClick={() => setShowAllTopics(!showAllTopics)}
-           className="flex items-center gap-1 hover:text-[var(--text-primary)] cursor-pointer px-2 py-1"
-         >
-           {showAllTopics ? "Show Less" : "Expand"} 
-           {showAllTopics ? <ChevronUp size={12}/> : <ChevronDown size={12}/>}
-         </button>
+      <div className="flex items-center gap-2 text-sm text-white font-medium">
+        <div className={`flex gap-4 flex-1 ${showAllTopics ? 'flex-wrap' : 'overflow-hidden max-h-[32px]'}`}>
+           {displayTopics.map((topic) => (
+             <button
+               key={topic.id}
+               onClick={() => handleTopicClick(topic.id)}
+               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer whitespace-nowrap ${
+                 filters.topic === topic.id
+                   ? "bg-[var(--brand-orange)] text-white"
+                   : "text-white/90 hover:text-white hover:bg-[var(--bg-tertiary)]"
+               }`}
+             >
+               {topic.label}
+               <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
+                 filters.topic === topic.id
+                   ? "bg-white/20"
+                   : "bg-[var(--bg-tertiary)]"
+               }`}>
+                 {topic.count}
+               </span>
+             </button>
+           ))}
+        </div>
+        <button 
+          onClick={() => setShowAllTopics(!showAllTopics)}
+          className="flex items-center gap-1 hover:text-[var(--text-primary)] cursor-pointer px-2 py-1 whitespace-nowrap shrink-0"
+        >
+          {showAllTopics ? "Show Less" : "Expand"} 
+          {showAllTopics ? <ChevronUp size={12}/> : <ChevronDown size={12}/>}
+        </button>
       </div>
 
       {/* Subject Pills */}
@@ -119,7 +121,7 @@ export default function ProblemFilters({ filters, setFilters }) {
           <button
             key={sub.id}
             onClick={() => setFilters({ ...filters, subject: sub.id, page: 1 })}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 shadow-sm ${
+            className={`px-5 py-2.5 rounded-full text-base font-medium transition-all flex items-center gap-2 shadow-sm ${
               filters.subject === sub.id
                 ? "bg-white text-black"
                 : "bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]/80 hover:text-[var(--text-primary)]"
@@ -133,7 +135,7 @@ export default function ProblemFilters({ filters, setFilters }) {
 
       {/* Search & Secondary Filters */}
       <div className="flex gap-3 items-center">
-        <div className="relative flex-1">
+        <div className="relative max-w-[240px]">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]" size={16} />
           <input
             type="text"

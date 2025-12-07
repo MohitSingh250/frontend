@@ -16,8 +16,8 @@
   --bg-overlay: rgba(0, 0, 0, 0.6);
   
   /* Text */
-  --text-primary: #DAE0DE; /* Main text (almost white) */
-  --text-secondary: #b7b9bc; /* Subtitles, meta info (light gray) */
+  --text-primary: #FFFFFF; /* Pure white like LeetCode */
+  --text-secondary: #eff1f6bf; /* Light gray */
   --text-tertiary: #8a8a8a; /* Disabled, placeholders */
   --text-inverse: #1a1a1a;
   
@@ -100,6 +100,7 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 15px; /* LeetCode base font size */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
