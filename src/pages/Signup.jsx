@@ -28,117 +28,69 @@ export default function Signup() {
   };
 
   return (
-    <div
-      className="
-        flex items-center justify-center min-h-screen
-        bg-[var(--raisin-black)] text-[var(--white)]
-        px-4
-      "
-    >
-      <div
-        className="
-          w-full max-w-md
-          bg-[var(--dark-slate-gray)]/80 backdrop-blur-md
-          border border-[var(--spanish-orange)]/20
-          rounded-2xl shadow-[0_0_25px_rgba(233,111,30,0.08)]
-          p-8 sm:p-10
-          transition-all duration-300
-        "
-      >
-        {/* Header */}
-        <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-[var(--white)]">
-          Create Account
-        </h2>
-        <p className="text-sm text-center text-[var(--white)]/60 mb-6">
-          Start your JEE Physics problem-solving journey 🚀
-        </p>
-
-        {/* Error */}
-        {err && (
-          <div
-            className="
-              p-3 mb-5 text-sm font-medium rounded-lg
-              bg-[var(--spanish-orange)]/10
-              text-[var(--spanish-orange)]
-              border border-[var(--spanish-orange)]/40
-            "
-          >
-            {err}
+    <div className="min-h-screen w-full flex items-center justify-center bg-[var(--bg-primary)]">
+      
+      <div className="w-full max-w-[400px] mx-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl shadow-sm p-8">
+          
+          <div className="text-center mb-8">
+             <div className="flex justify-center mb-4">
+                <img src="/orbit-logo.png" alt="Orbit" className="h-10 w-10 opacity-80" /> 
+             </div>
+             <h1 className="text-2xl font-semibold text-[var(--text-primary)] mb-2">
+                Create Account
+             </h1>
           </div>
-        )}
 
-        {/* Form */}
-        <form onSubmit={submit} className="space-y-4">
-          <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-            className="
-              w-full px-4 py-2.5 rounded-lg
-              bg-[var(--raisin-black)]/60
-              border border-[var(--spanish-orange)]/20
-              text-[var(--white)]
-              placeholder-[var(--white)]/40
-              focus:outline-none focus:border-[var(--orange-peel)]
-              transition-all duration-200
-            "
-          />
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            className="
-              w-full px-4 py-2.5 rounded-lg
-              bg-[var(--raisin-black)]/60
-              border border-[var(--spanish-orange)]/20
-              text-[var(--white)]
-              placeholder-[var(--white)]/40
-              focus:outline-none focus:border-[var(--orange-peel)]
-              transition-all duration-200
-            "
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="
-              w-full px-4 py-2.5 rounded-lg
-              bg-[var(--raisin-black)]/60
-              border border-[var(--spanish-orange)]/20
-              text-[var(--white)]
-              placeholder-[var(--white)]/40
-              focus:outline-none focus:border-[var(--orange-peel)]
-              transition-all duration-200
-            "
-          />
+          {err && (
+            <div className="mb-6 p-3 rounded bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center">
+              {err}
+            </div>
+          )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="
-              w-full py-2.5 rounded-lg font-semibold
-              bg-[var(--spanish-orange)]
-              text-white
-              hover:bg-[var(--orange-peel)]
-              hover:shadow-[0_0_10px_rgba(255,162,24,0.3)]
-              transition-all duration-200
-              disabled:opacity-50 disabled:cursor-not-allowed
-            "
-          >
-            {loading ? "Signing up..." : "Sign Up"}
-          </button>
-        </form>
+          <form onSubmit={submit} className="space-y-4">
+            <div className="space-y-1">
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full px-3 py-2.5 rounded bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] text-sm focus:outline-none focus:border-[var(--text-secondary)] transition-colors"
+                placeholder="Username"
+              />
+            </div>
 
-        {/* Footer */}
-        <div className="mt-6 text-center text-sm text-[var(--white)]/60">
-          Already have an account?{" "}
-          <a
-            href="/login"
-            className="text-[var(--orange-peel)] hover:text-[var(--spanish-orange)] font-medium transition"
-          >
-            Log in
-          </a>
+            <div className="space-y-1">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2.5 rounded bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] text-sm focus:outline-none focus:border-[var(--text-secondary)] transition-colors"
+                placeholder="Email address"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2.5 rounded bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] text-sm focus:outline-none focus:border-[var(--text-secondary)] transition-colors"
+                placeholder="Password"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-2.5 rounded bg-white text-black font-medium text-sm hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Creating Account..." : "Sign Up"}
+            </button>
+            
+            <div className="flex justify-center text-xs mt-4">
+               <span className="text-[var(--text-secondary)]">Already have an account? </span>
+               <a href="/login" className="ml-1 text-[var(--text-primary)] font-medium hover:underline">Sign In</a>
+            </div>
+          </form>
         </div>
       </div>
     </div>

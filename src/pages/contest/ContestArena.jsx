@@ -197,7 +197,11 @@ export default function ContestArena() {
 
           {/* Desktop Quit Button */}
           <button 
-            onClick={() => navigate(`/contest/${contestId}`)} 
+            onClick={() => {
+              if (window.confirm("Are you sure you want to quit? Your progress will be saved locally but not submitted.")) {
+                navigate(`/contest/${contestId}`);
+              }
+            }} 
             className={`hidden md:flex group items-center gap-2 text-sm font-bold ${themeStyles.mutedText} hover:text-red-500 transition-colors px-4 py-2 rounded-lg hover:bg-red-500/10`}
           >
             <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" /> Quit

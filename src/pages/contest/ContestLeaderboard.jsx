@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api";
 import { motion } from "framer-motion";
-import { Trophy, Medal, Timer, Target, ArrowLeft, Crown, TrendingUp, Search, RefreshCw } from "lucide-react";
+import { Timer, Target, ArrowLeft, Crown, TrendingUp, Search, RefreshCw } from "lucide-react";
 
 export default function ContestLeaderboard() {
   const { contestId } = useParams();
@@ -12,7 +12,7 @@ export default function ContestLeaderboard() {
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
 
-  const fetchLeaderboard = () => {
+  const fetchLeaderboard = useCallback(() => {
     setLoading(true);
     setError(null);
     api.get(`/leaderboards/${contestId}`)
@@ -25,11 +25,11 @@ export default function ContestLeaderboard() {
         setError(err.response?.data?.message || "Failed to load data");
       })
       .finally(() => setLoading(false));
-  };
+  }, [contestId]);
 
   useEffect(() => {
     fetchLeaderboard();
-  }, [contestId]);
+  }, [fetchLeaderboard]);
 
   const filteredBoard = board.filter(u => 
     (u.user?.username || "Unknown User").toLowerCase().includes(search.toLowerCase())

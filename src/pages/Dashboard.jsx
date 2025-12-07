@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import api from "../api";
 import ActivityHeatmap from "../components/ActivityHeatmap";
 import EditProfileModal from "../components/EditProfileModal";
+import SolvedProblemsChart from "../components/Dashboard/SolvedProblemsChart";
+import ContestRatingGraph from "../components/Dashboard/ContestRatingGraph";
+import { MapPin, Edit2, Github, Linkedin, Globe, Award, CheckCircle2, Info } from "lucide-react";
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
@@ -22,6 +26,11 @@ export default function Dashboard() {
           username: me.data.username,
           location: me.data.location,
           avatar: me.data.avatar,
+          about: me.data.about,
+          website: me.data.website,
+          github: me.data.github,
+          linkedin: me.data.linkedin,
+          skills: me.data.skills || [],
         });
         setStreak(streak.data);
       } catch (err) {
@@ -30,298 +39,301 @@ export default function Dashboard() {
     };
     fetchData();
   }, []);
-  console.log(data);
-
 
   if (!data)
     return (
-      <div className="flex justify-center items-center h-64 text-[var(--white)]/50">
+      <div className="flex justify-center items-center h-screen text-[var(--text-secondary)]">
         Loading dashboard...
       </div>
     );
 
-  const hasSolvedProblems =
-    data.solvedProblems && data.solvedProblems.length > 0;
-  const hasValidDates =
-    hasSolvedProblems && data.solvedProblems.some((p) => p.solvedAt);
+  const hasSolvedProblems = data.solvedProblems && data.solvedProblems.length > 0;
+  const hasValidDates = hasSolvedProblems && data.solvedProblems.some((p) => p.solvedAt);
 
   return (
-    <div className="min-h-screen bg-[var(--raisin-)] text-[var(--white)]">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6 p-6">
-        {/* ---------- Sidebar ---------- */}
-        <aside className="lg:col-span-1 space-y-6">
-          {/* Profile */}
-          <div className="bg-[var(--dark-slate-gray)]/80 rounded-2xl border border-[var(--dark-pastel-green)]/15 p-5 shadow-md backdrop-blur-md">
-            <div className="flex items-center space-x-3">
-              <img
-                src={data.avatar || "https://via.placeholder.com/80"}
-                alt="avatar"
-                className="w-16 h-16 rounded-full border border-[var(--dark-pastel-green)]/30 shadow-sm"
-              />
-              <div>
-                <h2 className="font-semibold text-[var(--white)]">
-                  {data.username}
-                </h2>
-                <p className="text-sm text-[var(--white)]/60">
-                  Rating: {data.rating || 0}
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={() => setShowEdit(true)}
-              className="
-                w-full mt-4 py-2 
-                 bg-[var(--dark-pastel-green)]/40
-                hover:opacity-90 rounded-lg font-medium text-[var(--dark-pastel-green)]
-                transition shadow-[0_0_10px_rgba(44,188,93,0.25)]
-              "
-            >
-              Edit Profile
-            </button>
-            <p className="mt-3 text-[var(--white)]/50 text-sm">
-              📍 {data.location || "Unknown"}
-            </p>
-          </div>
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] pb-20">
+      <div className="max-w-[1200px] mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        {/* ================= LEFT COLUMN (Profile) ================= */}
+        <aside className="lg:col-span-4 space-y-4">
+          
+          {/* Profile Card */}
+          <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] p-6 shadow-sm relative overflow-hidden">
+             <div className="flex items-start gap-4">
+                <div className="relative">
+                   <img
+                     src={data.avatar || "https://via.placeholder.com/100"}
+                     alt="avatar"
+                     className="w-20 h-20 rounded-xl border-2 border-[var(--bg-tertiary)] object-cover"
+                   />
+                </div>
+                <div className="flex-1 min-w-0">
+                   <h2 className="text-xl font-bold truncate">{data.username}</h2>
+                   <p className="text-sm text-[var(--text-secondary)]">Rank {data.globalRank || "N/A"}</p>
+                   {data.location && (
+                      <div className="flex items-center gap-1 text-xs text-[var(--text-tertiary)] mt-1">
+                         <MapPin size={12} />
+                         <span>{data.location}</span>
+                      </div>
+                   )}
+                </div>
+             </div>
 
-          {/* Streak Section */}
-          {streak && (
-            <div className="bg-[var(--dark-slate-gray)]/80 rounded-2xl border border-[var(--dark-pastel-green)]/15 p-5 shadow-md backdrop-blur-md">
-              <h3 className="text-[var(--white)]/80 font-medium mb-3 flex items-center">
-                Streak
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-[var(--white)]/60">
-                    Current Streak
-                  </span>
-                  <span className="text-2xl font-bold text-[var(--spanish-orange)]">
-                    {streak.currentStreak}
-                  </span>
+             <div className="mt-4 space-y-2">
+                {data.about && <p className="text-sm text-[var(--text-secondary)] line-clamp-3">{data.about}</p>}
+                
+                <div className="flex gap-3 pt-2">
+                   {data.github && <a href={data.github} target="_blank" className="text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"><Github size={18} /></a>}
+                   {data.linkedin && <a href={data.linkedin} target="_blank" className="text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"><Linkedin size={18} /></a>}
+                   {data.website && <a href={data.website} target="_blank" className="text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"><Globe size={18} /></a>}
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-[var(--white)]/60">
-                    Longest Streak
-                  </span>
-                  <span className="text-lg font-semibold text-[var(--orange-peel)]">
-                    {streak.longestStreak}
-                  </span>
-                </div>
-                {streak.lastSolvedAt && (
-                  <div className="text-xs text-[var(--white)]/40 mt-2">
-                    Last solved:{" "}
-                    {new Date(streak.lastSolvedAt).toLocaleDateString()}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+             </div>
+
+             <button
+               onClick={() => setShowEdit(true)}
+               className="w-full mt-6 py-2 rounded-lg bg-[#2cbb5d]/10 text-[#2cbb5d] hover:bg-[#2cbb5d]/20 text-sm font-bold transition-colors flex items-center justify-center gap-2"
+             >
+               Edit Profile
+             </button>
+          </div>
 
           {/* Community Stats */}
-          <div className="bg-[var(--dark-slate-gray)]/80 rounded-2xl border border-[var(--dark-pastel-green)]/15 p-5 shadow-md backdrop-blur-md">
-            <h3 className="text-[var(--white)]/80 font-medium mb-3">
-              Community Stats
-            </h3>
-            {["Views", "Solution", "Discuss", "Reputation"].map((stat) => (
-              <div key={stat} className="flex justify-between text-sm py-1">
-                <span className="text-[var(--white)]/70">{stat}</span>
-                <span className="text-[var(--white)]/50">0</span>
+          <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] p-4 shadow-sm">
+            <h3 className="text-xs font-bold text-[var(--text-secondary)] mb-4 uppercase tracking-wider">Community Stats</h3>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                 <div className="text-blue-500"><Globe size={16} /></div>
+                 <div className="flex-1 flex justify-between items-center">
+                    <span className="text-sm text-[var(--text-secondary)]">Views</span>
+                    <span className="text-sm font-medium text-[var(--text-primary)]">{data.views || 0}</span>
+                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Topic Performance */}
-          {data.topicStats && Object.keys(data.topicStats).length > 0 && (
-            <div className="bg-[var(--dark-slate-gray)]/80 rounded-2xl border border-[var(--dark-pastel-green)]/15 p-5 shadow-md backdrop-blur-md">
-              <h3 className="text-[var(--white)]/80 font-medium mb-4">
-                Topic Performance
-              </h3>
-              <div className="space-y-3">
-                {Object.entries(data.topicStats)
-                  .sort((a, b) => b[1].accuracy - a[1].accuracy)
-                  .slice(0, 8)
-                  .map(([topic, stats]) => (
-                    <div
-                      key={topic}
-                      className="flex items-center justify-between"
-                    >
-                      <span className="text-sm text-[var(--white)]/70">
-                        {topic}
-                      </span>
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs text-[var(--white)]/50">
-                          {stats.correct}/{stats.attempts}
-                        </span>
-                        <span className="text-sm font-semibold text-[var(--dark-pastel-green)] w-12 text-right">
-                          {stats.accuracy}%
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+              <div className="flex items-center gap-3">
+                 <div className="text-blue-500"><CheckCircle2 size={16} /></div>
+                 <div className="flex-1 flex justify-between items-center">
+                    <span className="text-sm text-[var(--text-secondary)]">Solutions</span>
+                    <span className="text-sm font-medium text-[var(--text-primary)]">{data.solutions || 0}</span>
+                 </div>
+              </div>
+              <div className="flex items-center gap-3">
+                 <div className="text-green-500"><Github size={16} /></div>
+                 <div className="flex-1 flex justify-between items-center">
+                    <span className="text-sm text-[var(--text-secondary)]">Discuss</span>
+                    <span className="text-sm font-medium text-[var(--text-primary)]">{data.discuss || 0}</span>
+                 </div>
+              </div>
+              <div className="flex items-center gap-3">
+                 <div className="text-yellow-500"><Award size={16} /></div>
+                 <div className="flex-1 flex justify-between items-center">
+                    <span className="text-sm text-[var(--text-secondary)]">Reputation</span>
+                    <span className="text-sm font-medium text-[var(--text-primary)]">{data.reputation || 0}</span>
+                 </div>
               </div>
             </div>
-          )}
+          </div>
+
+          {/* Subjects (styled like Languages) */}
+          <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] p-4 shadow-sm">
+             <h3 className="text-xs font-bold text-[var(--text-secondary)] mb-4 uppercase tracking-wider">Subjects</h3>
+             <div className="space-y-2">
+                {data.subjectStats && Object.entries(data.subjectStats).length > 0 ? (
+                   Object.entries(data.subjectStats).map(([subject, stats]) => (
+                      <div key={subject} className="flex justify-between items-center px-3 py-2 rounded-lg bg-[var(--bg-tertiary)]/50 hover:bg-[var(--bg-tertiary)] transition-colors cursor-pointer">
+                         <span className="text-xs font-medium text-[var(--text-primary)]">
+                            {subject}
+                         </span>
+                         <span className="text-xs text-[var(--text-secondary)]">
+                            <span className="font-bold text-[var(--text-primary)] mr-1">{stats.correct}</span>
+                            problems solved
+                         </span>
+                      </div>
+                   ))
+                ) : (
+                   <div className="text-xs text-[var(--text-tertiary)]">No subject data available</div>
+                )}
+             </div>
+          </div>
+
+          {/* Strong Topics (styled like Skills) */}
+          <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] p-4 shadow-sm">
+             <h3 className="text-xs font-bold text-[var(--text-secondary)] mb-4 uppercase tracking-wider">Strong Topics</h3>
+             <div className="flex flex-col gap-2">
+                {data.topicStats && Object.entries(data.topicStats).length > 0 ? (
+                   Object.entries(data.topicStats)
+                     .sort(([, a], [, b]) => b.correct - a.correct) // Sort by most solved
+                     .slice(0, 5) // Show top 5
+                     .map(([topic, stats]) => (
+                      <div key={topic} className="flex items-center gap-2">
+                         <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-tertiary)]"></span>
+                         <span className="text-xs text-[var(--text-secondary)]">{topic}</span>
+                         <span className="text-xs text-[var(--text-tertiary)] ml-auto">x{stats.correct}</span>
+                      </div>
+                   ))
+                ) : (
+                   <div className="text-xs text-[var(--text-tertiary)]">No topics mastered yet</div>
+                )}
+             </div>
+          </div>
+
         </aside>
 
-        {/* ---------- Main Section ---------- */}
-        <main className="lg:col-span-3 space-y-6">
-          {/* Problems Solved */}
-          <div className="bg-[var(--dark-slate-gray)]/80 rounded-2xl border border-[var(--dark-pastel-green)]/15 p-5 shadow-md backdrop-blur-md">
-            <h3 className="text-[var(--white)]/80 font-medium mb-4 text-xl">
-              Problems Solved
-            </h3>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-4xl font-bold text-[var(--dark-pastel-green)]">
-                  {data.totalSolved}
-                </p>
-                <p className="text-sm text-[var(--white)]/60 mt-1">
-                  Total Problems
-                </p>
-              </div>
-              <div className="text-right space-y-2">
-                {[
-                  ["Easy", data.easySolved || 0, "text-[var(--dark-pastel-green)]"],
-                  ["Medium", data.mediumSolved || 0, "text-[var(--orange-peel)]"],
-                  ["Hard", data.hardSolved || 0, "text-[var(--spanish-orange)]"],
-                ].map(([label, value, color]) => (
-                  <div
-                    key={label}
-                    className="flex items-center justify-end space-x-2"
-                  >
-                    <span className="text-sm text-[var(--white)]/60">
-                      {label}:
-                    </span>
-                    <span className={`text-lg font-semibold ${color}`}>
-                      {value}
-                    </span>
+        {/* ================= RIGHT COLUMN (Stats & Activity) ================= */}
+        <main className="lg:col-span-8 space-y-6">
+           
+           {/* Row 1: Mock Test Rating & Top % */}
+           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <Link to="/contests" className="lg:col-span-2 bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] p-6 shadow-sm h-[280px] hover:border-[var(--brand-orange)] transition-colors block">
+                  <ContestRatingGraph 
+                     title="Mock Test Rating"
+                     rating={data.contestRating} 
+                     globalRank={data.globalRank} 
+                     attended={data.attended} 
+                  />
+              </Link>
+              <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] p-6 shadow-sm h-[280px] flex flex-col justify-center items-center relative overflow-hidden">
+                  <div className="absolute top-4 left-4 text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Top</div>
+                  <div className="text-4xl font-black text-[var(--text-primary)] z-10">
+                     {data.percentile ? data.percentile : "0"}%
                   </div>
-                ))}
+                  
+                  {/* Background Bar Chart Effect */}
+                  <div className="absolute bottom-0 left-0 right-0 h-40 flex items-end justify-between px-6 opacity-30">
+                     {[10, 25, 40, 60, 80, 100, 70, 40, 20, 10, 5, 20, 40, 60, 30, 10].map((h, i) => (
+                        <div key={i} className={`w-1.5 rounded-t-sm ${i === 5 ? 'bg-[var(--brand-orange)]' : 'bg-[var(--text-secondary)]'}`} style={{ height: `${h}%` }} />
+                     ))}
+                  </div>
               </div>
-            </div>
-            {data.accuracy !== undefined && (
-              <div className="mt-4 pt-4 border-t border-[var(--dark-pastel-green)]/15">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-[var(--white)]/60">Accuracy</span>
-                  <span className="text-lg font-semibold text-[var(--aqua)]">
-                    {data.accuracy.toFixed(1)}%
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
+           </div>
 
-          {/* Activity Heatmap */}
-          <div className="bg-[var(--dark-slate-gray)]/80 rounded-2xl border border-[var(--dark-pastel-green)]/15 p-5 shadow-md backdrop-blur-md">
-            {hasSolvedProblems && hasValidDates ? (
-              <ActivityHeatmap submissions={data.solvedProblems} />
-            ) : (
-              <div className="text-center py-8">
-                <div className="text-[var(--white)]/50 mb-2">
-                  {!hasSolvedProblems
-                    ? "No problems solved yet. Start solving to see your activity!"
-                    : "No valid date information found for solved problems."}
-                </div>
-                <div className="text-xs text-[var(--white)]/40">
-                  Solve your first problem to start building your streak!
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Contest Rating */}
-          {data.contestRating !== undefined && (
-            <div className="bg-[var(--dark-slate-gray)]/80 rounded-2xl border border-[var(--dark-pastel-green)]/15 p-5 shadow-md backdrop-blur-md">
-              <h3 className="text-[var(--white)]/80 font-medium mb-4">
-                Contest Rating
-              </h3>
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="text-2xl font-bold text-[var(--white)]">
-                    {data.contestRating}
-                  </p>
-                  <p className="text-sm text-[var(--white)]/60">
-                    Global Rank: {data.globalRank}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm text-[var(--white)]/60">
-                    Attended: {data.attended}
-                  </p>
-                  <p className="text-sm text-[var(--white)]/60">
-                    Top {data.percentile || "—"}%
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Recently Solved */}
-          <div className="bg-[var(--dark-slate-gray)]/80 rounded-2xl border border-[var(--dark-pastel-green)]/15 p-5 shadow-md backdrop-blur-md">
-            <h3 className="text-[var(--white)]/80 font-medium mb-4">
-              Recently Solved
-            </h3>
-            <div className="space-y-2">
-              {data.solvedProblems && data.solvedProblems.length > 0 ? (
-                data.solvedProblems
-                  .sort((a, b) => new Date(b.solvedAt) - new Date(a.solvedAt))
-                  .slice(0, 10)
-                  .map((problem) => (
-                    <div
-                      key={problem._id}
-                      className="
-                        flex justify-between items-center 
-                        bg-[var(--raisin-black)]/60 p-3 rounded-lg 
-                        hover:bg-[var(--dark-slate-gray)]/70 transition
-                      "
-                    >
-                      <div className="flex-1">
-                        <span className="text-[var(--white)]">
-                          {problem.title}
-                        </span>
-                        {problem.topics && problem.topics.length > 0 && (
-                          <div className="flex gap-2 mt-1">
-                            {problem.topics.slice(0, 3).map((topic, idx) => (
-                              <span
-                                key={idx}
-                                className="text-xs text-[var(--white)]/50 bg-[var(--dark-slate-gray)]/70 px-2 py-0.5 rounded"
-                              >
-                                {topic}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-3">
-                        {problem.solvedAt && (
-                          <span className="text-xs text-[var(--white)]/40">
-                            {new Date(problem.solvedAt).toLocaleDateString()}
-                          </span>
-                        )}
-                        <span
-                          className={`text-sm font-medium ${
-                            problem.difficulty === "easy"
-                              ? "text-[var(--dark-pastel-green)]"
-                              : problem.difficulty === "medium"
-                              ? "text-[var(--orange-peel)]"
-                              : "text-[var(--spanish-orange)]"
-                          }`}
-                        >
-                          {problem.difficulty}
-                        </span>
-                      </div>
+           {/* Row 2: Solved Problems & Badges */}
+           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              
+              {/* Solved Problems (Circular) */}
+              <Link to="/problems" className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] p-6 shadow-sm hover:border-[var(--brand-orange)] transition-colors group">
+                 <div className="flex items-center gap-8">
+                    <div className="shrink-0 group-hover:scale-105 transition-transform">
+                       <SolvedProblemsChart 
+                          easy={data.easySolved || 0} 
+                          medium={data.mediumSolved || 0} 
+                          hard={data.hardSolved || 0} 
+                          total={data.totalSolved || 0} 
+                       />
                     </div>
-                  ))
+                    <div className="flex-1 space-y-4">
+                       <div className="flex justify-between items-center p-2 rounded bg-[var(--bg-tertiary)]/30">
+                          <span className="text-xs font-bold text-[var(--color-easy)] w-12">Easy</span>
+                           <span className="text-sm font-bold text-[var(--text-primary)]">
+                              {data.easySolved || 0}<span className="text-[var(--text-tertiary)] font-normal text-xs ml-1">/{data.totalEasy || 0}</span>
+                           </span>
+                       </div>
+
+                       <div className="flex justify-between items-center p-2 rounded bg-[var(--bg-tertiary)]/30">
+                          <span className="text-xs font-bold text-[var(--color-medium)] w-12">Med.</span>
+                           <span className="text-sm font-bold text-[var(--text-primary)]">
+                              {data.mediumSolved || 0}<span className="text-[var(--text-tertiary)] font-normal text-xs ml-1">/{data.totalMedium || 0}</span>
+                           </span>
+                       </div>
+
+                       <div className="flex justify-between items-center p-2 rounded bg-[var(--bg-tertiary)]/30">
+                          <span className="text-xs font-bold text-[var(--color-hard)] w-12">Hard</span>
+                           <span className="text-sm font-bold text-[var(--text-primary)]">
+                              {data.hardSolved || 0}<span className="text-[var(--text-tertiary)] font-normal text-xs ml-1">/{data.totalHard || 0}</span>
+                           </span>
+                       </div>
+                    </div>
+                 </div>
+              </Link>
+
+              {/* Badges */}
+              <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] p-6 shadow-sm flex flex-col relative">
+                 <div className="flex justify-between items-start mb-4">
+                    <div>
+                       <div className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-wider">Badges</div>
+                       <div className="text-3xl font-black text-[var(--text-primary)]">{data.badges ? data.badges.length : 0}</div>
+                    </div>
+                    <div className="text-[var(--text-tertiary)] cursor-pointer hover:text-[var(--text-primary)]">
+                        <span className="text-xl">→</span>
+                    </div>
+                 </div>
+                 
+                 <div className="flex-1 flex items-center gap-4">
+                    {data.badges && data.badges.length > 0 ? (
+                       data.badges.slice(0, 2).map((badge, idx) => (
+                          <div key={idx} className="w-20 h-20 bg-[var(--bg-tertiary)]/50 rounded-xl flex items-center justify-center border border-[var(--border-secondary)] relative group cursor-pointer hover:bg-[var(--bg-tertiary)] transition-colors">
+                             <img src={badge.icon || "https://assets.leetcode.com/static_assets/marketing/2024-100-days-badge.png"} alt={badge.name} className="w-16 h-16 object-contain opacity-80 group-hover:opacity-100 transition-opacity" />
+                          </div>
+                       ))
+                    ) : (
+                       <div className="text-sm text-[var(--text-tertiary)]">No badges earned yet</div>
+                    )}
+                 </div>
+
+                 <div className="mt-4">
+                    <div className="text-xs text-[var(--text-secondary)] font-medium">Most Recent Badge</div>
+                    <div className="text-sm font-bold text-[var(--text-primary)]">
+                       {data.badges && data.badges.length > 0 ? data.badges[0].name : "None"}
+                    </div>
+                 </div>
+              </div>
+
+           </div>
+
+
+
+           {/* Row 3: Activity Heatmap */}
+           <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] p-6 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
+                 <h3 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+                    {data.totalSolved || 0} <span className="text-[var(--text-secondary)] font-normal text-sm">submissions in the past one year</span>
+                    <Info size={14} className="text-[var(--text-tertiary)] cursor-pointer hover:text-[var(--text-secondary)]" />
+                 </h3>
+                 <div className="flex gap-6 text-xs text-[var(--text-secondary)]">
+                    <div>Total active days: <span className="text-[var(--text-primary)] font-bold">{streak?.history?.length || 0}</span></div>
+                    <div>Max streak: <span className="text-[var(--text-primary)] font-bold">{streak?.maxStreak || 0}</span></div>
+                 </div>
+              </div>
+              {hasSolvedProblems && hasValidDates ? (
+                <ActivityHeatmap submissions={data.solvedProblems} />
               ) : (
-                <div className="text-[var(--white)]/40 text-center py-6">
-                  No problems solved yet.
+                <div className="h-32 flex items-center justify-center text-[var(--text-tertiary)] text-sm">
+                   No activity data available
                 </div>
               )}
-            </div>
-          </div>
+           </div>
+
+           {/* Row 4: Recent Activity */}
+           <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] overflow-hidden shadow-sm">
+              <div className="p-4 border-b border-[var(--border-secondary)] flex items-center gap-6">
+                 <button className="flex items-center gap-2 px-3 py-1.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-xs font-bold">
+                    <CheckCircle2 size={14} /> Recent AC
+                 </button>
+                 <button className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-xs font-medium transition-colors">List</button>
+                 <button className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-xs font-medium transition-colors">Solutions</button>
+                 <button className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-xs font-medium transition-colors">Discuss</button>
+                 <div className="flex-1 text-right">
+                    <button className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-xs font-medium transition-colors">View all submissions &gt;</button>
+                 </div>
+              </div>
+              <div className="divide-y divide-[var(--border-secondary)]">
+                 {data.solvedProblems && data.solvedProblems.length > 0 ? (
+                    data.solvedProblems.slice(0, 5).map((problem) => (
+                       <div key={problem._id} className="p-4 flex items-center justify-between hover:bg-[var(--bg-tertiary)]/50 transition-colors cursor-pointer">
+                          <div className="font-medium text-sm text-[var(--text-primary)]">{problem.title}</div>
+                          <div className="text-xs text-[var(--text-tertiary)]">
+                             {new Date(problem.solvedAt).toLocaleDateString()}
+                          </div>
+                       </div>
+                    ))
+                 ) : (
+                    <div className="p-8 text-center text-[var(--text-tertiary)] text-sm">No recent submissions</div>
+                 )}
+              </div>
+           </div>
+
         </main>
       </div>
 
-      {/* ✅ Profile Edit Modal */}
+      {/* Edit Profile Modal */}
       {showEdit && (
         <EditProfileModal
           user={data}

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Calendar, Clock } from "lucide-react";
+import { Calendar, Clock, Trophy } from "lucide-react";
 import CountdownTimer from "../../components/CountdownTimer";
 
 export default function ContestCard({ contest, index, activeTab }) {
@@ -8,17 +8,7 @@ export default function ContestCard({ contest, index, activeTab }) {
   const end = new Date(contest.endTime);
   const now = Date.now();
   const isLive = now >= start.getTime() && now < end.getTime();
-
-  const isWeekly = contest.title.toLowerCase().includes("weekly");
-  
-  // Dynamic styles based on contest type
-  const cardStyle = {
-    background: isWeekly ? "var(--card-weekly-bg)" : "var(--card-biweekly-bg)",
-    borderColor: isWeekly ? "var(--card-weekly-border)" : "var(--card-biweekly-border)",
-    boxShadow: isWeekly ? "0 4px 30px var(--card-weekly-glow)" : "0 4px 30px var(--card-biweekly-glow)",
-  };
-
-  const iconColor = isWeekly ? "var(--card-weekly-icon)" : "var(--card-biweekly-icon)";
+  const isUpcoming = now < start.getTime();
 
   return (
     <motion.div
@@ -30,58 +20,60 @@ export default function ContestCard({ contest, index, activeTab }) {
     >
       <Link 
         to={`/contest/${contest._id}`}
-        className="group relative flex flex-col h-full min-h-[220px] rounded-2xl overflow-hidden border backdrop-blur-sm transition-all duration-500 hover:scale-[1.02]"
-        style={cardStyle}
+        className="group relative flex flex-col h-full min-h-[200px] rounded-xl overflow-hidden border border-[var(--border-primary)] bg-[var(--bg-secondary)] hover:border-[var(--brand-orange)] transition-all duration-300 hover:shadow-lg"
       >
-        {/* Abstract 3D Graphic Background (Simplified for theme compatibility) */}
-        <div className="absolute top-0 right-0 w-64 h-64 -mr-16 -mt-16 opacity-20 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3 pointer-events-none">
-           <div className="w-full h-full rounded-full blur-3xl bg-[var(--white)]/10" />
+        {/* Card Header with Gradient */}
+        <div className={`h-24 w-full relative overflow-hidden ${
+           isLive ? "bg-gradient-to-r from-red-500/10 to-orange-500/10" : 
+           isUpcoming ? "bg-gradient-to-r from-blue-500/10 to-purple-500/10" : 
+           "bg-[var(--bg-tertiary)]"
+        }`}>
+           <div className="absolute top-4 right-4">
+              {isLive ? (
+                 <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 text-red-500 text-xs font-bold border border-red-500/20 animate-pulse">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" /> LIVE
+                 </span>
+              ) : isUpcoming ? (
+                 <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-500 text-xs font-bold border border-blue-500/20">
+                    <Calendar size={12} /> UPCOMING
+                 </span>
+              ) : (
+                 <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)] text-xs font-bold border border-[var(--border-primary)]">
+                    ENDED
+                 </span>
+              )}
+           </div>
+           
+           <div className="absolute bottom-4 left-4">
+              <div className="p-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] shadow-sm">
+                 <Trophy className={`w-5 h-5 ${isLive ? "text-red-500" : isUpcoming ? "text-blue-500" : "text-[var(--text-secondary)]"}`} />
+              </div>
+           </div>
         </div>
-        
-        {/* Content Container */}
-        <div className="relative z-10 flex flex-col h-full p-6">
-          
-          {/* Header: Icon & Status */}
-          <div className="flex justify-between items-start mb-auto">
-            <div 
-              className="p-3 rounded-xl bg-[var(--white)]/10 border border-[var(--white)]/10 backdrop-blur-md"
-              style={{ color: iconColor }}
-            >
-              <Calendar className="w-6 h-6" />
-            </div>
-            
-            {/* Timer Badge */}
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--raisin-black)]/40 border border-[var(--white)]/10 backdrop-blur-md text-xs font-mono font-medium text-[var(--white)]/90 shadow-lg">
-                <Clock className="w-3.5 h-3.5 opacity-70" />
-                {isLive ? (
-                   <span className="text-[var(--alert-red)] font-bold flex items-center gap-1.5">
-                     Ends in <CountdownTimer target={end.getTime()} compact />
-                   </span>
-                ) : activeTab === 'upcoming' ? (
-                   <span className="text-[var(--white)] font-bold flex items-center gap-1.5">
-                     Starts in <CountdownTimer target={start.getTime()} compact />
-                   </span>
-                ) : (
-                   <span className="opacity-60">Ended</span>
-                )}
-            </div>
-          </div>
 
-          {/* Footer: Title & Date */}
-          <div className="mt-8">
-            <h3 className="text-2xl font-bold text-[var(--white)] mb-2 transition-colors duration-300 line-clamp-2 tracking-tight group-hover:text-[var(--aqua)]">
-              {contest.title}
-            </h3>
-            
-            <div className="flex items-center gap-3 text-sm text-[var(--white)]/50 font-medium">
-               <span>
-                 {start.toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
-               </span>
-               <span className="w-1 h-1 rounded-full bg-[var(--white)]/30" />
-               <span>
-                 {start.toLocaleString(undefined, { hour: 'numeric', minute: '2-digit' })}
-               </span>
-            </div>
+        {/* Content */}
+        <div className="p-5 flex flex-col flex-1">
+          <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2 line-clamp-2 group-hover:text-[var(--brand-orange)] transition-colors">
+            {contest.title}
+          </h3>
+          
+          <div className="mt-auto space-y-3">
+             <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+                <Calendar size={14} />
+                <span>{start.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}</span>
+                <span className="w-1 h-1 rounded-full bg-[var(--border-primary)]" />
+                <span>{start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+             </div>
+
+             {(isLive || isUpcoming) && (
+                <div className="flex items-center gap-2 text-xs font-medium text-[var(--text-primary)] bg-[var(--bg-tertiary)]/50 p-2 rounded-lg">
+                   <Clock size={14} className="text-[var(--brand-orange)]" />
+                   <span>
+                      {isLive ? "Ends in " : "Starts in "} 
+                      <CountdownTimer target={isLive ? end.getTime() : start.getTime()} compact />
+                   </span>
+                </div>
+             )}
           </div>
         </div>
       </Link>

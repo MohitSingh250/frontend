@@ -1,202 +1,207 @@
-import React, { useEffect, useState } from "react";
-import { Check, CalendarDays, X } from "lucide-react";
+import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+import { ChevronLeft, ChevronRight, X, Calendar as CalendarIcon, Zap } from "lucide-react";
 import api from "../api";
+import { AuthContext } from "../context/AuthContext";
 
-const Calendar = ({ isMobileModal = false, onClose }) => {
-  const [today] = useState(new Date());
-  const [dailyProblem, setDailyProblem] = useState(null);
-  const [solvedDays, setSolvedDays] = useState(new Set());
+export default function OrbitCalendar({ isMobile = false, onClose }) {
+  const { user } = useContext(AuthContext);
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [streak, setStreak] = useState(null);
+  const [activeDay, setActiveDay] = useState(new Date().getDate());
 
-  const getDateKey = (date) => date.toLocaleDateString("en-CA");
-
-
-
+  // Mock streak data if API fails or for visual demo
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const resProblem = await api.get("/problems/daily-problem");
-        setDailyProblem(resProblem.data);
-
-        const streakData = await api.get("/users/me/streak");
-        setStreak(streakData.data);
-
-        const resDashboard = await api.get("/users/me/dashboard");
-        const solvedDates = resDashboard.data.solvedProblems.map(
-          (p) => getDateKey(new Date(p.solvedAt))
-        );
-        setSolvedDays(new Set(solvedDates));
-      } catch (err) {
-        console.error("Error fetching calendar data:", err);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const handleDayClick = (day) => {
-    const clickedDate = new Date(today.getFullYear(), today.getMonth(), day);
-    const clickedKey = getDateKey(clickedDate);
-    const todayKey = getDateKey(today);
-    if (clickedKey === todayKey && dailyProblem) {
-      window.location.href = `/problems/${dailyProblem._id}`;
+    if (user) {
+      api.get(`/users/${user._id}/streak`)
+        .then((res) => setStreak(res.data))
+        .catch(() => {
+           setStreak({ currentStreak: 0, maxStreak: 0, history: [] });
+        });
+    } else {
+       setStreak({ currentStreak: 0, maxStreak: 0, history: [] });
     }
+  }, [user]);
+
+  const daysInMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+    0
+  ).getDate();
+
+  const firstDayOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    1
+  ).getDay();
+
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const renderDays = () => {
+    const days = [];
+    const today = new Date();
+    const isCurrentMonth =
+      today.getMonth() === currentDate.getMonth() &&
+      today.getFullYear() === currentDate.getFullYear();
+
+    // Empty slots for previous month
+    for (let i = 0; i < firstDayOfMonth; i++) {
+      days.push(<div key={`empty-${i}`} className="h-8 w-8" />);
+    }
+
+    // Days of the month
+    for (let i = 1; i <= daysInMonth; i++) {
+      const isToday = isCurrentMonth && i === today.getDate();
+      const isActive = i === activeDay;
+      
+      // Construct date string YYYY-MM-DD for this day (Local Time)
+      const dayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
+      const offset = dayDate.getTimezoneOffset();
+      const localDate = new Date(dayDate.getTime() - (offset*60*1000));
+      const dateString = localDate.toISOString().split('T')[0];
+
+      // Check if any history timestamp falls on this local date
+      const isSolved = streak?.history?.some(timestamp => {
+        const d = new Date(timestamp);
+        // Convert history timestamp to local YYYY-MM-DD
+        const localD = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
+        return localD.toISOString().split('T')[0] === dateString;
+      });
+
+      days.push(
+        <div
+          key={i}
+          onClick={() => setActiveDay(i)}
+          className={`
+            h-8 w-8 flex items-center justify-center rounded-full text-xs font-medium cursor-pointer transition-all relative
+            ${isActive ? "bg-[var(--white)] text-black" : "text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"}
+            ${isToday && !isActive && !isSolved ? "text-[var(--text-primary)] font-bold" : ""}
+            ${isSolved && !isActive ? "text-[var(--color-success)] font-bold" : ""}
+          `}
+        >
+          {i}
+          
+          {/* Today Indicator (Orange Dot) - Only if NOT solved */}
+          {isToday && !isActive && !isSolved && (
+             <div className="absolute -bottom-1 w-1 h-1 rounded-full bg-[var(--brand-orange)]" />
+          )}
+
+          {/* Solved Indicator (Green Checkmark) */}
+          {isSolved && !isActive && (
+             <div className="absolute -bottom-1.5 flex items-center justify-center">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--color-success)]">
+                   <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+             </div>
+          )}
+          
+          {/* Solved + Active Indicator (Black Checkmark) */}
+          {isSolved && isActive && (
+             <div className="absolute -bottom-1.5 flex items-center justify-center">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="text-black">
+                   <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+             </div>
+          )}
+        </div>
+      );
+    }
+    return days;
   };
 
-  const isFuture = (date) => date > today;
-  const isPast = (date) => date < today;
-  const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-  const firstDayOfWeek = new Date(today.getFullYear(), today.getMonth(), 1).getDay(); // 0 = Sun, 1 = Mon, etc.
-
-  // Generate an array of days with correct spacing
-  const daysArray = [];
-  for (let i = 0; i < firstDayOfWeek; i++) {
-    daysArray.push(null); // empty placeholders before day 1
-  }
-  for (let d = 1; d <= daysInMonth; d++) {
-    daysArray.push(d);
-  }
-
-
-
-  // 🗓️ Calendar Grid Renderer
-  const renderDays = () => (
-    <div className="grid grid-cols-7 gap-2 text-center">
-      {daysArray.map((day, index) => {
-        if (!day)
-          return (
-            <div key={`empty-${index}`} className="h-10 w-10"></div> // empty cell
-          );
-
-        const date = new Date(today.getFullYear(), today.getMonth(), day);
-        const dateKey = getDateKey(date);
-        const isToday = dateKey === getDateKey(today);
-        const isSolved = solvedDays.has(dateKey);
-        const future = isFuture(date);
-        const past = isPast(date);
-
-        let styles = "";
-        if (future)
-          styles =
-            "bg-[var(--raisin-black)]/60 text-[var(--white)]/20 cursor-not-allowed";
-        else if (isToday)
-          styles =
-            "border-2 border-[var(--orange-peel)] text-[var(--orange-peel)] font-semibold";
-        else if (isSolved)
-          styles =
-            "bg-[var(--dark-pastel-green)]/20 text-[var(--dark-pastel-green)] border border-[var(--dark-pastel-green)]/30";
-        else if (past)
-          styles =
-            "bg-[var(--dark-slate-gray)]/60 text-[var(--white)]/40 cursor-default";
-
-        return (
-          <div
-            key={day}
-            onClick={() => !future && handleDayClick(day)}
-            className={`relative h-10 w-10 flex items-center justify-center rounded-xl select-none ${styles}`}
+  const content = (
+    <>
+      {/* Header with Month/Year and Streak Badge */}
+      <div className="p-4 flex items-center justify-between border-b border-[var(--border-secondary)] bg-[var(--bg-tertiary)]/30">
+        <div className="flex items-center gap-2">
+           <span className="text-[var(--text-primary)] font-bold text-sm">
+             {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+           </span>
+           <div className="flex items-center gap-1 px-2 py-0.5 rounded bg-[var(--brand-orange)]/10 border border-[var(--brand-orange)]/20">
+              <Zap size={10} className="text-[var(--brand-orange)] fill-[var(--brand-orange)]" />
+              <span className="text-[10px] font-bold text-[var(--brand-orange)]">{streak?.currentStreak || 0}</span>
+           </div>
+        </div>
+        <div className="flex gap-1">
+          <button
+            onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)))}
+            className="p-1 rounded hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)] transition-colors"
           >
-            {day}
-            {isSolved && (
-              <Check
-                className="absolute bottom-1 right-1 text-[var(--dark-pastel-green)]"
-                size={14}
-              />
-            )}
-          </div>
-        );
-      })}
-    </div>
+            <ChevronLeft size={14} />
+          </button>
+          <button
+            onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)))}
+            className="p-1 rounded hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)] transition-colors"
+          >
+            <ChevronRight size={14} />
+          </button>
+        </div>
+      </div>
+
+      {/* Calendar Grid */}
+      <div className="p-4">
+        {/* Day Labels */}
+        <div className="grid grid-cols-7 mb-2">
+          {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
+            <div key={i} className="h-8 w-8 flex items-center justify-center text-[10px] font-bold text-[var(--text-tertiary)]">
+              {d}
+            </div>
+          ))}
+        </div>
+        
+        {/* Days */}
+        <div className="grid grid-cols-7 gap-y-1">
+          {renderDays()}
+        </div>
+      </div>
+
+      {/* Footer: Check-in Button */}
+      <div className="p-4 border-t border-[var(--border-secondary)] bg-[var(--bg-tertiary)]/10">
+         <Link to="/daily" className="w-full py-2 rounded-lg bg-[var(--brand-orange)] hover:bg-[var(--brand-orange)]/90 text-white text-xs font-bold shadow-lg shadow-[var(--brand-orange)]/20 transition-all flex items-center justify-center gap-2">
+            <CalendarIcon size={14} />
+            {streak?.history?.some(ts => {
+               const d = new Date(ts);
+               const localD = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
+               const today = new Date();
+               const localToday = new Date(today.getTime() - (today.getTimezoneOffset() * 60000));
+               return localD.toISOString().split('T')[0] === localToday.toISOString().split('T')[0];
+            }) ? "Solved Today" : "Daily Challenge"}
+         </Link>
+      </div>
+    </>
   );
 
-  // 📱 Mobile Modal View
-  if (isMobileModal) {
+  if (isMobile) {
     return (
       <>
-        <div
-          onClick={onClose}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
-        />
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40" onClick={onClose} />
         <div
           className="
-            fixed bottom-0 left-0 w-full z-50 bg-[var(--dark-slate-gray)]
-            text-[var(--white)] rounded-t-3xl border-t border-[var(--card-border)]
+            fixed bottom-0 left-0 w-full z-50 bg-[var(--bg-secondary)]
+            text-[var(--text-primary)] rounded-t-3xl border-t border-[var(--border-primary)]
             shadow-2xl animate-slide-up
           "
-          style={{ maxHeight: "85vh" }}
         >
-          <div className="relative p-6 overflow-y-auto">
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 p-2 bg-[var(--raisin-black)] rounded-full text-[var(--text-secondary)] hover:text-[var(--white)]"
-            >
-              <X size={20} />
-            </button>
-
-            <h2 className="text-xl font-bold mb-6 text-center flex items-center justify-center gap-2">
-              <CalendarDays className="text-[var(--orange-peel)]" />
-              {today.toLocaleString("default", { month: "long" })} {today.getFullYear()}
-            </h2>
-
-            {/* Weekdays */}
-            <div className="grid grid-cols-7 gap-2 text-center text-sm font-medium text-[var(--text-secondary)] mb-3">
-              {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
-                <div key={`${d}-${i}`}>{d}</div>
-              ))}
-            </div>
-
-            {renderDays()}
-
-            {streak && (
-              <div className="mt-6 flex items-center justify-center gap-3 bg-[var(--raisin-black)] p-3 rounded-xl border border-[var(--card-border)]">
-                <span className="text-[var(--text-secondary)] text-sm">Current Streak:</span>
-                <span className="text-[var(--dark-pastel-green)] font-bold text-lg">
-                  {streak.currentStreak} days 🔥
-                </span>
-              </div>
-            )}
+          <div className="p-4 border-b border-[var(--border-primary)] flex justify-between items-center">
+             <h2 className="text-lg font-bold">Daily Streak</h2>
+             <button onClick={onClose} className="p-2 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)]">
+                <X size={20} />
+             </button>
+          </div>
+          <div className="bg-[var(--bg-secondary)]">
+             {content}
           </div>
         </div>
       </>
     );
   }
 
-  // 🖥 Desktop Widget View
   return (
-    <>
-        <div
-          className="
-            bg-[var(--dark-slate-gray)]/80 text-[var(--white)] 
-            rounded-2xl p-5 w-full max-w-md mx-auto 
-            border border-[var(--dark-pastel-green)]/15 shadow-md backdrop-blur-md
-          "
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">
-              {today.toLocaleString("default", { month: "long" })} {today.getFullYear()}
-            </h2>
-            <span className="text-sm text-[var(--dark-pastel-green)] bg-[var(--raisin-black)]/50 px-3 py-1 rounded-full border border-[var(--dark-pastel-green)]/30">
-              Daily Problem
-            </span>
-          </div>
-
-          <div className="grid grid-cols-7 gap-2 text-center text-sm text-[var(--white)]/50 mb-2">
-            {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
-              <div key={`${d}-${i}`}>{d}</div>
-            ))}
-          </div>
-
-          {renderDays()}
-        </div>
-        
-          {streak && (
-            <div className="mt-4 text-sm text-center">
-              <span className="text-[var(--white)]/60">Streak: </span>
-              <span className="text-[var(--dark-pastel-green)] font-semibold">
-                {streak.currentStreak} days
-              </span>
-            </div>
-          )}
-    </>
+    <div className="bg-[var(--bg-secondary)] rounded-xl overflow-hidden border border-[var(--border-primary)] shadow-sm">
+      {content}
+    </div>
   );
-};
-
-export default Calendar;
+}

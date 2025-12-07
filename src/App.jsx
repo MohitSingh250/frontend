@@ -16,19 +16,28 @@ import ContestList from "./pages/contest/ContestList";
 import ContestDetail from "./pages/contest/ContestDetail";
 import ContestArena from "./pages/contest/ContestArena";
 import ContestLeaderboard from "./pages/contest/ContestLeaderboard";
+import ComingSoon from "./pages/ComingSoon";
+import Notebook from "./pages/Notebook";
+import MyLists from "./pages/MyLists";
 
 function PrivateRoute({ children }) {
   const { user } = useContext(AuthContext);
   return user ? children : <Navigate to="/login" replace />;
 }
 
+import Footer from "./components/Footer";
+
+import ProblemList from "./pages/ProblemList";
+
 export default function App() {
+  const { user } = useContext(AuthContext);
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--raisin-black)] text-white">
+    <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
       {!useLocation().pathname.includes("/arena") && <Header />}
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={user ? <Navigate to="/problems" replace /> : <Home />} />
+        <Route path="/problems" element={<ProblemList />} />
         <Route path="/daily" element={<DailyProblem />} />
         <Route path="/problems/:id" element={<ProblemDetail />} />
 
@@ -60,7 +69,19 @@ export default function App() {
             </PrivateRoute>
           }
         />
+
+        {/* New Routes from Profile Menu */}
+        <Route path="/list" element={<MyLists />} />
+        <Route path="/notebook" element={<Notebook />} />
+        <Route path="/progress" element={<ComingSoon title="Progress" />} />
+        <Route path="/points" element={<ComingSoon title="Points" />} />
+        <Route path="/features" element={<ComingSoon title="New Features" />} />
+        <Route path="/orders" element={<ComingSoon title="Orders" />} />
+        <Route path="/playgrounds" element={<ComingSoon title="My Playgrounds" />} />
+        <Route path="/settings" element={<ComingSoon title="Settings" />} />
       </Routes>
+
+      {!useLocation().pathname.includes("/arena") && <Footer />}
     </div>
   );
 }

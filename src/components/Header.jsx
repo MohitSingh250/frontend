@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ProfileMenu from "./ProfileMenu";
 import { AuthContext } from "../context/AuthContext";
-
+import { Bell, MessageSquare } from "lucide-react";
 
 export default function Header() {
   const { user, logout } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const location = useLocation();
 
   useEffect(() => {
     if (!open) return;
@@ -25,91 +26,89 @@ export default function Header() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  const navLinks = [
+    { name: "Explore", path: "/explore" },
+    { name: "Problems", path: "/problems" },
+    { name: "Contest", path: "/contests" },
+    { name: "Discuss", path: "/discuss" },
+    { name: "Interview", path: "/interview" },
+    { name: "Store", path: "/store" },
+  ];
+
   return (
-    <header
-      className="
-        bg-[var(--dark-slate-gray)]/80 
-        border-b border-[var(--dark-pastel-green)]/20 
-        shadow-md backdrop-blur-md text-[var(--white)]
-        sticky top-0 z-50
-      "
-    >
-      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-        {/* Left: Logo */}
-        <Link to="/" className="flex items-center space-x-2 group">
-          <div className="relative w-10 h-10">
-            <img
-              src="orbits.png"
-              alt="logo"
-              className="w-10 h-10 rounded-full border border-[var(--dark-pastel-green)]/40 shadow-sm group-hover:shadow-[0_0_10px_rgba(255,165,0,0.4)] transition"
-            />
-          </div>
-          <span className="text-lg font-semibold tracking-wide text-[#718A9E] group-hover:text-[var(--spanish-orange)] transition">
-            Orbit
-          </span>
-        </Link>
-
-        {/* Right: Navigation */}
-        <nav className="flex items-center space-x-6 text-sm font-medium relative">
-
-          <Link
-            to="/"
-            className="hover:text-[var(--dark-pastel-green)] transition"
-          >
-            Problems
+    <header className="bg-[var(--bg-secondary)] border-b border-[var(--border-primary)] h-[50px] flex items-center sticky top-0 z-50">
+      <div className="max-w-[1200px] mx-auto px-4 w-full flex items-center justify-between h-full">
+        
+        {/* Left: Logo & Nav */}
+        <div className="flex items-center gap-8 h-full">
+          <Link to="/" className="flex items-center gap-1">
+            <img src="/orbits.png" alt="Orbit" className="w-6 h-6" />
+            <span className="font-bold text-lg tracking-tight hidden md:block">Orbit</span>
           </Link>
-          <Link
-            to="/contests"
-            className="hover:text-[var(--dark-pastel-green)] transition"
+
+          <nav className="hidden md:flex items-center gap-6 h-full">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                className={`text-sm font-medium h-full flex items-center border-b-2 transition-colors ${
+                  location.pathname === link.path
+                    ? "border-[var(--brand-orange)] text-[var(--text-primary)]"
+                    : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        {/* Right: Actions */}
+        <div className="flex items-center gap-4">
+          
+          {/* Premium Button */}
+          <Link 
+            to="/premium"
+            className="hidden sm:flex items-center gap-1 px-3 py-1 rounded bg-gradient-to-r from-[#FFA116] to-[#FFC01E] text-white text-xs font-medium hover:opacity-90 transition"
           >
-            contests
+            <span>Premium</span>
           </Link>
 
           {user ? (
-            <div ref={menuRef} className="relative">
-              <img
-                src={user.avatar || "https://via.placeholder.com/80"}
-                alt={user.username}
-                onClick={() => setOpen((prev) => !prev)}
-                className="
-                  w-8 h-8 rounded-full cursor-pointer 
-                  border border-[var(--dark-pastel-green)]/40 
-                  hover:border-[var(--dark-pastel-green)] 
-                  hover:scale-105 hover:shadow-[0_0_8px_rgba(44,188,93,0.4)] 
-                  transition
-                "
-              />
-              {open && (
-                <ProfileMenu
-                  user={user}
-                  onSignOut={() => {
-                    logout();
-                    setOpen(false);
-                  }}
+            <div className="flex items-center gap-4">
+              <button className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition">
+                <Bell className="w-5 h-5" />
+              </button>
+              
+              <div ref={menuRef} className="relative">
+                <img
+                  src={user.avatar || "https://via.placeholder.com/80"}
+                  alt={user.username}
+                  onClick={() => setOpen((prev) => !prev)}
+                  className="w-8 h-8 rounded-full cursor-pointer border border-[var(--border-primary)] hover:border-[var(--text-secondary)] transition"
                 />
-              )}
+                {open && (
+                  <ProfileMenu
+                    user={user}
+                    onSignOut={() => {
+                      logout();
+                      setOpen(false);
+                    }}
+                  />
+                )}
+              </div>
             </div>
           ) : (
-            <>
-              <Link
-                to="/login"
-                className="text-[var(--white)]/80 hover:text-[var(--dark-pastel-green)] transition"
-              >
-                Login
+            <div className="flex items-center gap-2 text-sm font-medium">
+              <Link to="/login" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-3 py-1.5 rounded hover:bg-[var(--bg-tertiary)] transition">
+                Sign in
               </Link>
-              <Link
-                to="/signup"
-                className="
-                  bg-[var(--dark-pastel-green)] hover:bg-[var(--aqua)]
-                  text-[var(--white)] px-4 py-1.5 rounded-md font-medium
-                  transition shadow-sm hover:shadow-[0_0_10px_rgba(27,187,186,0.4)]
-                "
-              >
-                Sign up
+              <Link to="/signup" className="text-[var(--brand-orange)] hover:bg-[var(--brand-orange)]/10 px-3 py-1.5 rounded transition">
+                Register
               </Link>
-            </>
+            </div>
           )}
-        </nav>
+        </div>
       </div>
     </header>
   );

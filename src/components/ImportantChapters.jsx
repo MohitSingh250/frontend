@@ -16,16 +16,16 @@ export default function ImportantChapters({ isMobileModal = false, onClose }) {
   const content = (
     <>
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-bold text-[var(--white)] flex items-center gap-2">
-           <BookOpen size={16} className="text-[var(--dark-pastel-green)]" />
+        <h3 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+           <BookOpen size={16} className="text-[var(--brand-orange)]" />
            Important Chapters
         </h3>
         {!isMobileModal && (
           <div className="flex gap-1">
-             <button className="p-1 rounded hover:bg-[var(--glass-border)] text-[var(--text-secondary)]">
+             <button className="p-1 rounded hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)]">
                 <ChevronLeft size={14} />
              </button>
-             <button className="p-1 rounded hover:bg-[var(--glass-border)] text-[var(--text-secondary)]">
+             <button className="p-1 rounded hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)]">
                 <ChevronRight size={14} />
              </button>
           </div>
@@ -33,10 +33,10 @@ export default function ImportantChapters({ isMobileModal = false, onClose }) {
       </div>
 
       <div className="relative mb-4">
-         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] w-4 h-4" />
+         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] w-4 h-4" />
          <input 
             placeholder="Search chapters..." 
-            className="w-full bg-[var(--raisin-black)] text-[var(--white)] text-xs rounded-lg pl-9 pr-3 py-2 focus:outline-none focus:ring-1 focus:ring-[var(--dark-pastel-green)]/50 placeholder-[var(--text-secondary)] border border-[var(--card-border)]"
+            className="w-full bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-xs rounded-lg pl-9 pr-3 py-2 focus:outline-none focus:bg-[var(--bg-primary)] focus:border-[var(--brand-orange)] border border-transparent placeholder-[var(--text-tertiary)] transition-all"
          />
       </div>
 
@@ -44,9 +44,9 @@ export default function ImportantChapters({ isMobileModal = false, onClose }) {
         {chapters.map((chapter) => (
           <div 
             key={chapter.name}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--raisin-black)] border border-[var(--card-border)] hover:border-[var(--dark-pastel-green)]/30 cursor-pointer transition-all"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-tertiary)] border border-transparent hover:bg-[var(--bg-secondary)] cursor-pointer transition-all"
           >
-            <span className="text-xs font-medium text-[var(--white)]">{chapter.name}</span>
+            <span className="text-xs font-medium text-[var(--text-primary)]">{chapter.name}</span>
             <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${chapter.color}`}>
                {chapter.count}
             </span>
@@ -60,8 +60,8 @@ export default function ImportantChapters({ isMobileModal = false, onClose }) {
     return (
       <>
         <div onClick={onClose} className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-        <div className="fixed bottom-0 left-0 w-full z-50 bg-[var(--dark-slate-gray)] text-[var(--white)] rounded-t-3xl border-t border-[var(--card-border)] shadow-2xl animate-slide-up p-6">
-           <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-[var(--raisin-black)] rounded-full text-[var(--text-secondary)] hover:text-[var(--white)]">
+        <div className="fixed bottom-0 left-0 w-full z-50 bg-[var(--bg-secondary)] text-[var(--text-primary)] rounded-t-3xl border-t border-[var(--border-primary)] shadow-2xl animate-slide-up p-6">
+           <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-[var(--bg-tertiary)] rounded-full text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
               <X size={20} />
            </button>
            {content}
@@ -71,7 +71,7 @@ export default function ImportantChapters({ isMobileModal = false, onClose }) {
   }
 
   return (
-    <div className="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-xl p-4 mt-4 shadow-sm">
+    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 mt-4 shadow-sm">
       {content}
     </div>
   );

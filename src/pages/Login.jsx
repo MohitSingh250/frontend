@@ -19,119 +19,77 @@ export default function Login() {
   };
 
   return (
-    <div
-      className="
-        flex items-center justify-center min-h-screen
-        bg-[var(--raisin-black)] text-[var(--white)]
-        px-4
-      "
-    >
-      <div
-        className="
-          w-full max-w-md
-          bg-[var(--dark-slate-gray)]/80 backdrop-blur-sm
-          border border-[var(--spanish-orange)]/20
-          rounded-2xl shadow-[0_0_25px_rgba(233,111,30,0.08)]
-          p-8 sm:p-10
-          transition-all duration-300
-        "
-      >
-        {/* Title */}
-        <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-[var(--white)]">
-          Welcome Back
-        </h2>
-
-        {/* Error Message */}
-        {err && (
-          <div
-            className="
-              p-3 mb-5 text-sm rounded-lg
-              bg-[var(--spanish-orange)]/10
-              text-[var(--spanish-orange)]
-              border border-[var(--spanish-orange)]/40
-            "
-          >
-            {err}
-          </div>
-        )}
-
-        {/* Form */}
-        <form onSubmit={submit} className="space-y-4">
-          <div>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-              className="
-                w-full px-4 py-2.5 rounded-lg
-                bg-[var(--raisin-black)]/60
-                border border-[var(--spanish-orange)]/20
-                text-[var(--white)]
-                placeholder-[var(--white)]/40
-                focus:outline-none focus:border-[var(--orange-peel)]
-                transition-all duration-200
-              "
-            />
+    <div className="min-h-screen w-full flex items-center justify-center bg-[var(--bg-primary)]">
+      
+      <div className="w-full max-w-[400px] mx-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl shadow-sm p-8">
+          
+          <div className="text-center mb-8">
+             <div className="flex justify-center mb-4">
+                <img src="/orbit-logo.png" alt="Orbit" className="h-10 w-10 opacity-80" /> 
+             </div>
+             <h1 className="text-2xl font-semibold text-[var(--text-primary)] mb-2">
+                Sign in
+             </h1>
           </div>
 
-          <div>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              className="
-                w-full px-4 py-2.5 rounded-lg
-                bg-[var(--raisin-black)]/60
-                border border-[var(--spanish-orange)]/20
-                text-[var(--white)]
-                placeholder-[var(--white)]/40
-                focus:outline-none focus:border-[var(--orange-peel)]
-                transition-all duration-200
-              "
-            />
+          {err && (
+            <div className="mb-6 p-3 rounded bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center">
+              {err}
+            </div>
+          )}
+
+          <form onSubmit={submit} className="space-y-4">
+            <div className="space-y-1">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2.5 rounded bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] text-sm focus:outline-none focus:border-[var(--text-secondary)] transition-colors"
+                placeholder="Email address"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2.5 rounded bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] text-sm focus:outline-none focus:border-[var(--text-secondary)] transition-colors"
+                placeholder="Password"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-2.5 rounded bg-white text-black font-medium text-sm hover:bg-gray-100 transition-colors"
+            >
+              Sign In
+            </button>
+            
+            <div className="flex justify-between items-center text-xs">
+               <a href="#" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)]">Forgot Password?</a>
+               <a href="/signup" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)]">Sign Up</a>
+            </div>
+          </form>
+
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[var(--border-secondary)]"></div>
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="bg-[var(--bg-secondary)] px-2 text-[var(--text-tertiary)]">or</span>
+            </div>
           </div>
 
-          <button
-            type="submit"
-            className="
-              w-full py-2.5 rounded-lg font-semibold
-              bg-[var(--spanish-orange)]
-              text-white
-              hover:bg-[var(--orange-peel)]
-              hover:shadow-[0_0_10px_rgba(255,162,24,0.3)]
-              transition-all duration-200
-            "
-          >
-            Log In
-          </button>
-        </form>
-
-        {/* Divider */}
-        <div className="mt-6 flex items-center justify-center">
-          <span className="text-[var(--white)]/50 text-sm">
-            or continue with
-          </span>
-        </div>
-
-        {/* Google Login */}
-        <div className="mt-4 flex justify-center">
-          <GoogleLogin
-            onSuccess={(cred) => googleLogin(cred.credential)}
-            onError={() => setErr("Google Login Failed")}
-          />
-        </div>
-
-        {/* Footer */}
-        <div className="mt-6 text-center text-sm text-[var(--white)]/60">
-          Don’t have an account?{" "}
-          <a
-            href="/signup"
-            className="text-[var(--orange-peel)] hover:text-[var(--spanish-orange)] font-medium transition"
-          >
-            Sign up
-          </a>
+          <div className="flex justify-center">
+             <GoogleLogin
+               onSuccess={(cred) => googleLogin(cred.credential)}
+               onError={() => setErr("Google Login Failed")}
+               theme="filled_black"
+               shape="circle"
+             />
+          </div>
         </div>
       </div>
     </div>

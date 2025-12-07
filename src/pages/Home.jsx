@@ -1,186 +1,131 @@
-import React, { useEffect, useState } from "react";
-import api from "../api/index.js";
-import ProblemTable from "../components/ProblemTable";
-import ProblemFilters from "../components/ProblemFilters";
-import Calendar from "../components/OrbitCalendar";
-import FeaturedWidgets from "../components/FeaturedWidgets";
-import ImportantChapters from "../components/ImportantChapters";
-import MobileFloatingMenu from "../components/MobileFloatingMenu";
-import { Loader2 } from "lucide-react";
+import React from "react";
+import { Link } from "react-router-dom";
+import { ChevronRight, Code2, Users, Trophy, Building2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Home() {
-  const [filters, setFilters] = useState({
-    q: "",
-    subject: "",
-    topic: "",
-    difficulty: "",
-  });
-
-  const [loadedData, setLoadedData] = useState([]);
-  const [dailyProblem, setDailyProblem] = useState(null);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [moreData, setMoreData] = useState(true);
-  const [activeMobileWidget, setActiveMobileWidget] = useState(null); // 'calendar' | 'chapters' | null
-  const pageSize = 20;
-
-  // Fetch Daily Problem for Widgets
-  useEffect(() => {
-    const fetchDaily = async () => {
-      try {
-        const res = await api.get("/problems/daily-problem");
-        setDailyProblem(res.data);
-      } catch (err) {
-        console.error("Error fetching daily problem:", err);
-      }
-    };
-    fetchDaily();
-  }, []);
-
-  const fetchProblems = async (reset = false) => {
-    try {
-      setLoading(true);
-
-      const params = { ...filters, page, limit: pageSize };
-      const res = await api.get("/problems", { params });
-      
-      let data = [];
-      let total = 0;
-
-      // Handle both old (array) and new (object) response formats
-      if (Array.isArray(res.data)) {
-        data = res.data;
-      } else if (res.data && Array.isArray(res.data.problems)) {
-        data = res.data.problems;
-        total = res.data.total;
-      }
-
-      if (Array.isArray(data)) {
-        setLoadedData((prev) =>
-          reset ? data : [...prev, ...data]
-        );
-
-        if (data.length < pageSize) {
-          setMoreData(false);
-        } else {
-          setMoreData(true);
-        }
-      }
-    } catch (err) {
-      console.error("Error fetching problems:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // 🧩 Run when filters change → reset + refetch
-  useEffect(() => {
-    setPage(1);
-    fetchProblems(true); // ✅ immediate fetch on filter change
-  }, [filters]);
-
-  // 🧩 Run when page changes → fetch more
-  useEffect(() => {
-    if (page > 1) {
-      fetchProblems(false);
-    }
-  }, [page]);
-
-  // 🧭 Infinite scroll logic
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop + 1 >=
-      document.documentElement.offsetHeight
-    ) {
-      if (!loading && moreData) {
-        setPage((prev) => prev + 1);
-      }
-    }
-  };
-
-
-  // ♻️ Scroll listener
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading, moreData]);
-
   return (
-    <div className="min-h-screen w-full bg-[var(--raisin-black)] text-[var(--white)] font-sans selection:bg-[var(--dark-pastel-green)]/30 pb-20 transition-colors duration-300">
+    <div className="w-full bg-[var(--bg-primary)] text-[var(--text-primary)]">
       
-      <div className="max-w-[1400px] mx-auto p-4 md:p-6">
-        
-        {/* 1. TOP WIDGETS */}
-        <FeaturedWidgets dailyProblem={dailyProblem} />
-
-        <div className="flex flex-col xl:flex-row gap-6">
+      {/* 1. Hero Section */}
+      <section className="relative w-full py-20 md:py-32 overflow-hidden">
+        <div className="max-w-[1200px] mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-12">
           
-          {/* 2. LEFT COLUMN (PROBLEM LIST) */}
-          <div className="flex-1 min-w-0">
-            
-            <ProblemFilters filters={filters} setFilters={setFilters} />
-
-            <ProblemTable problems={loadedData} loading={loading && page === 1} />
-
-            {!loading && loadedData.length === 0 && (
-              <div className="flex flex-col items-center justify-center py-20 text-center border border-dashed border-[var(--card-border)] rounded-xl bg-[var(--card-bg)] mt-4">
-                <div className="w-12 h-12 bg-[var(--raisin-black)] rounded-full flex items-center justify-center mb-3 text-2xl">
-                  🔍
-                </div>
-                <h3 className="text-lg font-bold text-[var(--white)] mb-1">No problems found</h3>
-                <p className="text-sm text-[var(--text-secondary)]">
-                  Try adjusting your filters.
-                </p>
-              </div>
-            )}
-
-            <div className="mt-8 flex justify-center">
-              {loading && page > 1 && (
-                 <div className="flex items-center gap-2 text-[var(--dark-pastel-green)]">
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span className="text-xs font-bold uppercase tracking-wider">Loading more...</span>
-                 </div>
-              )}
-              {!loading && !moreData && loadedData.length > 0 && (
-                <div className="text-xs text-[var(--text-secondary)]">
-                  You've reached the end
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* 3. RIGHT COLUMN (SIDEBAR) */}
-          <aside className="hidden xl:block w-[320px] shrink-0 space-y-4">
-            <div className="sticky top-6">
-               <Calendar />
-               <ImportantChapters />
-               
-               {/* Footer Links */}
-               <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-xs text-[var(--text-secondary)] px-2">
-                  <a href="#" className="hover:text-[var(--white)]">Copyright © 2025 Orbit</a>
-                  <a href="#" className="hover:text-[var(--white)]">Help Center</a>
-                  <a href="#" className="hover:text-[var(--white)]">Jobs</a>
-                  <a href="#" className="hover:text-[var(--white)]">Bug Bounty</a>
-                  <a href="#" className="hover:text-[var(--white)]">Students</a>
-                  <a href="#" className="hover:text-[var(--white)]">Terms</a>
-                  <a href="#" className="hover:text-[var(--white)]">Privacy Policy</a>
+          {/* Left: 3D Illustration Placeholder */}
+          <div className="flex-1 relative">
+            <div className="relative z-10 w-full max-w-[500px] aspect-[4/3] bg-gradient-to-br from-[var(--bg-secondary)] to-[var(--bg-tertiary)] rounded-2xl shadow-2xl border border-[var(--border-primary)] flex items-center justify-center overflow-hidden">
+               {/* Abstract UI Mockup */}
+               <div className="absolute inset-4 bg-[var(--bg-primary)] rounded-xl p-4 flex flex-col gap-3 opacity-90">
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500/20"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/20"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500/20"></div>
+                  </div>
+                  <div className="h-4 w-3/4 bg-[var(--bg-tertiary)] rounded"></div>
+                  <div className="h-4 w-1/2 bg-[var(--bg-tertiary)] rounded"></div>
+                  <div className="flex-1 bg-[var(--bg-tertiary)]/30 rounded mt-2 border border-dashed border-[var(--border-secondary)]"></div>
                </div>
             </div>
-          </aside>
+            {/* Decorative blobs */}
+            <div className="absolute -top-10 -left-10 w-64 h-64 bg-[var(--brand-orange)]/10 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-[var(--accent-blue)]/10 rounded-full blur-3xl"></div>
+          </div>
+
+          {/* Right: Content */}
+          <div className="flex-1 text-center md:text-left">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+              A New Way to Learn
+            </h1>
+            <p className="text-lg md:text-xl text-[var(--text-secondary)] mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+              Orbit is the best platform to help you enhance your skills, expand your knowledge and prepare for JEE & NEET exams.
+            </p>
+            <Link 
+              to="/signup"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-[var(--color-easy)] hover:bg-[var(--color-easy)]/90 text-white font-semibold text-lg shadow-lg shadow-[var(--color-easy)]/20 transition-all hover:scale-105"
+            >
+              Create Account <ChevronRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Start Exploring */}
+      <section className="py-20 bg-[var(--bg-secondary)]">
+        <div className="max-w-[1200px] mx-auto px-6">
+          <div className="flex items-center gap-4 mb-12">
+            <div className="p-3 rounded-xl bg-[var(--color-easy)]/10 text-[var(--color-easy)]">
+              <Code2 className="w-8 h-8" />
+            </div>
+            <h2 className="text-3xl font-bold text-[var(--color-easy)]">Start Exploring</h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+             <div className="space-y-6">
+               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
+                 Explore is a well-organized tool that helps you get the most out of Orbit by providing structure to guide your progress towards the next step in your programming career.
+               </p>
+               <Link to="/explore" className="text-[var(--accent-blue)] font-medium hover:underline inline-flex items-center gap-1">
+                 Get Started <ChevronRight className="w-4 h-4" />
+               </Link>
+             </div>
+             
+             {/* Cards Carousel Mockup */}
+             <div className="relative h-[300px] w-full">
+                <div className="absolute top-0 right-0 w-[80%] h-full bg-gradient-to-br from-[#00B8A3] to-[#007AFF] rounded-2xl shadow-xl p-8 text-white flex flex-col justify-end transform translate-x-4 translate-y-4 opacity-50 scale-95"></div>
+                <div className="absolute top-0 right-0 w-[80%] h-full bg-gradient-to-br from-[#00B8A3] to-[#007AFF] rounded-2xl shadow-xl p-8 text-white flex flex-col justify-end z-10">
+                   <h3 className="text-2xl font-bold mb-2">JEE Advanced 75</h3>
+                   <p className="opacity-90">Ace your entrance exam with 75 curated high-weightage questions.</p>
+                   <div className="mt-6 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                     <ChevronRight className="w-6 h-6" />
+                   </div>
+                </div>
+             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Features Grid */}
+      <section className="py-20">
+        <div className="max-w-[1200px] mx-auto px-6 grid md:grid-cols-2 gap-16">
+          
+          {/* Feature 1 */}
+          <div className="flex gap-6">
+             <div className="shrink-0">
+               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--accent-blue)] to-[var(--accent-purple)] flex items-center justify-center text-white shadow-lg">
+                 <Users className="w-8 h-8" />
+               </div>
+             </div>
+             <div>
+               <h3 className="text-2xl font-bold text-[var(--accent-blue)] mb-4">Questions, Community & Contests</h3>
+               <p className="text-[var(--text-secondary)] mb-4 leading-relaxed">
+                 Over 4000 questions for you to practice. Come and join one of the largest student communities and participate in our mock tests to challenge yourself and earn rewards.
+               </p>
+               <Link to="/problems" className="text-[var(--accent-blue)] font-medium hover:underline inline-flex items-center gap-1">
+                 View Questions <ChevronRight className="w-4 h-4" />
+               </Link>
+             </div>
+          </div>
+
+          {/* Feature 2 */}
+          <div className="flex gap-6">
+             <div className="shrink-0">
+               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--brand-orange)] to-[var(--color-medium)] flex items-center justify-center text-white shadow-lg">
+                 <Building2 className="w-8 h-8" />
+               </div>
+             </div>
+             <div>
+               <h3 className="text-2xl font-bold text-[var(--brand-orange)] mb-4">Institutes & Aspirants</h3>
+               <p className="text-[var(--text-secondary)] mb-4 leading-relaxed">
+                 Not only does Orbit prepare aspirants for JEE & NEET, we also help institutes identify top talent. From sponsoring contests to providing online assessments and training.
+               </p>
+               <Link to="/business" className="text-[var(--accent-blue)] font-medium hover:underline inline-flex items-center gap-1">
+                 Partner Opportunities <ChevronRight className="w-4 h-4" />
+               </Link>
+             </div>
+          </div>
 
         </div>
-      </div>
-
-      {/* 📱 Mobile Floating Menu */}
-      <MobileFloatingMenu setActiveMobileWidget={setActiveMobileWidget} />
-
-      {/* 📱 Mobile Modals */}
-      {activeMobileWidget === 'calendar' && (
-        <Calendar isMobileModal={true} onClose={() => setActiveMobileWidget(null)} />
-      )}
-      {activeMobileWidget === 'chapters' && (
-        <ImportantChapters isMobileModal={true} onClose={() => setActiveMobileWidget(null)} />
-      )}
+      </section>
 
     </div>
   );

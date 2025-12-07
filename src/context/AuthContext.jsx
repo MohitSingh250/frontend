@@ -32,7 +32,7 @@ const login = async (email, password) => {
 
   const me = await api.get('/auth/me');
   setUser(me.data);
-  navigate('/');
+  navigate('/problems');
 };
 
 const signup = async (username, email, password) => {
@@ -44,7 +44,7 @@ const signup = async (username, email, password) => {
 
   const me = await api.get('/auth/me');
   setUser(me.data);
-  navigate('/');
+  navigate('/problems');
 };
 
 
@@ -52,7 +52,7 @@ const logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('refreshToken');
   setUser(null);
-  navigate('/login');
+  navigate('/');
 };
 
 
@@ -63,7 +63,7 @@ const logout = () => {
   localStorage.setItem('token', token);
   const me = await api.get('/auth/me');
   setUser(me.data);
-  navigate('/');
+  navigate('/problems');
 };
 
   return (

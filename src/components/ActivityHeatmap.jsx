@@ -53,11 +53,11 @@ export default function ActivityHeatmap({ submissions }) {
 
   // --- Step 2: Color scale
   const getColorClass = (count) => {
-    if (count === 0) return "bg-[#2f2f2f]";
-    if (count === 1) return "bg-[#016620]";
-    if (count === 2) return "bg-[#29C244]";
-    if (count <= 4) return "bg-[#7FE18C]";
-    return "bg-[#99f7a5]";
+    if (count === 0) return "bg-[var(--heatmap-level-0)]";
+    if (count === 1) return "bg-[var(--heatmap-level-1)]";
+    if (count === 2) return "bg-[var(--heatmap-level-2)]";
+    if (count <= 4) return "bg-[var(--heatmap-level-3)]";
+    return "bg-[var(--heatmap-level-4)]";
   };
 
   // --- Step 3: Group into weeks for vertical columns
@@ -87,132 +87,166 @@ export default function ActivityHeatmap({ submissions }) {
     return weekArray;
   }, [heatmapData.days]);
 
-  // --- Step 4: Month labels
-  const monthLabels = useMemo(() => {
+  // --- Step 4: Month labels & Gaps
+  const { monthLabels, weekMargins } = useMemo(() => {
     const labels = [];
+    const margins = []; // Store margin for each week
     let lastMonth = -1;
+    let currentOffset = 0;
 
     weeks.forEach((week, weekIndex) => {
       const firstDay = week.find((d) => d !== null);
+      let isNewMonth = false;
+
       if (firstDay) {
         const month = firstDay.date.getMonth();
         if (month !== lastMonth) {
+          isNewMonth = true;
+          if (lastMonth !== -1) {
+             // Add gap before this week (which starts a new month)
+             // Actually, usually gaps are between the last week of prev month and first of new.
+             // But here we iterate weeks. Let's add margin to the PREVIOUS week.
+             if (weekIndex > 0) margins[weekIndex - 1] = 16; // 16px gap
+          }
+          
           labels.push({
-            month: firstDay.date.toLocaleDateString("en-US", {
-              month: "short",
-            }),
-            weekIndex,
+            month: firstDay.date.toLocaleDateString("en-US", { month: "short" }),
+            offset: currentOffset
           });
           lastMonth = month;
         }
       }
+      
+      // Default gap is 3px. If we added a margin to prev week, we account for it?
+      // No, the offset calculation needs to sum up widths.
+      // Width of a week is 10px + 3px gap = 13px.
+      // If there's an extra margin, we add it.
+      
+      // Let's simplify: We render weeks with dynamic margins.
+      // We calculate label positions based on cumulative width.
+      
+      const gap = margins[weekIndex - 1] || 2; // Gap AFTER the previous week (default 2px)
+      if (weekIndex > 0) currentOffset += (9 + gap); // 9px width + gap
+      
+      // Initialize margin for current week
+      margins[weekIndex] = 2; 
     });
-    return labels;
+
+    // Re-calculate margins to add extra space at month boundaries
+    // We want a gap *between* months.
+    // So if week[i] is in Month A and week[i+1] starts Month B, add margin to week[i].
+    
+    weeks.forEach((week, i) => {
+        if (i < weeks.length - 1) {
+            const dayA = week.find(d => d);
+            const dayB = weeks[i+1].find(d => d);
+            if (dayA && dayB && dayA.date.getMonth() !== dayB.date.getMonth()) {
+                margins[i] = 10; // Larger gap at month end (reduced from 12)
+            }
+        }
+    });
+
+    // Recalculate offsets for labels to center them
+    let runningOffset = 0;
+    const finalLabels = [];
+    let currentMonthLabel = null;
+    let currentMonthStartOffset = 0;
+    let currentMonthWeekCount = 0;
+    
+    weeks.forEach((week, i) => {
+       const day = week.find(d => d);
+       if (day) {
+           const month = day.date.toLocaleDateString("en-US", { month: "short" });
+           
+           if (month !== currentMonthLabel) {
+               // Push previous month label
+               if (currentMonthLabel) {
+                   // Calculate center: start + (width / 2)
+                   // Width is roughly weekCount * 11 (plus gaps?)
+                   // Let's just use the start offset and add half the width
+                   const width = currentMonthWeekCount * 11; 
+                   finalLabels.push({ month: currentMonthLabel, offset: currentMonthStartOffset + (width / 2) - 10 }); // -10 to center text roughly
+               }
+               
+               currentMonthLabel = month;
+               currentMonthStartOffset = runningOffset;
+               currentMonthWeekCount = 0;
+           }
+           currentMonthWeekCount++;
+       }
+       runningOffset += (9 + (margins[i] || 2));
+    });
+    
+    // Push last month
+    if (currentMonthLabel) {
+        const width = currentMonthWeekCount * 11;
+        finalLabels.push({ month: currentMonthLabel, offset: currentMonthStartOffset + (width / 2) - 10 });
+    }
+
+    return { monthLabels: finalLabels, weekMargins: margins };
   }, [weeks]);
 
   // --- Step 5: Render
   return (
     <div className="w-full">
-      {/* Stats Header */}
-      <div className="flex items-center justify-between mb-3 text-sm">
-        <div className="flex items-center gap-2">
-          <span className="text-[var(--white)]">
-            <span className="font-semibold ext-[var(--white)]">
-              {heatmapData.totalSubmissions}
-            </span>{" "}
-            submissions in the past one year
-          </span>
-        </div>
-        <div className="flex items-center gap-5 ext-[var(--white)]">
-          <span>
-            Total active days:{" "}
-            <span className="font-semibold ext-[var(--white)]">
-              {heatmapData.activeDays}
-            </span>
-          </span>
-          <span>
-            Max streak:{" "}
-            <span className="font-semibold ext-[var(--white)]">
-              {heatmapData.maxStreak}
-            </span>
-          </span>
-        </div>
+      {/* Heatmap Container */}
+      <div className="w-full">
+            {/* Grid Weeks */}
+            <div className="flex items-end h-[100px]">
+              {weeks.map((week, weekIndex) => (
+                <div 
+                    key={weekIndex} 
+                    className="flex flex-col gap-[2px]"
+                    style={{ marginRight: `${weekMargins[weekIndex] || 2}px` }}
+                >
+                  {[0, 1, 2, 3, 4, 5, 6].map((dayIndex) => {
+                    const day = week[dayIndex];
+                    if (!day)
+                      return (
+                        <div key={dayIndex} className="w-[9px] h-[9px]" />
+                      );
+
+                    return (
+                      <div
+                        key={dayIndex}
+                        className={`w-[9px] h-[9px] rounded-[2px] ${getColorClass(
+                          day.count
+                        )} transition-all hover:ring-1 hover:ring-[var(--text-secondary)] cursor-pointer`}
+                        title={`${day.count} submission${
+                          day.count !== 1 ? "s" : ""
+                        } on ${day.date.toLocaleDateString()}`}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+
+            {/* Month labels (Bottom) */}
+            <div className="flex mt-2 text-xs text-[var(--text-tertiary)] relative h-4 w-full">
+              {monthLabels.map((label, i) => (
+                <div
+                  key={i}
+                  className="absolute top-0 text-[10px]"
+                  style={{ left: `${label.offset}px` }}
+                >
+                  {label.month}
+                </div>
+              ))}
+            </div>
       </div>
 
-      {/* Heatmap */}
-      <div className="relative bg-[var(--raisin-black)] p-3 rounded-xl">
-        {/* Month labels */}
-        <div className="flex mb-1 ml-8">
-          {monthLabels.map((label, i) => (
-            <div
-              key={i}
-              className="text-xs text-gray-500 font-medium"
-              style={{
-                marginLeft:
-                  i === 0
-                    ? 0
-                    : `${
-                        (label.weekIndex -
-                          (monthLabels[i - 1]?.weekIndex || 0)) *
-                        9.5
-                      }px`,
-              }}
-            >
-              {label.month}
-            </div>
-          ))}
-        </div>
-
-        {/* Grid Weeks */}
-        <div className="flex gap-[2px] overflow-x-auto pb-2">
-          {weeks.map((week, weekIndex) => (
-            <div key={weekIndex} className="flex flex-col gap-[2px]">
-              {[0, 1, 2, 3, 4, 5, 6].map((dayIndex) => {
-                const day = week[dayIndex];
-                if (!day)
-                  return (
-                    <div key={dayIndex} className="w-[10px] h-[10px]" />
-                  );
-
-                const prevDay =
-                  weekIndex > 0
-                    ? weeks[weekIndex - 1]?.[dayIndex]
-                    : null;
-                const isNewMonth =
-                  prevDay &&
-                  prevDay.date.getMonth() !== day.date.getMonth();
-
-                return (
-                  <div
-                    key={dayIndex}
-                    className={`w-[10px] h-[10px] rounded-[2.5px] ${getColorClass(
-                      day.count
-                    )} transition-all hover:ring-1 hover:ring-gray-400 cursor-pointer`}
-                    title={`${day.count} submission${
-                      day.count !== 1 ? "s" : ""
-                    } on ${day.date.toLocaleDateString()}`}
-                    style={{
-                      marginLeft: isNewMonth ? "8px" : "0",
-                    }}
-                  />
-                );
-              })}
-            </div>
-          ))}
-        </div>
-
-        {/* Legend */}
-        <div className="flex items-center justify-end gap-2 mt-3 text-xs text-gray-500">
+      {/* Legend */}
+      <div className="flex items-center justify-end gap-2 mt-3 text-xs text-[var(--text-tertiary)]">
           <span>Less</span>
           <div className="flex gap-1">
-            <div className="w-[11px] h-[11px] rounded-sm bg-[#2f2f2f]" />
-            <div className="w-[11px] h-[11px] rounded-sm bg-[#016620]" />
-            <div className="w-[11px] h-[11px] rounded-sm bg-[#29C244]" />
-            <div className="w-[11px] h-[11px] rounded-sm bg-[#7FE18C]" />
-            <div className="w-[11px] h-[11px] rounded-sm bg-[#99f7a5]" />
+            <div className="w-[9px] h-[9px] rounded-[2px] bg-[var(--heatmap-level-0)]" />
+            <div className="w-[9px] h-[9px] rounded-[2px] bg-[var(--heatmap-level-1)]" />
+            <div className="w-[9px] h-[9px] rounded-[2px] bg-[var(--heatmap-level-2)]" />
+            <div className="w-[9px] h-[9px] rounded-[2px] bg-[var(--heatmap-level-3)]" />
+            <div className="w-[9px] h-[9px] rounded-[2px] bg-[var(--heatmap-level-4)]" />
           </div>
           <span>More</span>
-        </div>
       </div>
     </div>
   );
