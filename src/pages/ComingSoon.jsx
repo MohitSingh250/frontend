@@ -13,10 +13,10 @@ export default function ComingSoon({ title = "Coming Soon" }) {
         We are working hard to bring you this feature. Stay tuned for updates!
       </p>
       <Link 
-        to="/dashboard" 
+        to="/problems" 
         className="px-6 py-2.5 rounded-lg bg-[var(--brand-orange)] text-white font-medium hover:opacity-90 transition-opacity"
       >
-        Back to Dashboard
+        Back to Problems
       </Link>
     </div>
   );

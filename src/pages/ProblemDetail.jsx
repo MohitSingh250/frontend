@@ -24,7 +24,7 @@ export default function ProblemDetail() {
 
     if (user) {
       api
-        .get(`/submissions/user/${user._id}`)
+        .get(`/submissions/problem/${id}`)
         .then((r) => setSubmissions(r.data))
         .catch(() => {});
     }
@@ -39,7 +39,7 @@ export default function ProblemDetail() {
         text: res.data.message || (res.data.correct ? "✅ Correct!" : "❌ Wrong"),
       });
       if (user) {
-        const s = await api.get(`/submissions/user/${user._id}`);
+        const s = await api.get(`/submissions/problem/${id}`);
         setSubmissions(s.data);
       }
     } catch (err) {
@@ -70,7 +70,7 @@ export default function ProblemDetail() {
               className={`
                  flex items-center gap-2 px-4 h-full text-xs font-medium transition-colors border-r border-[var(--border-secondary)]
                  ${activeTab === "description" 
-                    ? "bg-[var(--bg-secondary)] text-[var(--text-primary)] border-t-2 border-t-[var(--brand-orange)]" 
+                    ? "bg-[var(--bg-secondary)] text-[var(--text-primary)]" 
                     : "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]"}
               `}
            >
@@ -82,7 +82,7 @@ export default function ProblemDetail() {
               className={`
                  flex items-center gap-2 px-4 h-full text-xs font-medium transition-colors border-r border-[var(--border-secondary)]
                  ${activeTab === "submissions" 
-                    ? "bg-[var(--bg-secondary)] text-[var(--text-primary)] border-t-2 border-t-[var(--brand-orange)]" 
+                    ? "bg-[var(--bg-secondary)] text-[var(--text-primary)]" 
                     : "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]"}
               `}
            >

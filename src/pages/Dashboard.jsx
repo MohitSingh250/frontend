@@ -91,7 +91,7 @@ export default function Dashboard() {
 
              <button
                onClick={() => setShowEdit(true)}
-               className="w-full mt-6 py-2 rounded-lg bg-[#2cbb5d]/10 text-[#2cbb5d] hover:bg-[#2cbb5d]/20 text-sm font-bold transition-colors flex items-center justify-center gap-2"
+               className="w-full mt-6 py-2 rounded-lg bg-[var(--color-success)]/10 text-[var(--color-success)] hover:bg-[var(--color-success)]/20 text-sm font-bold transition-colors flex items-center justify-center gap-2"
              >
                Edit Profile
              </button>
@@ -190,7 +190,7 @@ export default function Dashboard() {
                      attended={data.attended} 
                   />
               </Link>
-              <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] p-6 shadow-sm h-[280px] flex flex-col justify-center items-center relative overflow-hidden">
+              <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-primary)] p-6 shadow-sm h-auto md:h-[280px] flex flex-col justify-center items-center relative overflow-hidden">
                   <div className="absolute top-4 left-4 text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Top</div>
                   <div className="text-4xl font-black text-[var(--text-primary)] z-10">
                      {data.percentile ? data.percentile : "0"}%
@@ -202,7 +202,7 @@ export default function Dashboard() {
                         <div key={i} className={`w-1.5 rounded-t-sm ${i === 5 ? 'bg-[var(--brand-orange)]' : 'bg-[var(--text-secondary)]'}`} style={{ height: `${h}%` }} />
                      ))}
                   </div>
-              </div>
+               </div>
            </div>
 
            {/* Row 2: Solved Problems & Badges */}

@@ -35,7 +35,7 @@ export default function MyLists() {
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] p-6">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center gap-3 mb-8">
-          <div className="p-3 rounded-xl bg-green-500/10 text-green-500">
+          <div className="p-3 rounded-xl bg-[var(--color-success)]/10 text-[var(--color-success)]">
             <List size={24} />
           </div>
           <div>

@@ -33,7 +33,7 @@ export default function Notebook() {
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] p-6">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center gap-3 mb-8">
-          <div className="p-3 rounded-xl bg-blue-500/10 text-blue-500">
+          <div className="p-3 rounded-xl bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]">
             <Book size={24} />
           </div>
           <div>

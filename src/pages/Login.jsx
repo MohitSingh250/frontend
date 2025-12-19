@@ -62,7 +62,7 @@ export default function Login() {
 
             <button
               type="submit"
-              className="w-full py-2.5 rounded bg-white text-black font-medium text-sm hover:bg-gray-100 transition-colors"
+              className="w-full py-2.5 rounded bg-[var(--brand-orange)] text-white font-medium text-sm hover:bg-[var(--brand-orange-hover)] transition-colors shadow-lg shadow-[var(--brand-orange)]/20"
             >
               Sign In
             </button>
@@ -86,7 +86,7 @@ export default function Login() {
              <GoogleLogin
                onSuccess={(cred) => googleLogin(cred.credential)}
                onError={() => setErr("Google Login Failed")}
-               theme="filled_black"
+               theme={document.documentElement.getAttribute("data-theme") === "dark" ? "filled_black" : "outline"}
                shape="circle"
              />
           </div>

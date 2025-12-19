@@ -27,12 +27,10 @@ export default function Header() {
   }, []);
 
   const navLinks = [
-    { name: "Explore", path: "/explore", hasDropdown: false },
     { name: "Problems", path: "/problems", hasDropdown: false },
     { name: "Contest", path: "/contests", hasDropdown: false },
     { name: "Discuss", path: "/discuss", hasDropdown: false },
-    { name: "Interview", path: "/interview", hasDropdown: true },
-    { name: "Store", path: "/store", hasDropdown: true },
+    { name: "Store", path: "/store", hasDropdown: false },
   ];
 
   return (
@@ -71,12 +69,6 @@ export default function Header() {
           
           {user ? (
             <>
-              {/* Streak / Fire Icon */}
-              <div className="hidden sm:flex items-center gap-1 text-[var(--text-secondary)]">
-                <span className="text-orange-500">🔥</span>
-                <span className="text-sm font-medium">0</span>
-              </div>
-
               {/* Notifications */}
               <button className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-lg transition">
                 <Bell size={18} />

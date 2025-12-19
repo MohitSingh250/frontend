@@ -81,7 +81,7 @@ export default function Signup() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded bg-white text-black font-medium text-sm hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-2.5 rounded bg-[var(--brand-orange)] text-white font-medium text-sm hover:bg-[var(--brand-orange-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[var(--brand-orange)]/20"
             >
               {loading ? "Creating Account..." : "Sign Up"}
             </button>

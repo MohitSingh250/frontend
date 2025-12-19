@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 
 export default function PromoCards() {
   const scrollRef = useRef(null);
@@ -41,44 +41,36 @@ export default function PromoCards() {
           </button>
         </div>
 
-        {/* Card 2: Top PYQ Questions */}
+        {/* Card 2: JEE Store */}
         <div className="relative min-w-[270px] h-[135px] overflow-hidden rounded-lg bg-gradient-to-br from-[#00bcd4] to-[#00acc1] p-4 flex flex-col justify-between shrink-0">
-          {/* Illustration */}
-          <div className="absolute top-3 right-3 flex gap-1">
-            <div className="w-10 h-8 bg-white/20 rounded-md flex items-center justify-center">
-              <div className="w-6 h-5 bg-white/40 rounded-sm" />
-            </div>
-            <div className="w-8 h-10 bg-white/15 rounded-md flex items-center justify-center mt-2">
-              <div className="w-5 h-6 bg-white/30 rounded-sm" />
-            </div>
+          <div className="absolute top-3 right-3 opacity-20">
+            <BookOpen size={60} className="text-white" />
           </div>
           
           <div>
-            <h3 className="text-xl font-bold text-white leading-tight">Top Interview</h3>
-            <p className="text-xl font-bold text-white">Questions</p>
+            <h3 className="text-xl font-bold text-white leading-tight">JEE Premium</h3>
+            <p className="text-xl font-bold text-white">Store</p>
           </div>
           
           <button className="self-start px-4 py-1.5 rounded-md bg-white text-[#00acc1] text-xs font-bold">
-            Get Started
+            Visit Now
           </button>
         </div>
 
-        {/* Card 3: JEE Crash Course */}
+        {/* Card 3: Formula Cheat Sheets */}
         <div className="relative min-w-[270px] h-[135px] overflow-hidden rounded-lg bg-gradient-to-br from-[#7c4dff] to-[#651fff] p-4 flex flex-col justify-between shrink-0">
-          {/* Pattern */}
           <div className="absolute top-0 right-0 w-24 h-24 opacity-20">
             <div className="absolute top-4 right-4 w-12 h-12 border-4 border-white rounded-lg rotate-12" />
-            <div className="absolute top-8 right-8 w-8 h-8 border-4 border-white rounded-lg rotate-45" />
           </div>
           
           <div>
-            <h3 className="text-lg font-bold text-white leading-tight">JEE's Interview</h3>
-            <p className="text-lg font-bold text-white">Crash Course:</p>
-            <p className="text-[11px] text-white/80">Data Structures and Algorithms</p>
+            <h3 className="text-lg font-bold text-white leading-tight">Formula Sheets</h3>
+            <p className="text-lg font-bold text-white">Quick Revision</p>
+            <p className="text-[11px] text-white/80">Physics, Chemistry & Maths</p>
           </div>
           
           <button className="self-start px-4 py-1.5 rounded-md bg-white/20 border border-white/30 text-white text-xs font-bold">
-            Start Learning
+            Download PDF
           </button>
         </div>
 

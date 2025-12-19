@@ -97,7 +97,7 @@ export default function ContestDetail() {
             <button 
               onClick={handleJoin}
               disabled={joining || !isUpcoming}
-              className="px-6 py-2 rounded-full bg-[var(--bg-tertiary)] text-[var(--brand-orange)] font-medium hover:bg-[var(--bg-secondary)] transition-colors flex items-center gap-2"
+              className="px-6 py-2 rounded-full bg-[var(--brand-orange)]/10 text-[var(--brand-orange)] font-medium hover:bg-[var(--brand-orange)]/20 transition-colors flex items-center gap-2 disabled:opacity-50"
             >
               {joining ? "Registering..." : "Register"}
             </button>
@@ -165,23 +165,23 @@ export default function ContestDetail() {
                   <tbody className="divide-y divide-[var(--border-primary)]">
                     <tr className="bg-[var(--bg-secondary)]">
                       <td className="p-4 font-medium">1st Place</td>
-                      <td className="p-4 text-right text-yellow-500 font-bold">5,000 🪙</td>
+                      <td className="p-4 text-right text-[var(--color-medium)] font-bold">5,000 🪙</td>
                     </tr>
                     <tr>
                       <td className="p-4 font-medium">2nd Place</td>
-                      <td className="p-4 text-right text-yellow-500 font-bold">2,500 🪙</td>
+                      <td className="p-4 text-right text-[var(--color-medium)] font-bold">2,500 🪙</td>
                     </tr>
                     <tr className="bg-[var(--bg-secondary)]">
                       <td className="p-4 font-medium">3rd Place</td>
-                      <td className="p-4 text-right text-yellow-500 font-bold">1,000 🪙</td>
+                      <td className="p-4 text-right text-[var(--color-medium)] font-bold">1,000 🪙</td>
                     </tr>
                     <tr>
                       <td className="p-4 font-medium">4th - 50th Place</td>
-                      <td className="p-4 text-right text-yellow-500 font-bold">300 🪙</td>
+                      <td className="p-4 text-right text-[var(--color-medium)] font-bold">300 🪙</td>
                     </tr>
                     <tr className="bg-[var(--bg-secondary)]">
                       <td className="p-4 font-medium">Participation</td>
-                      <td className="p-4 text-right text-yellow-500 font-bold">5 🪙</td>
+                      <td className="p-4 text-right text-[var(--color-medium)] font-bold">5 🪙</td>
                     </tr>
                   </tbody>
                 </table>

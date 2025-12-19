@@ -23,9 +23,9 @@ export default function ProfileMenu({ user, onSignOut }) {
           <h3 className="text-base font-bold truncate text-[var(--text-primary)] group-hover:text-[var(--brand-orange)] transition-colors">
             {user?.username || "User"}
           </h3>
-          <p className="text-xs text-[var(--brand-orange)] font-medium">
+          <Link to="/premium" className="text-xs text-[var(--brand-orange)] font-medium hover:underline">
             Access all features with our Premium subscription!
-          </p>
+          </Link>
         </div>
       </Link>
 

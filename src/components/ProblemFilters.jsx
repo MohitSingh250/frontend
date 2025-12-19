@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Search, ChevronDown, ChevronUp, SlidersHorizontal, ArrowUpDown } from "lucide-react";
 
-export default function ProblemFilters({ filters, setFilters }) {
+export default function ProblemFilters({ filters, setFilters, userStats }) {
   const [showAllTopics, setShowAllTopics] = useState(false);
 
   const subjects = [
@@ -83,7 +83,7 @@ export default function ProblemFilters({ filters, setFilters }) {
   return (
     <div className="space-y-4 mb-4">
       {/* JEE Topics Row */}
-      <div className="flex items-center gap-2 text-sm text-white font-medium">
+      <div className="flex items-center gap-2 text-sm text-[var(--text-primary)] font-medium">
         <div className={`flex gap-4 flex-1 ${showAllTopics ? 'flex-wrap' : 'overflow-hidden max-h-[32px]'}`}>
            {displayTopics.map((topic) => (
              <button
@@ -92,7 +92,7 @@ export default function ProblemFilters({ filters, setFilters }) {
                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer whitespace-nowrap ${
                  filters.topic === topic.id
                    ? "bg-[var(--brand-orange)] text-white"
-                   : "text-white/90 hover:text-white hover:bg-[var(--bg-tertiary)]"
+                   : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]"
                }`}
              >
                {topic.label}
@@ -108,7 +108,7 @@ export default function ProblemFilters({ filters, setFilters }) {
         </div>
         <button 
           onClick={() => setShowAllTopics(!showAllTopics)}
-          className="flex items-center gap-1 hover:text-[var(--text-primary)] cursor-pointer px-2 py-1 whitespace-nowrap shrink-0"
+          className="flex items-center gap-1 hover:text-[var(--text-primary)] cursor-pointer px-2 py-1 whitespace-nowrap shrink-0 text-[var(--text-secondary)]"
         >
           {showAllTopics ? "Show Less" : "Expand"} 
           {showAllTopics ? <ChevronUp size={12}/> : <ChevronDown size={12}/>}
@@ -123,7 +123,7 @@ export default function ProblemFilters({ filters, setFilters }) {
             onClick={() => setFilters({ ...filters, subject: sub.id, page: 1 })}
             className={`px-5 py-2.5 rounded-full text-base font-medium transition-all flex items-center gap-2 shadow-sm ${
               filters.subject === sub.id
-                ? "bg-white text-black"
+                ? "bg-[var(--text-primary)] text-[var(--bg-primary)]"
                 : "bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]/80 hover:text-[var(--text-primary)]"
             }`}
           >
@@ -166,7 +166,7 @@ export default function ProblemFilters({ filters, setFilters }) {
         </button>
         
         <div className="ml-auto text-xs text-[var(--text-secondary)] font-medium">
-           <span className="text-[var(--text-primary)]">226</span>/3772 Solved
+           <span className="text-[var(--text-primary)]">{userStats?.totalSolved || 0}</span>/{userStats?.totalProblems || 0} Solved
         </div>
       </div>
     </div>

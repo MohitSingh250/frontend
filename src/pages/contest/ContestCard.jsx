@@ -24,17 +24,17 @@ export default function ContestCard({ contest, index, activeTab }) {
       >
         {/* Card Header with Gradient */}
         <div className={`h-24 w-full relative overflow-hidden ${
-           isLive ? "bg-gradient-to-r from-red-500/10 to-orange-500/10" : 
-           isUpcoming ? "bg-gradient-to-r from-blue-500/10 to-purple-500/10" : 
+           isLive ? "bg-gradient-to-r from-[var(--color-hard)]/10 to-[var(--brand-orange)]/10" : 
+           isUpcoming ? "bg-gradient-to-r from-[var(--accent-blue)]/10 to-[var(--accent-purple)]/10" : 
            "bg-[var(--bg-tertiary)]"
         }`}>
            <div className="absolute top-4 right-4">
               {isLive ? (
-                 <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 text-red-500 text-xs font-bold border border-red-500/20 animate-pulse">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" /> LIVE
+                 <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--color-hard)]/10 text-[var(--color-hard)] text-xs font-bold border border-[var(--color-hard)]/20 animate-pulse">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-hard)]" /> LIVE
                  </span>
               ) : isUpcoming ? (
-                 <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-500 text-xs font-bold border border-blue-500/20">
+                 <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--accent-blue)]/10 text-[var(--accent-blue)] text-xs font-bold border border-[var(--accent-blue)]/20">
                     <Calendar size={12} /> UPCOMING
                  </span>
               ) : (
@@ -46,7 +46,7 @@ export default function ContestCard({ contest, index, activeTab }) {
            
            <div className="absolute bottom-4 left-4">
               <div className="p-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] shadow-sm">
-                 <Trophy className={`w-5 h-5 ${isLive ? "text-red-500" : isUpcoming ? "text-blue-500" : "text-[var(--text-secondary)]"}`} />
+                 <Trophy className={`w-5 h-5 ${isLive ? "text-[var(--color-hard)]" : isUpcoming ? "text-[var(--accent-blue)]" : "text-[var(--text-secondary)]"}`} />
               </div>
            </div>
         </div>

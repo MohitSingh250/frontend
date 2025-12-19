@@ -14,16 +14,16 @@ export default function FeaturedContestCard({ contest, type }) {
       {/* Background Gradient */}
       <div className={`absolute inset-0 ${
         isWeekly 
-          ? "bg-gradient-to-br from-blue-600/20 via-blue-900/40 to-[var(--bg-secondary)]" 
-          : "bg-gradient-to-br from-emerald-600/20 via-emerald-900/40 to-[var(--bg-secondary)]"
+          ? "bg-gradient-to-br from-[var(--accent-blue)]/20 via-[var(--bg-secondary)] to-[var(--bg-secondary)]" 
+          : "bg-gradient-to-br from-[var(--color-success)]/20 via-[var(--bg-secondary)] to-[var(--bg-secondary)]"
       }`} />
       
       {/* Abstract Shapes */}
-      <div className="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+      <div className="absolute right-0 top-0 w-64 h-64 bg-[var(--text-primary)]/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
       
       <div className="relative p-6 h-full flex flex-col min-h-[200px] border border-[var(--border-primary)] rounded-2xl hover:border-[var(--brand-orange)] transition-colors">
         <div className="flex justify-between items-start mb-4">
-          <div className={`p-2 rounded-lg ${isWeekly ? "bg-blue-500/20 text-blue-400" : "bg-emerald-500/20 text-emerald-400"}`}>
+          <div className={`p-2 rounded-lg ${isWeekly ? "bg-[var(--accent-blue)]/20 text-[var(--accent-blue)]" : "bg-[var(--color-success)]/20 text-[var(--color-success)]"}`}>
             <Calendar size={20} />
           </div>
         </div>

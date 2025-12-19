@@ -56,8 +56,9 @@ export default function FeaturedWidgets({ dailyProblem }) {
         </div>
       </div>
 
-      {/* 2. Top Interview Questions (Blue Gradient) */}
+      {/* 2. JEE Store (Blue Gradient) */}
       <div 
+        onClick={() => navigate('/store')}
         className="
           group relative overflow-hidden rounded-xl cursor-pointer
           bg-gradient-to-br from-blue-600 to-blue-800
@@ -66,25 +67,26 @@ export default function FeaturedWidgets({ dailyProblem }) {
         "
       >
         <div className="absolute right-0 bottom-0 opacity-20 transform translate-x-4 translate-y-4">
-           <Code2 size={120} className="text-white" />
+           <BookOpen size={120} className="text-white" />
         </div>
         
         <div className="p-5 relative z-10 h-full flex flex-col justify-between text-white">
           <div>
-            <h3 className="text-xl font-black mb-1">Top Interview Questions</h3>
+            <h3 className="text-xl font-black mb-1">JEE Premium Store</h3>
             <p className="text-blue-100 text-xs font-medium max-w-[80%]">
-               Curated list of 150 most asked questions.
+               Get access to premium JEE books, formula sheets, and study material.
             </p>
           </div>
           
           <button className="w-fit px-4 py-2 rounded-lg bg-white text-blue-700 text-xs font-bold hover:bg-blue-50 transition-colors shadow-sm">
-             Start Learning
+             Visit Store
           </button>
         </div>
       </div>
 
-      {/* 3. SQL 50 (Purple Gradient) */}
+      {/* 3. Mock Test Series (Purple Gradient) */}
       <div 
+        onClick={() => navigate('/contests')}
         className="
           group relative overflow-hidden rounded-xl cursor-pointer
           bg-gradient-to-br from-purple-600 to-purple-800
@@ -93,28 +95,28 @@ export default function FeaturedWidgets({ dailyProblem }) {
         "
       >
         <div className="absolute right-0 top-0 opacity-20 transform translate-x-4 -translate-y-4">
-           <Database size={120} className="text-white" />
+           <Trophy size={120} className="text-white" />
         </div>
         
         <div className="p-5 relative z-10 h-full flex flex-col justify-between text-white">
           <div>
              <div className="flex items-center gap-2 mb-2">
                 <span className="px-2 py-0.5 rounded bg-purple-500/30 border border-purple-400/30 text-[10px] font-bold uppercase tracking-wider">
-                   Study Plan
+                   All India Series
                 </span>
              </div>
-            <h3 className="text-xl font-black mb-1">SQL 50</h3>
+            <h3 className="text-xl font-black mb-1">Mock Test Series</h3>
             <p className="text-purple-100 text-xs font-medium max-w-[80%]">
-               Crack SQL interviews in 50 questions.
+               Practice with full-length JEE Mains & Advanced mock tests.
             </p>
           </div>
           
           <div className="flex items-center justify-between">
              <button className="px-4 py-2 rounded-lg bg-white text-purple-700 text-xs font-bold hover:bg-purple-50 transition-colors shadow-sm">
-                Get Started
+                Start Testing
              </button>
              <div className="text-right">
-                <span className="text-2xl font-black opacity-30">0/50</span>
+                <span className="text-2xl font-black opacity-30">LIVE</span>
              </div>
           </div>
         </div>

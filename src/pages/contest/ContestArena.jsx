@@ -94,35 +94,35 @@ export default function ContestArena() {
   };
 
   if (loading) return (
-    <div className={`min-h-screen flex items-center justify-center ${darkMode ? "bg-[#0f0f0f]" : "bg-gray-50"}`}>
-      <div className={`animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 ${darkMode ? "border-[var(--dark-pastel-green)]" : "border-blue-600"}`}></div>
+    <div className={`min-h-screen flex items-center justify-center bg-[var(--bg-primary)]`}>
+      <div className={`animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[var(--brand-orange)]`}></div>
     </div>
   );
   
-  if (!contest) return <div className={`min-h-screen flex items-center justify-center ${darkMode ? "bg-[#0f0f0f] text-white" : "bg-gray-50 text-gray-900"}`}>Contest not found</div>;
+  if (!contest) return <div className={`min-h-screen flex items-center justify-center bg-[var(--bg-primary)] text-[var(--text-primary)]`}>Contest not found</div>;
 
   const activeProblem = problems[activeProblemIndex];
   const currentAnswer = answers[activeProblem._id];
 
   // Dynamic Theme Classes
   const themeStyles = {
-    bg: darkMode ? "bg-[#0f0f0f]" : "bg-gray-50",
-    text: darkMode ? "text-[#e0e0e0]" : "text-gray-900",
-    headerBg: darkMode ? "bg-[#161819]" : "bg-white",
-    headerBorder: darkMode ? "border-white/5" : "border-gray-200",
-    panelBg: darkMode ? "bg-[#161819]" : "bg-gray-50",
-    panelBorder: darkMode ? "border-white/5" : "border-gray-200",
-    cardBg: darkMode ? "bg-[#1e2022]/50 backdrop-blur-md" : "bg-white/80 backdrop-blur-md",
-    cardBorder: darkMode ? "border-white/5" : "border-gray-200",
-    inputBg: darkMode ? "bg-[#0f0f0f]" : "bg-white",
-    inputBorder: darkMode ? "border-white/10" : "border-gray-300",
-    accent: darkMode ? "var(--dark-pastel-green)" : "#2563eb", // Blue-600
-    accentText: darkMode ? "text-[var(--dark-pastel-green)]" : "text-blue-600",
-    accentBg: darkMode ? "bg-[var(--dark-pastel-green)]" : "bg-blue-600",
-    accentBorder: darkMode ? "border-[var(--dark-pastel-green)]" : "border-blue-600",
-    mutedText: darkMode ? "text-white/40" : "text-gray-400",
-    subText: darkMode ? "text-white/60" : "text-gray-600",
-    hoverBg: darkMode ? "hover:bg-white/5" : "hover:bg-gray-100",
+    bg: "bg-[var(--bg-primary)]",
+    text: "text-[var(--text-primary)]",
+    headerBg: "bg-[var(--bg-secondary)]",
+    headerBorder: "border-[var(--border-primary)]",
+    panelBg: "bg-[var(--bg-secondary)]",
+    panelBorder: "border-[var(--border-primary)]",
+    cardBg: "bg-[var(--bg-secondary)]/50 backdrop-blur-md",
+    cardBorder: "border-[var(--border-primary)]",
+    inputBg: "bg-[var(--bg-primary)]",
+    inputBorder: "border-[var(--border-primary)]",
+    accent: "var(--brand-orange)",
+    accentText: "text-[var(--brand-orange)]",
+    accentBg: "bg-[var(--brand-orange)]",
+    accentBorder: "border-[var(--brand-orange)]",
+    mutedText: "text-[var(--text-tertiary)]",
+    subText: "text-[var(--text-secondary)]",
+    hoverBg: "hover:bg-[var(--bg-tertiary)]",
   };
 
   return (
@@ -165,7 +165,7 @@ export default function ContestArena() {
       <header className={`h-16 shrink-0 ${themeStyles.headerBg} border-b ${themeStyles.headerBorder} flex items-center justify-between px-4 md:px-6 z-30 shadow-sm relative transition-colors duration-300`}>
         <div className="flex items-center gap-4 md:gap-6">
           <div className="flex items-center gap-3">
-             <div className={`w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center font-bold text-lg md:text-xl shadow-md ${darkMode ? "bg-[var(--dark-pastel-green)] text-black shadow-[0_0_15px_rgba(34,197,94,0.3)]" : "bg-blue-600 text-white shadow-blue-200"}`}>O</div>
+             <div className={`w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center font-bold text-lg md:text-xl shadow-md bg-[var(--brand-orange)] text-white shadow-[var(--brand-orange)]/20`}>O</div>
              <div className="hidden md:block">
                <h1 className={`font-bold text-lg tracking-tight leading-none ${themeStyles.text}`}>Orbit Arena</h1>
                <span className={`text-[10px] ${darkMode ? "text-white/40" : "text-gray-500"} font-bold uppercase tracking-widest`}>Professional Exam Suite</span>
@@ -225,13 +225,13 @@ export default function ContestArena() {
                   <span className={`text-4xl md:text-5xl font-black ${darkMode ? "text-white/5" : "text-gray-100"} tracking-tighter shrink-0 select-none`}>Q{activeProblemIndex + 1}</span>
                   <div>
                     <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-2">
-                      <span className={`px-2 md:px-2.5 py-1 rounded-md text-[9px] md:text-[10px] font-bold uppercase tracking-wide border ${darkMode ? "bg-[var(--dark-pastel-green)]/10 text-[var(--dark-pastel-green)] border-[var(--dark-pastel-green)]/20" : "bg-blue-50 text-blue-600 border-blue-100"}`}>
+                      <span className={`px-2 md:px-2.5 py-1 rounded-md text-[9px] md:text-[10px] font-bold uppercase tracking-wide border bg-[var(--brand-orange)]/10 text-[var(--brand-orange)] border-[var(--brand-orange)]/20`}>
                         {activeProblem.inputType === "mcq_single" ? "Single Correct" : "Numeric Value"}
                       </span>
                       <span className={`px-2 md:px-2.5 py-1 rounded-md text-[9px] md:text-[10px] font-bold uppercase tracking-wide border ${
-                        activeProblem.difficulty === 'Hard' ? (darkMode ? 'border-red-500/20 text-red-400 bg-red-500/5' : 'border-red-100 text-red-500 bg-red-50') :
-                        activeProblem.difficulty === 'Medium' ? (darkMode ? 'border-yellow-500/20 text-yellow-400 bg-yellow-500/5' : 'border-yellow-100 text-yellow-600 bg-yellow-50') :
-                        (darkMode ? 'border-green-500/20 text-green-400 bg-green-500/5' : 'border-green-100 text-green-600 bg-green-50')
+                        activeProblem.difficulty === 'Hard' ? 'border-[var(--color-hard)]/20 text-[var(--color-hard)] bg-[var(--color-hard)]/5' :
+                        activeProblem.difficulty === 'Medium' ? 'border-[var(--color-medium)]/20 text-[var(--color-medium)] bg-[var(--color-medium)]/5' :
+                        'border-[var(--color-easy)]/20 text-[var(--color-easy)] bg-[var(--color-easy)]/5'
                       }`}>
                         {activeProblem.difficulty || "Medium"}
                       </span>
@@ -410,19 +410,19 @@ export default function ContestArena() {
                           setActiveProblemIndex(i);
                           setSidebarOpen(false); // Close drawer on selection (mobile)
                         }}
-                        className={`aspect-square rounded-lg flex items-center justify-center text-xs font-bold transition-all relative group ${
+                         className={`aspect-square rounded-lg flex items-center justify-center text-xs font-bold transition-all relative group ${
                           activeProblemIndex === i
-                            ? `ring-2 ${themeStyles.accentBorder} ring-offset-2 ${darkMode ? "ring-offset-[#161819] bg-[#0f0f0f]" : "ring-offset-white bg-gray-900"} text-white z-10`
+                            ? `ring-2 ${themeStyles.accentBorder} ring-offset-2 bg-[var(--text-primary)] text-[var(--bg-primary)] z-10`
                             : ""
                         } ${
                           answers[p._id]
-                            ? `${darkMode ? "bg-[var(--dark-pastel-green)] text-black" : "bg-green-500 text-white"} shadow-sm`
+                            ? `bg-[var(--color-success)] text-white shadow-sm`
                             : `${themeStyles.cardBg} border ${themeStyles.cardBorder} ${themeStyles.mutedText} hover:${themeStyles.hoverBg} hover:${themeStyles.text} hover:${themeStyles.panelBorder}`
                         }`}
                       >
                         {i + 1}
                         {answers[p._id] && (
-                          <div className={`absolute -top-1 -right-1 w-2 h-2 ${darkMode ? "bg-emerald-400 border-[#161819]" : "bg-green-500 border-white"} rounded-full border-2`} />
+                          <div className={`absolute -top-1 -right-1 w-2 h-2 bg-[var(--color-success)] border-[var(--bg-secondary)] rounded-full border-2`} />
                         )}
                       </button>
                     ))}
@@ -430,7 +430,7 @@ export default function ContestArena() {
                   
                   <div className={`mt-8 space-y-3 p-4 rounded-xl ${themeStyles.cardBg} border ${themeStyles.cardBorder}`}>
                      <div className={`flex items-center gap-3 text-[10px] font-bold uppercase tracking-wide ${themeStyles.subText}`}>
-                       <div className={`w-2.5 h-2.5 rounded-full ${darkMode ? "bg-[var(--dark-pastel-green)]" : "bg-green-500"}`}></div>
+                       <div className={`w-2.5 h-2.5 rounded-full bg-[var(--color-success)]`}></div>
                        <span>Answered</span>
                      </div>
                      <div className={`flex items-center gap-3 text-[10px] font-bold uppercase tracking-wide ${themeStyles.subText}`}>
@@ -438,7 +438,7 @@ export default function ContestArena() {
                        <span>Not Answered</span>
                      </div>
                      <div className={`flex items-center gap-3 text-[10px] font-bold uppercase tracking-wide ${themeStyles.subText}`}>
-                       <div className={`w-2.5 h-2.5 rounded-full ${darkMode ? "bg-[#0f0f0f] ring-1 ring-[var(--dark-pastel-green)]" : "bg-gray-900"}`}></div>
+                       <div className={`w-2.5 h-2.5 rounded-full bg-[var(--text-primary)] ring-1 ring-[var(--brand-orange)]`}></div>
                        <span>Current</span>
                      </div>
                   </div>

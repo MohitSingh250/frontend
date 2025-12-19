@@ -19,6 +19,9 @@ import ContestLeaderboard from "./pages/contest/ContestLeaderboard";
 import ComingSoon from "./pages/ComingSoon";
 import Notebook from "./pages/Notebook";
 import MyLists from "./pages/MyLists";
+import Store from "./pages/Store";
+
+import Premium from "./pages/Premium";
 
 function PrivateRoute({ children }) {
   const { user } = useContext(AuthContext);
@@ -27,12 +30,14 @@ function PrivateRoute({ children }) {
 
 import Footer from "./components/Footer";
 
+import { Toaster } from "react-hot-toast";
 import ProblemList from "./pages/ProblemList";
 
 export default function App() {
   const { user } = useContext(AuthContext);
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
+      <Toaster position="top-center" reverseOrder={false} />
       {!useLocation().pathname.includes("/arena") && <Header />}
 
       <Routes>
@@ -79,9 +84,15 @@ export default function App() {
         <Route path="/orders" element={<ComingSoon title="Orders" />} />
         <Route path="/playgrounds" element={<ComingSoon title="My Playgrounds" />} />
         <Route path="/settings" element={<ComingSoon title="Settings" />} />
+        <Route path="/store" element={<Store />} />
+        <Route path="/discuss" element={<ComingSoon title="Discuss" />} />
+        <Route path="/quest" element={<ComingSoon title="Quest" />} />
+        <Route path="/study-plan" element={<ComingSoon title="Study Plan" />} />
+        <Route path="/favorites" element={<ComingSoon title="Favorites" />} />
+        <Route path="/premium" element={<Premium />} />
       </Routes>
 
-      {!useLocation().pathname.includes("/arena") && <Footer />}
+      {!useLocation().pathname.includes("/arena") && !useLocation().pathname.includes("/problems/") && <Footer />}
     </div>
   );
 }

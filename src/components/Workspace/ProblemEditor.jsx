@@ -9,7 +9,7 @@ export default function ProblemEditor({ problem, answer, setAnswer, submit, msg 
       {/* Editor Header */}
       <div className="h-10 flex items-center px-4 border-b border-[var(--border-primary)] bg-[var(--bg-tertiary)]">
         <span className="text-xs font-medium text-[var(--text-secondary)]">
-           Code / Answer
+           Answer
         </span>
       </div>
 

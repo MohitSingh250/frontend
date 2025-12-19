@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ReactMarkdown from "react-markdown";
 import { Lightbulb, ChevronRight, ChevronDown } from "lucide-react";
+import { ThemeContext } from "../../context/ThemeContext";
 
 export default function ProblemDescription({ problem }) {
+  const { theme } = useContext(ThemeContext);
   const [shownHints, setShownHints] = useState(0);
 
   if (!problem) return null;
@@ -38,7 +40,7 @@ export default function ProblemDescription({ problem }) {
       </div>
 
       {/* Statement */}
-      <div className="prose prose-invert max-w-none text-[var(--text-primary)] text-sm leading-relaxed">
+      <div className={`prose ${theme === 'dark' ? 'prose-invert' : ''} max-w-none text-[var(--text-primary)] text-sm leading-relaxed`}>
         <ReactMarkdown>{problem.statement}</ReactMarkdown>
       </div>
 

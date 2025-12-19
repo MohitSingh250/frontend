@@ -26,6 +26,8 @@ export default function ProblemList() {
   const [activeMobileWidget, setActiveMobileWidget] = useState(null); // 'calendar' | 'chapters' | null
   const pageSize = 20;
 
+  const [userStats, setUserStats] = useState({ totalSolved: 0, totalProblems: 0 });
+
   // Fetch Daily Problem for Widgets
   useEffect(() => {
     const fetchDaily = async () => {
@@ -37,6 +39,22 @@ export default function ProblemList() {
       }
     };
     fetchDaily();
+  }, []);
+
+  // Fetch User Stats for Filter Header
+  useEffect(() => {
+    const fetchUserStats = async () => {
+      try {
+        const res = await api.get("/users/me/dashboard");
+        setUserStats({
+          totalSolved: res.data.totalSolved,
+          totalProblems: res.data.totalEasy + res.data.totalMedium + res.data.totalHard
+        });
+      } catch (err) {
+        console.error("Error fetching user stats:", err);
+      }
+    };
+    fetchUserStats();
   }, []);
 
   const fetchProblems = async (reset = false) => {
@@ -125,7 +143,7 @@ export default function ProblemList() {
             <PromoCards />
             
             {/* Filters & Table */}
-            <ProblemFilters filters={filters} setFilters={setFilters} />
+            <ProblemFilters filters={filters} setFilters={setFilters} userStats={userStats} />
 
             <ProblemTable problems={loadedData} loading={loading && page === 1} />
 
@@ -161,16 +179,6 @@ export default function ProblemList() {
              <Calendar />
              <ImportantChapters />
              
-             {/* Footer Links */}
-             <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-xs text-[var(--text-secondary)] px-2">
-                <a href="#" className="hover:text-[var(--text-primary)]">Copyright © 2025 Orbit</a>
-                <a href="#" className="hover:text-[var(--text-primary)]">Help Center</a>
-                <a href="#" className="hover:text-[var(--text-primary)]">Jobs</a>
-                <a href="#" className="hover:text-[var(--text-primary)]">Bug Bounty</a>
-                <a href="#" className="hover:text-[var(--text-primary)]">Students</a>
-                <a href="#" className="hover:text-[var(--text-primary)]">Terms</a>
-                <a href="#" className="hover:text-[var(--text-primary)]">Privacy Policy</a>
-             </div>
           </aside>
 
         </div>

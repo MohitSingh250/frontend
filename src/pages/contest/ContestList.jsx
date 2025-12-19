@@ -54,7 +54,7 @@ export default function ContestList() {
             transition={{ duration: 0.5 }}
           >
             <img 
-              src="https://assets.leetcode.com/static_assets/others/cup.png" 
+              src="https://plus.unsplash.com/premium_photo-1713628398150-090420185638?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
               alt="Trophy" 
               className="w-24 h-24 mx-auto mb-4 drop-shadow-2xl"
             />
@@ -85,7 +85,7 @@ export default function ContestList() {
                 onClick={() => setActiveTab("past")}
                 className={`pb-3 text-sm font-medium transition-colors border-b-2 ${
                   activeTab === "past" 
-                    ? "border-[var(--text-primary)] text-[var(--text-primary)]" 
+                    ? "border-[var(--brand-orange)] text-[var(--brand-orange)]" 
                     : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
@@ -95,7 +95,7 @@ export default function ContestList() {
                 onClick={() => setActiveTab("my")}
                 className={`pb-3 text-sm font-medium transition-colors border-b-2 ${
                   activeTab === "my" 
-                    ? "border-[var(--text-primary)] text-[var(--text-primary)]" 
+                    ? "border-[var(--brand-orange)] text-[var(--brand-orange)]" 
                     : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
