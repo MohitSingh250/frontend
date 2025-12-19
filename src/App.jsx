@@ -24,7 +24,16 @@ import Store from "./pages/Store";
 import Premium from "./pages/Premium";
 
 function PrivateRoute({ children }) {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[var(--brand-orange)]"></div>
+      </div>
+    );
+  }
+  
   return user ? children : <Navigate to="/login" replace />;
 }
 
@@ -34,14 +43,27 @@ import { Toaster } from "react-hot-toast";
 import ProblemList from "./pages/ProblemList";
 
 export default function App() {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <Toaster position="top-center" reverseOrder={false} />
       {!useLocation().pathname.includes("/arena") && <Header />}
 
       <Routes>
-        <Route path="/" element={user ? <Navigate to="/problems" replace /> : <Home />} />
+        <Route 
+          path="/" 
+          element={
+            loading ? (
+              <div className="flex-1 flex items-center justify-center bg-[var(--bg-primary)]">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[var(--brand-orange)]"></div>
+              </div>
+            ) : user ? (
+              <Navigate to="/problems" replace />
+            ) : (
+              <Home />
+            )
+          } 
+        />
         <Route path="/problems" element={<ProblemList />} />
         <Route path="/daily" element={<DailyProblem />} />
         <Route path="/problems/:id" element={<ProblemDetail />} />

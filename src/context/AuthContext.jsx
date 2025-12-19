@@ -7,20 +7,24 @@ export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-useEffect(() => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    api.get('/auth/me')
-      .then(res => setUser(res.data))
-      .catch(() => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
-        setUser(null);
-      });
-  }
-}, []);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      api.get('/auth/me')
+        .then(res => setUser(res.data))
+        .catch(() => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('refreshToken');
+          setUser(null);
+        })
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
 
 const login = async (email, password) => {
@@ -67,7 +71,7 @@ const logout = () => {
 };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, signup, logout,googleLogin }}>
+    <AuthContext.Provider value={{ user, setUser, login, signup, logout, googleLogin, loading }}>
       {children}
     </AuthContext.Provider>
   );
