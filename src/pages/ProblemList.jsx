@@ -61,7 +61,7 @@ export default function ProblemList() {
     try {
       setLoading(true);
 
-      const params = { ...filters, page, limit: pageSize };
+      const params = { ...filters, page: reset ? 1 : page, limit: pageSize };
       const res = await api.get("/problems", { params });
       
       let data = [];
@@ -145,7 +145,11 @@ export default function ProblemList() {
             {/* Filters & Table */}
             <ProblemFilters filters={filters} setFilters={setFilters} userStats={userStats} />
 
-            <ProblemTable problems={loadedData} loading={loading && page === 1} />
+            <ProblemTable 
+              problems={loadedData} 
+              loading={loading && page === 1} 
+              searchQuery={filters.q}
+            />
 
             {!loading && loadedData.length === 0 && (
               <div className="flex flex-col items-center justify-center py-20 text-center border border-dashed border-[var(--border-primary)] rounded-xl bg-[var(--bg-secondary)] mt-4">

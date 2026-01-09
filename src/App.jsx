@@ -97,7 +97,6 @@ export default function App() {
           }
         />
 
-        {/* New Routes from Profile Menu */}
         <Route path="/list" element={<MyLists />} />
         <Route path="/notebook" element={<Notebook />} />
         <Route path="/progress" element={<ComingSoon title="Progress" />} />
@@ -114,7 +113,7 @@ export default function App() {
         <Route path="/premium" element={<Premium />} />
       </Routes>
 
-      {!useLocation().pathname.includes("/arena") && !useLocation().pathname.includes("/problems/") && <Footer />}
+      {!useLocation().pathname.includes("/arena") && !useLocation().pathname.startsWith("/problems") && <Footer />}
     </div>
   );
 }

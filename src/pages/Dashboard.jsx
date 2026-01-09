@@ -217,28 +217,58 @@ export default function Dashboard() {
                           medium={data.mediumSolved || 0} 
                           hard={data.hardSolved || 0} 
                           total={data.totalSolved || 0} 
+                          totalEasy={data.totalEasy || 0}
+                          totalMedium={data.totalMedium || 0}
+                          totalHard={data.totalHard || 0}
                        />
                     </div>
-                    <div className="flex-1 space-y-4">
-                       <div className="flex justify-between items-center p-2 rounded bg-[var(--bg-tertiary)]/30">
-                          <span className="text-xs font-bold text-[var(--color-easy)] w-12">Easy</span>
-                           <span className="text-sm font-bold text-[var(--text-primary)]">
-                              {data.easySolved || 0}<span className="text-[var(--text-tertiary)] font-normal text-xs ml-1">/{data.totalEasy || 0}</span>
-                           </span>
+                    <div className="flex-1 space-y-5">
+                       {/* Easy */}
+                       <div className="space-y-2">
+                          <div className="flex justify-between items-center text-xs font-bold">
+                             <span className="text-[var(--color-easy)]">Easy</span>
+                             <span className="text-[var(--text-primary)]">
+                                {data.easySolved || 0}<span className="text-[var(--text-tertiary)] font-normal ml-1">/{data.totalEasy || 0}</span>
+                             </span>
+                          </div>
+                          <div className="h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+                             <div 
+                                className="h-full bg-[var(--color-easy)] rounded-full transition-all duration-1000" 
+                                style={{ width: `${Math.min(100, ((data.easySolved || 0) / (data.totalEasy || 1)) * 100)}%` }}
+                             ></div>
+                          </div>
                        </div>
 
-                       <div className="flex justify-between items-center p-2 rounded bg-[var(--bg-tertiary)]/30">
-                          <span className="text-xs font-bold text-[var(--color-medium)] w-12">Med.</span>
-                           <span className="text-sm font-bold text-[var(--text-primary)]">
-                              {data.mediumSolved || 0}<span className="text-[var(--text-tertiary)] font-normal text-xs ml-1">/{data.totalMedium || 0}</span>
-                           </span>
+                       {/* Medium */}
+                       <div className="space-y-2">
+                          <div className="flex justify-between items-center text-xs font-bold">
+                             <span className="text-[var(--color-medium)]">Med.</span>
+                             <span className="text-[var(--text-primary)]">
+                                {data.mediumSolved || 0}<span className="text-[var(--text-tertiary)] font-normal ml-1">/{data.totalMedium || 0}</span>
+                             </span>
+                          </div>
+                          <div className="h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+                             <div 
+                                className="h-full bg-[var(--color-medium)] rounded-full transition-all duration-1000" 
+                                style={{ width: `${Math.min(100, ((data.mediumSolved || 0) / (data.totalMedium || 1)) * 100)}%` }}
+                             ></div>
+                          </div>
                        </div>
 
-                       <div className="flex justify-between items-center p-2 rounded bg-[var(--bg-tertiary)]/30">
-                          <span className="text-xs font-bold text-[var(--color-hard)] w-12">Hard</span>
-                           <span className="text-sm font-bold text-[var(--text-primary)]">
-                              {data.hardSolved || 0}<span className="text-[var(--text-tertiary)] font-normal text-xs ml-1">/{data.totalHard || 0}</span>
-                           </span>
+                       {/* Hard */}
+                       <div className="space-y-2">
+                          <div className="flex justify-between items-center text-xs font-bold">
+                             <span className="text-[var(--color-hard)]">Hard</span>
+                             <span className="text-[var(--text-primary)]">
+                                {data.hardSolved || 0}<span className="text-[var(--text-tertiary)] font-normal ml-1">/{data.totalHard || 0}</span>
+                             </span>
+                          </div>
+                          <div className="h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+                             <div 
+                                className="h-full bg-[var(--color-hard)] rounded-full transition-all duration-1000" 
+                                style={{ width: `${Math.min(100, ((data.hardSolved || 0) / (data.totalHard || 1)) * 100)}%` }}
+                             ></div>
+                          </div>
                        </div>
                     </div>
                  </div>

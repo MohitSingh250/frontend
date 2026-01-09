@@ -4,7 +4,26 @@ import { AuthContext } from '../context/AuthContext';
 import api from '../api';
 import { CheckCircle2, Circle, FileText } from 'lucide-react';
 
-export default function ProblemTable({ problems, loading }) {
+const HighlightText = ({ text, query }) => {
+  if (!query || !query.trim()) return text;
+  
+  const parts = text.split(new RegExp(`(${query})`, 'gi'));
+  return (
+    <span>
+      {parts.map((part, i) => 
+        part.toLowerCase() === query.toLowerCase() ? (
+          <mark key={i} className="bg-[var(--brand-orange)]/30 text-[var(--brand-orange)] rounded-sm px-0.5">
+            {part}
+          </mark>
+        ) : (
+          part
+        )
+      )}
+    </span>
+  );
+};
+
+export default function ProblemTable({ problems, loading, searchQuery }) {
   const { user } = useContext(AuthContext);
   const [solvedIds, setSolvedIds] = useState(new Set());
 
@@ -78,7 +97,7 @@ export default function ProblemTable({ problems, loading }) {
                     to={`/problems/${problem._id}`} 
                     className="text-[var(--text-primary)] transition-colors flex items-center gap-2"
                   >
-                    {problem.title}
+                    <HighlightText text={problem.title} query={searchQuery} />
                   </Link>
                 </td>
                 <td className={`px-4 py-2 text-[var(--text-secondary)] ${rowBg} transition-colors`}>

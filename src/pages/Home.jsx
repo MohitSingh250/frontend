@@ -5,21 +5,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import api from "../api";
 
 export default function Home() {
-  const [stats, setStats] = useState({
-    totalProblems: 5000,
-    totalUsers: 10000,
-    totalSubmissions: 2400000,
-    activeContests: 2
-  });
+  const [stats, setStats] = useState(null);
   const [activeUsers, setActiveUsers] = useState(42);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
+        setLoading(true);
         const res = await api.get("/advanced/stats");
         setStats(res.data);
       } catch (err) {
         console.error("Failed to fetch global stats:", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchStats();
@@ -217,7 +216,7 @@ export default function Home() {
                 tagline: "Mechanics & Electrodynamics",
                 desc: "From Classical Mechanics to Modern Physics, master the most challenging concepts with 1500+ problems vetted by top IITians.",
                 color: "var(--accent-blue)",
-                stats: `${stats.subjectCounts?.Physics || 0}+ Problems`
+                stats: loading ? null : `${stats?.subjectCounts?.Physics || 0}+ Problems`
               },
               {
                 icon: <FlaskConical className="w-10 h-10" />,
@@ -225,7 +224,7 @@ export default function Home() {
                 tagline: "Organic & Physical",
                 desc: "Organic, Inorganic, and Physical Chemistry modules designed for maximum retention and numerical precision.",
                 color: "var(--color-easy)",
-                stats: `${stats.subjectCounts?.Chemistry || 0}+ Problems`
+                stats: loading ? null : `${stats?.subjectCounts?.Chemistry || 0}+ Problems`
               },
               {
                 icon: <Calculator className="w-10 h-10" />,
@@ -233,7 +232,7 @@ export default function Home() {
                 tagline: "Calculus & Algebra",
                 desc: "Calculus, Algebra, and Coordinate Geometry with advanced difficulty levels to build logical rigor and problem-solving speed.",
                 color: "var(--brand-orange)",
-                stats: `${stats.subjectCounts?.Maths || 0}+ Problems`
+                stats: loading ? null : `${stats?.subjectCounts?.Maths || 0}+ Problems`
               }
             ].map((subject, idx) => (
               <motion.div 
@@ -249,15 +248,26 @@ export default function Home() {
                     {subject.icon}
                   </div>
                   <div className="mb-6 md:mb-8">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-30 mb-3 block">{subject.tagline}</span>
-                    <h3 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-4 md:mb-5">{subject.title}</h3>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-30 mb-3 block">
+                      {loading ? <div className="h-3 w-24 bg-[var(--bg-tertiary)] animate-pulse rounded-md"></div> : subject.tagline}
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-4 md:mb-5">
+                      {loading ? <div className="h-8 w-32 bg-[var(--bg-tertiary)] animate-pulse rounded-lg"></div> : subject.title}
+                    </h3>
                     <p className="text-sm md:text-base text-[var(--text-secondary)] leading-relaxed font-light">
-                      {subject.desc}
+                      {loading ? (
+                        <div className="space-y-2">
+                          <div className="h-4 w-full bg-[var(--bg-tertiary)] animate-pulse rounded-md"></div>
+                          <div className="h-4 w-4/5 bg-[var(--bg-tertiary)] animate-pulse rounded-md"></div>
+                        </div>
+                      ) : subject.desc}
                     </p>
                   </div>
                   
                   <div className="flex items-center justify-between pt-6 md:pt-8 border-t border-[var(--border-primary)]">
-                    <span className="text-[10px] md:text-xs font-bold text-[var(--text-tertiary)] tracking-widest uppercase">{subject.stats}</span>
+                    <span className="text-[10px] md:text-xs font-bold text-[var(--text-tertiary)] tracking-widest uppercase">
+                      {loading ? <div className="h-4 w-20 bg-[var(--bg-tertiary)] animate-pulse rounded-md"></div> : subject.stats}
+                    </span>
                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl md:rounded-2xl bg-[var(--bg-tertiary)] flex items-center justify-center group-hover:bg-[var(--brand-orange)] group-hover:text-white transition-all duration-500 shadow-xl">
                       <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
                     </div>
@@ -328,7 +338,11 @@ export default function Home() {
                   <Users className="w-5 h-5 md:w-6 md:h-6" />
                 </div>
                 <h4 className="text-lg md:text-xl font-bold text-[var(--text-primary)] mb-2 md:mb-3 tracking-tight">Elite Community</h4>
-                <p className="text-xs md:text-sm text-[var(--text-secondary)] font-light leading-relaxed">Learn alongside {stats.totalUsers > 1000 ? (stats.totalUsers / 1000).toFixed(1) + 'k+' : stats.totalUsers} serious JEE aspirants.</p>
+                {loading ? (
+                  <div className="h-4 w-3/4 bg-[var(--bg-tertiary)] animate-pulse rounded-md"></div>
+                ) : (
+                  <p className="text-xs md:text-sm text-[var(--text-secondary)] font-light leading-relaxed">Learn alongside {stats?.totalUsers > 1000 ? (stats.totalUsers / 1000).toFixed(1) + 'k+' : stats?.totalUsers || 0} serious JEE aspirants.</p>
+                )}
               </div>
             </div>
 
@@ -352,13 +366,17 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16 text-center">
             {[
-              { label: "Active Aspirants", value: stats.totalUsers > 1000 ? (stats.totalUsers / 1000).toFixed(1) + 'k+' : stats.totalUsers },
-              { label: "Problems Solved", value: stats.totalSubmissions > 1000000 ? (stats.totalSubmissions / 1000000).toFixed(1) + 'M+' : stats.totalSubmissions },
+              { label: "Active Aspirants", value: stats?.totalUsers > 1000 ? (stats.totalUsers / 1000).toFixed(1) + 'k+' : stats?.totalUsers || 0 },
+              { label: "Problems Solved", value: stats?.totalSubmissions > 1000000 ? (stats.totalSubmissions / 1000000).toFixed(1) + 'M+' : stats?.totalSubmissions || 0 },
               { label: "Success Rate", value: "94%" },
-              { label: "Active Contests", value: stats.activeContests }
+              { label: "Active Contests", value: stats?.activeContests || 0 }
             ].map((stat, i) => (
               <div key={i}>
-                <div className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-3 md:mb-4 tracking-tighter">{stat.value}</div>
+                {loading ? (
+                  <div className="h-12 w-24 bg-[var(--bg-tertiary)] animate-pulse rounded-xl mx-auto mb-4"></div>
+                ) : (
+                  <div className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-3 md:mb-4 tracking-tighter">{stat.value}</div>
+                )}
                 <div className="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--text-tertiary)]">{stat.label}</div>
               </div>
             ))}
@@ -419,7 +437,7 @@ export default function Home() {
             </div>
             
             {/* Subtle Footer Note */}
-            <p className="mt-12 md:mt-16 text-[8px] md:text-[10px] text-[var(--text-tertiary)] font-bold tracking-[0.4em] uppercase">No credit card required • Instant access to {stats.totalProblems}+ problems</p>
+            <p className="mt-12 md:mt-16 text-[8px] md:text-[10px] text-[var(--text-tertiary)] font-bold tracking-[0.4em] uppercase">No credit card required • Instant access to {stats?.totalProblems || 0}+ problems</p>
           </motion.div>
         </div>
       </section>
