@@ -1,7 +1,8 @@
-@import "tailwindcss";
-
 /* 1️⃣ Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* 2️⃣ THEME: LeetCode (Dark + Light) */
 :root[data-theme="dark"] {

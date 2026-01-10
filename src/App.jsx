@@ -42,6 +42,10 @@ import Footer from "./components/Footer";
 import { Toaster } from "react-hot-toast";
 import ProblemList from "./pages/ProblemList";
 
+import Discuss from "./pages/Discuss";
+
+import Profile from "./pages/Profile";
+
 export default function App() {
   const { user, loading } = useContext(AuthContext);
   return (
@@ -106,11 +110,12 @@ export default function App() {
         <Route path="/playgrounds" element={<ComingSoon title="My Playgrounds" />} />
         <Route path="/settings" element={<ComingSoon title="Settings" />} />
         <Route path="/store" element={<Store />} />
-        <Route path="/discuss" element={<ComingSoon title="Discuss" />} />
+        <Route path="/discuss" element={<Discuss />} />
         <Route path="/quest" element={<ComingSoon title="Quest" />} />
         <Route path="/study-plan" element={<ComingSoon title="Study Plan" />} />
         <Route path="/favorites" element={<ComingSoon title="Favorites" />} />
         <Route path="/premium" element={<Premium />} />
+        <Route path="/profile/:id" element={<Profile />} />
       </Routes>
 
       {!useLocation().pathname.includes("/arena") && !useLocation().pathname.startsWith("/problems") && <Footer />}

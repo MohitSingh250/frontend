@@ -49,4 +49,11 @@ api.interceptors.response.use(
   }
 );
 
+export const uploadImage = async (file) => {
+  const formData = new FormData();
+  formData.append('image', file);
+  const res = await api.post('/discussions/upload', formData);
+  return res.data.url;
+};
+
 export default api;

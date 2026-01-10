@@ -5,7 +5,8 @@ import { AuthContext } from "../context/AuthContext";
 import ProblemDescription from "../components/Workspace/ProblemDescription";
 import ProblemEditor from "../components/Workspace/ProblemEditor";
 import ProblemSubmissions from "../components/Workspace/ProblemSubmissions";
-import { FileText, History, List } from "lucide-react";
+import { FileText, History, List, MessageSquare } from "lucide-react";
+import DiscussionList from "../components/Discussion/DiscussionList";
 
 export default function ProblemDetail() {
   const { id } = useParams();
@@ -14,7 +15,7 @@ export default function ProblemDetail() {
   const [answer, setAnswer] = useState("");
   const [msg, setMsg] = useState(null);
   const [submissions, setSubmissions] = useState([]);
-  const [activeTab, setActiveTab] = useState("description"); // 'description' | 'submissions'
+  const [activeTab, setActiveTab] = useState("description"); // 'description' | 'submissions' | 'discuss'
 
   useEffect(() => {
     api
@@ -60,7 +61,7 @@ export default function ProblemDetail() {
   return (
     <div className="h-[calc(100vh-60px)] flex flex-col lg:flex-row bg-[var(--bg-primary)] overflow-hidden">
       
-      {/* LEFT PANEL: Tabs (Description, Submissions) */}
+      {/* LEFT PANEL: Tabs (Description, Submissions, Discuss) */}
       <div className="w-full lg:w-1/2 flex flex-col border-r border-[var(--border-secondary)] bg-[var(--bg-secondary)]">
         
         {/* Tab Header */}
@@ -89,12 +90,25 @@ export default function ProblemDetail() {
               <History size={14} />
               Submissions
            </button>
+           <button
+              onClick={() => setActiveTab("discuss")}
+              className={`
+                 flex items-center gap-2 px-4 h-full text-xs font-medium transition-colors border-r border-[var(--border-secondary)]
+                 ${activeTab === "discuss" 
+                    ? "bg-[var(--bg-secondary)] text-[var(--text-primary)]" 
+                    : "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]"}
+              `}
+           >
+              <MessageSquare size={14} />
+              Discuss
+           </button>
         </div>
 
         {/* Tab Content */}
         <div className="flex-1 overflow-hidden relative">
            {activeTab === "description" && <ProblemDescription problem={problem} />}
            {activeTab === "submissions" && <ProblemSubmissions submissions={submissions} />}
+           {activeTab === "discuss" && <DiscussionList problemId={id} />}
         </div>
 
       </div>
