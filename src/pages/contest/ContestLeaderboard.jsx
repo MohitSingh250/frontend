@@ -41,6 +41,62 @@ export default function ContestLeaderboard() {
   const top3 = filteredBoard.slice(0, 3);
   const rest = filteredBoard.slice(3);
 
+  const getStateEmblem = (stateName) => {
+    if (!stateName) return null;
+    
+    const emblemMap = {
+      "Andhra Pradesh": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Emblem_of_Andhra_Pradesh.svg/500px-Emblem_of_Andhra_Pradesh.svg.png",
+      "Arunachal Pradesh": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Emblem_of_Arunachal_Pradesh.svg/500px-Emblem_of_Arunachal_Pradesh.svg.png",
+      "Assam": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Emblem_of_Assam.svg/500px-Emblem_of_Assam.svg.png",
+      "Bihar": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Emblem_of_Bihar.svg/500px-Emblem_of_Bihar.svg.png",
+      "Chhattisgarh": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Emblem_of_Chhattisgarh.svg/500px-Emblem_of_Chhattisgarh.svg.png",
+      "Goa": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Emblem_of_Goa.svg/500px-Emblem_of_Goa.svg.png",
+      "Gujarat": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Emblem_of_Gujarat.svg/500px-Emblem_of_Gujarat.svg.png",
+      "Haryana": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Emblem_of_Haryana.svg/500px-Emblem_of_Haryana.svg.png",
+      "Himachal Pradesh": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Emblem_of_Himachal_Pradesh.svg/500px-Emblem_of_Himachal_Pradesh.svg.png",
+      "Jharkhand": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Emblem_of_Jharkhand.svg/500px-Emblem_of_Jharkhand.svg.png",
+      "Karnataka": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Emblem_of_Karnataka.svg/500px-Emblem_of_Karnataka.svg.png",
+      "Kerala": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Emblem_of_Kerala.svg/500px-Emblem_of_Kerala.svg.png",
+      "Madhya Pradesh": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Emblem_of_Madhya_Pradesh.svg/500px-Emblem_of_Madhya_Pradesh.svg.png",
+      "Maharashtra": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Emblem_of_Maharashtra.svg/500px-Emblem_of_Maharashtra.svg.png",
+      "Manipur": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Emblem_of_Manipur.svg/500px-Emblem_of_Manipur.svg.png",
+      "Meghalaya": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Emblem_of_Meghalaya.svg/500px-Emblem_of_Meghalaya.svg.png",
+      "Mizoram": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Emblem_of_Mizoram.svg/500px-Emblem_of_Mizoram.svg.png",
+      "Nagaland": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Emblem_of_Nagaland.svg/500px-Emblem_of_Nagaland.svg.png",
+      "Odisha": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Emblem_of_Odisha.svg/500px-Emblem_of_Odisha.svg.png",
+      "Punjab": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Emblem_of_Punjab.svg/500px-Emblem_of_Punjab.svg.png",
+      "Rajasthan": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Emblem_of_Rajasthan.svg/500px-Emblem_of_Rajasthan.svg.png",
+      "Sikkim": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Emblem_of_Sikkim.svg/500px-Emblem_of_Sikkim.svg.png",
+      "Tamil Nadu": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Emblem_of_Tamil_Nadu.svg/500px-Emblem_of_Tamil_Nadu.svg.png",
+      "Telangana": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Emblem_of_Telangana.svg/500px-Emblem_of_Telangana.svg.png",
+      "Tripura": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Emblem_of_Tripura.svg/500px-Emblem_of_Tripura.svg.png",
+      "Uttar Pradesh": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Emblem_of_Uttar_Pradesh.svg/500px-Emblem_of_Uttar_Pradesh.svg.png",
+      "Uttarakhand": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Emblem_of_Uttarakhand.svg/500px-Emblem_of_Uttarakhand.svg.png",
+      "West Bengal": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Emblem_of_West_Bengal.svg/500px-Emblem_of_West_Bengal.svg.png",
+      "Delhi": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Emblem_of_Delhi.svg/500px-Emblem_of_Delhi.svg.png",
+      "Jammu & Kashmir": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Emblem_of_Jammu_and_Kashmir.svg/500px-Emblem_of_Jammu_and_Kashmir.svg.png",
+      "Ladakh": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Emblem_of_Ladakh.svg/500px-Emblem_of_Ladakh.svg.png",
+      "Chandigarh": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Emblem_of_Chandigarh.svg/500px-Emblem_of_Chandigarh.svg.png",
+      "Puducherry": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Emblem_of_Puducherry.svg/500px-Emblem_of_Puducherry.svg.png"
+    };
+
+    const emblemUrl = emblemMap[stateName];
+    
+    return (
+      <div className="flex items-center justify-center" title={stateName}>
+        {emblemUrl ? (
+          <div className="w-8 h-8 rounded-full bg-white p-0.5 flex items-center justify-center border border-white/20 shadow-lg hover:scale-110 transition-transform cursor-help">
+            <img src={emblemUrl} alt={stateName} className="w-full h-full object-contain" />
+          </div>
+        ) : (
+          <div className="w-8 h-8 rounded-full bg-[#282828] flex items-center justify-center text-[8px] font-black text-[#8A8A8A] border border-[#3E3E3E]">
+            {stateName.substring(0, 2).toUpperCase()}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   // Mock data for missing fields (Accuracy, Time) for now
   const enhanceUser = (u) => ({
     ...u,
@@ -197,7 +253,10 @@ function PodiumCard({ user, rank, delay }) {
       </div>
 
       <div className="mt-6 text-center">
-        <h3 className="font-bold text-white text-lg truncate max-w-[120px]">{username}</h3>
+        <div className="flex items-center justify-center gap-2 mb-1">
+          <h3 className="font-bold text-white text-lg truncate max-w-[120px]">{username}</h3>
+          {getStateEmblem(user.user?.location)}
+        </div>
         <div className="flex items-center justify-center gap-2 mt-1">
           <span className="text-[#FFA217] font-bold text-xl">{user.score}</span>
           <span className="text-xs text-[#8A8A8A] uppercase font-bold">pts</span>
@@ -231,7 +290,10 @@ function RankRow({ user, rank, index }) {
           {initial}
         </div>
         <div>
-          <div className="font-bold text-white/90 group-hover:text-white transition-colors">{username}</div>
+          <div className="flex items-center gap-2">
+            <div className="font-bold text-white/90 group-hover:text-white transition-colors">{username}</div>
+            {getStateEmblem(user.user?.location)}
+          </div>
           <div className="text-xs text-[#8A8A8A] md:hidden">{user.accuracy}% Acc • {user.timeTaken}</div>
         </div>
       </div>

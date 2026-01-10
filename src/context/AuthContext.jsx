@@ -39,8 +39,8 @@ const login = async (email, password) => {
   navigate('/problems');
 };
 
-const signup = async (username, email, password) => {
-  const res = await api.post('/auth/signup', { username, email, password });
+const signup = async (username, email, password, onboardingData) => {
+  const res = await api.post('/auth/signup', { username, email, password, ...onboardingData });
   const { token, refreshToken } = res.data;
 
   localStorage.setItem('token', token);

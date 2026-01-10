@@ -55,11 +55,11 @@ export default function ContestDetail() {
     <div className="min-h-screen font-sans pb-20 bg-[#1A1A1A] text-[#DAE0DE]">
       
       {/* 1. HERO BANNER */}
-      <div className="relative w-full bg-[#282828] border-b border-[#3E3E3E] overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
-        <div className="absolute -right-20 -top-20 w-[600px] h-[600px] bg-[#FFA217] opacity-5 blur-[100px] rounded-full pointer-events-none"></div>
+      <div className="relative w-full py-16 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-[#FFA217] opacity-10 blur-[120px] rounded-full pointer-events-none"></div>
         
-        <div className="max-w-6xl mx-auto px-6 py-12 relative z-10">
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
           <button 
             onClick={() => navigate(-1)}
             className="mb-8 flex items-center gap-2 text-[#8A8A8A] hover:text-white transition-colors text-sm font-medium"
@@ -68,51 +68,51 @@ export default function ContestDetail() {
             Back to Contests
           </button>
 
-          <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="px-3 py-1 rounded-full bg-[#FFA217]/10 text-[#FFA217] text-xs font-bold border border-[#FFA217]/20 uppercase tracking-wider">
-                  Official Contest
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-12 bg-[#282828]/50 backdrop-blur-xl border border-[#3E3E3E] p-8 md:p-12 rounded-[3rem] shadow-2xl">
+            <div className="flex-1 text-center lg:text-left">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-6">
+                <span className="px-4 py-1 rounded-full bg-[#FFA217] text-black text-[10px] font-black uppercase tracking-widest">
+                  Official
                 </span>
-                <span className="flex items-center gap-1.5 text-[#8A8A8A] text-sm">
+                <span className="flex items-center gap-1.5 text-[#8A8A8A] text-sm font-bold">
                   <Calendar size={14} />
                   {new Date(contest.startTime).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
                 </span>
               </div>
               
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+              <h1 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight tracking-tight">
                 {contest.title}
               </h1>
               
-              <div className="flex items-center gap-6 text-[#DAE0DE]">
-                <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-lg bg-[#3E3E3E]">
-                    <Clock size={20} className="text-[#FFA217]" />
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-8">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-2xl bg-[#3E3E3E]/50 border border-[#3E3E3E]">
+                    <Clock size={24} className="text-[#FFA217]" />
                   </div>
                   <div>
-                    <p className="text-xs text-[#8A8A8A] uppercase font-bold">Duration</p>
-                    <p className="font-medium">90 Minutes</p>
+                    <p className="text-[10px] text-[#8A8A8A] uppercase font-black tracking-widest">Duration</p>
+                    <p className="font-bold text-lg text-white">90 Mins</p>
                   </div>
                 </div>
-                <div className="w-[1px] h-10 bg-[#3E3E3E]"></div>
-                <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-lg bg-[#3E3E3E]">
-                    <Trophy size={20} className="text-[#FF375F]" />
+                <div className="hidden md:block w-[1px] h-12 bg-[#3E3E3E]"></div>
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-2xl bg-[#3E3E3E]/50 border border-[#3E3E3E]">
+                    <Trophy size={24} className="text-[#FF375F]" />
                   </div>
                   <div>
-                    <p className="text-xs text-[#8A8A8A] uppercase font-bold">Prizes</p>
-                    <p className="font-medium">Orbit Swag</p>
+                    <p className="text-[10px] text-[#8A8A8A] uppercase font-black tracking-widest">Prizes</p>
+                    <p className="font-bold text-lg text-white">Orbit Swag</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Countdown Card */}
-            <div className="w-full md:w-auto p-6 rounded-2xl bg-[#1A1A1A]/50 backdrop-blur-sm border border-[#3E3E3E] min-w-[300px]">
-              <p className="text-center text-[#8A8A8A] text-sm font-medium uppercase tracking-wider mb-4">
-                {isUpcoming ? "Contest Starts In" : "Contest Ends In"}
+            <div className="w-full lg:w-auto p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md border border-white/10 min-w-[320px] shadow-2xl">
+              <p className="text-center text-[#8A8A8A] text-[10px] font-black uppercase tracking-[0.2em] mb-6">
+                {isUpcoming ? "Starts In" : "Ends In"}
               </p>
-              <div className="text-4xl font-mono font-bold text-center text-white mb-6 tracking-widest">
+              <div className="text-5xl font-mono font-black text-center text-white mb-8 tracking-tighter">
                 <CountdownTimer target={targetTime} />
               </div>
               
@@ -120,14 +120,14 @@ export default function ContestDetail() {
                 <>
                   {now >= targetTime ? (
                     <button 
-                      onClick={() => navigate(`/contest/${contestId}/arena`)}
-                      className="w-full py-3 rounded-xl bg-[#FFA217] text-black font-bold hover:bg-[#ffb347] transition-all shadow-lg shadow-orange-500/20"
+                      onClick={() => navigate(`/contest/${contestId}/arena${now > new Date(contest.endTime).getTime() ? '?mode=virtual' : ''}`)}
+                      className="w-full py-4 rounded-2xl bg-[#FFA217] text-black font-black uppercase tracking-widest hover:bg-[#ffb347] transition-all shadow-[0_0_30px_rgba(255,162,23,0.3)]"
                     >
-                      Enter Arena
+                      {now > new Date(contest.endTime).getTime() ? "Start Virtual Contest" : "Enter Arena"}
                     </button>
                   ) : (
-                    <button disabled className="w-full py-3 rounded-xl bg-[#3E3E3E] text-[#8A8A8A] font-bold border border-[#3E3E3E] cursor-not-allowed flex items-center justify-center gap-2">
-                      <ShieldCheck size={18} />
+                    <button disabled className="w-full py-4 rounded-2xl bg-[#3E3E3E] text-[#8A8A8A] font-black uppercase tracking-widest border border-[#3E3E3E] cursor-not-allowed flex items-center justify-center gap-2">
+                      <ShieldCheck size={20} />
                       Registered
                     </button>
                   )}
@@ -135,18 +135,19 @@ export default function ContestDetail() {
               ) : (
                 <button 
                   onClick={handleJoin}
-                  disabled={joining || !isUpcoming}
-                  className="w-full py-3 rounded-xl bg-[#FFA217] text-black font-bold hover:bg-[#ffb347] transition-all shadow-lg shadow-orange-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={joining}
+                  className="w-full py-4 rounded-2xl bg-[#FFA217] text-black font-black uppercase tracking-widest hover:bg-[#ffb347] transition-all shadow-[0_0_30px_rgba(255,162,23,0.3)] disabled:opacity-50"
                 >
-                  {joining ? "Registering..." : "Register Now"}
+                  {joining ? "Registering..." : now > new Date(contest.endTime).getTime() ? "Register for Virtual" : "Register Now"}
                 </button>
               )}
               
-              <div className="mt-4 flex justify-center">
+              <div className="mt-6 flex justify-center">
                 <button 
                   onClick={() => navigate(`/contest/${contestId}/leaderboard`)}
-                  className="text-sm text-[#8A8A8A] hover:text-white transition-colors underline decoration-[#3E3E3E] underline-offset-4"
+                  className="text-xs font-bold text-[#8A8A8A] hover:text-white transition-colors flex items-center gap-2"
                 >
+                  <Trophy size={14} />
                   View Leaderboard
                 </button>
               </div>

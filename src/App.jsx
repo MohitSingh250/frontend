@@ -30,6 +30,7 @@ import ContestList from "./pages/contest/ContestList";
 import ContestDetail from "./pages/contest/ContestDetail";
 import ContestArena from "./pages/contest/ContestArena";
 import ContestLeaderboard from "./pages/contest/ContestLeaderboard";
+import GlobalLeaderboard from "./pages/contest/GlobalLeaderboard";
 import ComingSoon from "./pages/ComingSoon";
 import Notebook from "./pages/Notebook";
 import MyLists from "./pages/MyLists";
@@ -110,6 +111,7 @@ export default function App() {
           path="/contest/:contestId/leaderboard"
           element={<ContestLeaderboard />}
         />
+        <Route path="/leaderboard" element={<GlobalLeaderboard />} />
         <Route 
           path="/contest/:contestId/arena"
           element={
@@ -148,7 +150,12 @@ export default function App() {
         <Route path="/profile/:id" element={<Profile />} />
       </Routes>
 
-      {!useLocation().pathname.includes("/arena") && !useLocation().pathname.startsWith("/problems") && !useLocation().pathname.startsWith("/admin") && <Footer />}
+      {!useLocation().pathname.includes("/arena") && 
+       !useLocation().pathname.startsWith("/problems") && 
+       !useLocation().pathname.startsWith("/admin") && 
+       !useLocation().pathname.startsWith("/login") && 
+       !useLocation().pathname.startsWith("/signup") && 
+       <Footer />}
     </div>
   );
 }

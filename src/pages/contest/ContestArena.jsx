@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import api from "../../api";
 import { AuthContext } from "../../context/AuthContext";
 import CountdownTimer from "../../components/CountdownTimer";
@@ -12,6 +12,7 @@ import "katex/dist/katex.min.css";
 export default function ContestArena() {
   const { contestId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useContext(AuthContext);
 
   const [contest, setContest] = useState(null);
@@ -22,18 +23,28 @@ export default function ContestArena() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [virtualEndTime, setVirtualEndTime] = useState(null);
+  
+  const queryParams = new URLSearchParams(location.search);
+  const isVirtual = queryParams.get("mode") === "virtual";
 
   useEffect(() => {
     const fetchArena = async () => {
       try {
-        const res = await api.get(`/contests/${contestId}`);
-        setContest(res.data.contest);
-        setProblems(res.data.contest.problems || []);
+        const res = await api.get(`/contests/${contestId}${isVirtual ? '?virtual=true' : ''}`);
+        const contestData = res.data.contest;
+        setContest(contestData);
+        setProblems(contestData.problems || []);
+
+        if (isVirtual) {
+          const duration = new Date(contestData.endTime).getTime() - new Date(contestData.startTime).getTime();
+          setVirtualEndTime(Date.now() + duration);
+        }
 
         // Check if user has already submitted
-        if (user && res.data.contest.participants) {
-          const participant = res.data.contest.participants.find(p => p.userId._id === user._id || p.userId === user._id);
-          if (participant?.isSubmitted) {
+        if (user && contestData.participants) {
+          const participant = contestData.participants.find(p => p.userId._id === user._id || p.userId === user._id);
+          if (participant?.isSubmitted && !isVirtual) {
             navigate(`/contest/${contestId}`, { replace: true });
           }
         }
@@ -44,7 +55,7 @@ export default function ContestArena() {
       }
     };
     fetchArena();
-  }, [contestId, user]);
+  }, [contestId, user, isVirtual]);
 
   const handleAnswerChange = (val) => {
     const pid = problems[activeProblemIndex]._id;
@@ -76,7 +87,8 @@ export default function ContestArena() {
 
       await api.post("/submissions/bulk", {
         contestId,
-        submissions
+        submissions,
+        isVirtual // Send virtual flag to backend if needed
       });
       
       setShowSuccessModal(true);
@@ -94,10 +106,24 @@ export default function ContestArena() {
     </div>
   );
   
-  if (!contest) return <div className="min-h-screen flex items-center justify-center bg-[#1A1A1A] text-white">Contest not found</div>;
+  if (!contest || problems.length === 0) return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#1A1A1A] text-white p-6 text-center">
+      <Trophy className="w-16 h-16 text-[#3E3E3E] mb-6" />
+      <h2 className="text-2xl font-bold mb-2">No problems available</h2>
+      <p className="text-[#8A8A8A] max-w-md mb-8">
+        We couldn't find any problems for contest {contestId}. This might be because the contest hasn't started yet or the problems haven't been seeded.
+      </p>
+      <button 
+        onClick={() => navigate('/contest')}
+        className="px-8 py-3 rounded-xl bg-[#3E3E3E] hover:bg-[#4E4E4E] transition-colors font-bold"
+      >
+        Back to Contests
+      </button>
+    </div>
+  );
 
   const activeProblem = problems[activeProblemIndex];
-  const currentAnswer = answers[activeProblem._id];
+  const currentAnswer = answers[activeProblem?._id];
 
   return (
     <div className="h-screen w-screen flex flex-col bg-[#1A1A1A] text-[#DAE0DE] overflow-hidden font-sans">
@@ -149,7 +175,7 @@ export default function ContestArena() {
              </div>
           </div>
           <div className="h-6 w-px bg-[#3E3E3E] mx-2 hidden md:block"></div>
-          <h2 className="text-xs md:text-sm font-medium text-[#8A8A8A] truncate max-w-[150px] md:max-w-[400px]">{contest.title}</h2>
+          <h2 className="text-xs md:text-sm font-medium text-[#8A8A8A] truncate max-w-[150px] md:max-w-[400px]">{contest.title} {isVirtual && <span className="text-[#FFA217] font-bold ml-2">(VIRTUAL)</span>}</h2>
         </div>
 
         <div className="flex items-center gap-3 md:gap-6">
@@ -157,7 +183,7 @@ export default function ContestArena() {
             <Clock className="w-4 h-4 md:w-5 md:h-5 text-[#FFA217]" />
             <div className="flex flex-col items-end">
               <span className="text-[8px] md:text-[9px] text-[#8A8A8A] font-bold uppercase tracking-wider leading-none mb-0.5">Time Left</span>
-              <CountdownTimer target={new Date(contest.endTime).getTime()} />
+              <CountdownTimer target={isVirtual ? virtualEndTime : new Date(contest.endTime).getTime()} />
             </div>
           </div>
 

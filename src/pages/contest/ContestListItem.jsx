@@ -1,42 +1,49 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Calendar } from "lucide-react";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function ContestListItem({ contest }) {
+  const { user } = useContext(AuthContext);
   const start = new Date(contest.startTime);
+  const isWeekly = contest.type === "weekly";
   
+  const participant = contest.participants?.find(p => {
+    const pId = typeof p.userId === 'object' ? p.userId._id : p.userId;
+    return String(pId) === String(user?._id);
+  });
+
+  const solvedCount = participant?.solved || 0;
+  const totalProblems = contest.problems?.length || 0;
+
   return (
-    <Link 
-      to={`/contest/${contest._id}`}
-      className="flex items-center gap-4 p-4 rounded-xl hover:bg-[var(--bg-secondary)] transition-colors group"
-    >
-      {/* Thumbnail */}
-      <div className="w-32 h-20 shrink-0 rounded-lg overflow-hidden relative bg-[var(--bg-tertiary)]">
-        {contest.bannerImage ? (
-          <img src={contest.bannerImage} alt={contest.title} className="w-full h-full object-cover" />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 flex items-center justify-center">
-             <Calendar className="text-[var(--text-secondary)] opacity-50" />
-          </div>
-        )}
+    <div className="flex items-center justify-between p-4 rounded-2xl hover:bg-[#3E3E3E]/30 transition-all group">
+      <div className="flex items-center gap-4">
+        {/* Thumbnail Gradient */}
+        <div className={`w-16 h-10 rounded-lg bg-gradient-to-br ${
+          isWeekly ? "from-[#FFA217] to-[#FFB84D]" : "from-[#6366F1] to-[#A855F7]"
+        } opacity-80 shadow-inner`} />
+        
+        <div>
+          <h4 className="font-bold text-white group-hover:text-[#FFA217] transition-colors">
+            {contest.title}
+          </h4>
+          <p className="text-xs text-[#8A8A8A]">
+            {start.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}, {start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} GMT+05:30
+          </p>
+        </div>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 min-w-0">
-        <h3 className="text-lg font-medium text-[var(--text-primary)] mb-1 group-hover:text-[var(--brand-orange)] transition-colors truncate">
-          {contest.title}
-        </h3>
-        <p className="text-sm text-[var(--text-secondary)]">
-          {start.toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}
-        </p>
-      </div>
-
-      {/* Action */}
-      <div className="shrink-0">
-        <span className="px-4 py-2 rounded-lg bg-[var(--bg-tertiary)] text-xs font-medium text-[var(--text-secondary)] group-hover:bg-[var(--bg-primary)] transition-colors">
-          Virtual
+      <div className="flex items-center gap-4">
+        <span className="text-xs font-bold text-[#8A8A8A] bg-[#3E3E3E] px-3 py-1 rounded-full">
+          {solvedCount} / {totalProblems || 4}
         </span>
+        <Link 
+          to={`/contest/${contest._id}`}
+          className="px-6 py-2 rounded-xl border border-[#A855F7] text-[#A855F7] text-sm font-bold hover:bg-[#A855F7] hover:text-white transition-all shadow-lg shadow-purple-500/10"
+        >
+          Virtual
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 }

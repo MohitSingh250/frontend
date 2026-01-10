@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Calendar, Clock, Trophy, ArrowRight } from "lucide-react";
+import { Calendar, Clock, Trophy, ArrowRight, AlarmClock } from "lucide-react";
 import CountdownTimer from "../../components/CountdownTimer";
 
 export default function ContestCard({ contest, index, variant = "default" }) {
@@ -11,45 +11,44 @@ export default function ContestCard({ contest, index, variant = "default" }) {
   const isUpcoming = now < start.getTime();
 
   if (variant === "featured") {
+    const isWeekly = contest.type === "weekly";
+    const bgGradient = isWeekly 
+      ? "from-[#FFA217] to-[#FFB84D]" 
+      : "from-[#6366F1] to-[#A855F7]";
+    
     return (
       <Link 
         to={`/contest/${contest._id}`}
-        className="group relative block w-full h-full min-h-[220px] rounded-2xl overflow-hidden bg-[#282828] border border-[#3E3E3E] hover:border-[#FFA217] transition-all duration-300"
+        className="group relative block w-full aspect-[16/9] rounded-[1.5rem] overflow-hidden border border-white/10 transition-all duration-500 hover:scale-[1.01]"
       >
-        {/* Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FFA217]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
-        <div className="relative p-6 flex flex-col h-full">
-          <div className="flex justify-between items-start mb-4">
-            <div className="p-2.5 rounded-xl bg-[#3E3E3E]/50 border border-[#3E3E3E] text-[#FFA217]">
-              <Trophy size={20} />
+        {/* Background Image/Gradient */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${bgGradient}`}>
+          <div className="absolute inset-0 opacity-30 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+        </div>
+
+        {/* Content Overlay */}
+        <div className="relative h-full p-6 flex flex-col justify-between text-white">
+          {/* Top Row: Countdown */}
+          <div className="flex justify-end">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/20 backdrop-blur-md border border-white/10 text-xs font-bold">
+              <Clock size={14} />
+              <CountdownTimer target={start.getTime()} />
             </div>
-            {isLive ? (
-              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF375F]/10 text-[#FF375F] text-xs font-bold border border-[#FF375F]/20 animate-pulse">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF375F]" /> LIVE
-              </span>
-            ) : (
-              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#3E3E3E] text-[#8A8A8A] text-xs font-bold border border-[#3E3E3E]">
-                <Calendar size={12} /> UPCOMING
-              </span>
-            )}
           </div>
 
-          <h3 className="text-xl font-bold text-white mb-2 line-clamp-2 group-hover:text-[#FFA217] transition-colors">
-            {contest.title}
-          </h3>
-          
-          <div className="mt-auto pt-4 border-t border-[#3E3E3E]/50">
-            <div className="flex items-center justify-between text-sm">
-              <div className="flex flex-col gap-1">
-                <span className="text-[#8A8A8A] text-xs font-medium uppercase tracking-wider">Starts In</span>
-                <span className="text-[#DAE0DE] font-mono font-medium">
-                  <CountdownTimer target={start.getTime()} compact />
-                </span>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-[#3E3E3E] flex items-center justify-center text-white group-hover:bg-[#FFA217] group-hover:text-black transition-colors">
-                <ArrowRight size={16} />
-              </div>
+          {/* Bottom Row: Info & Alarm */}
+          <div className="flex items-end justify-between">
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold mb-1 drop-shadow-lg">
+                {contest.title}
+              </h3>
+              <p className="text-white/80 font-medium text-xs md:text-sm">
+                {start.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}, {start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </p>
+            </div>
+            
+            <div className="p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 group-hover:bg-white/20 transition-all">
+              <AlarmClock size={20} className="text-white" />
             </div>
           </div>
         </div>
