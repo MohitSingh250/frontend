@@ -1,6 +1,9 @@
+import { useState, useEffect, useContext } from "react";
 import { MessageSquare, ThumbsUp, Plus, Search, User, Clock, Users } from "lucide-react";
 import DiscussionDetail from "./DiscussionDetail";
 import CreateDiscussion from "./CreateDiscussion";
+import { AuthContext } from "../../context/AuthContext";
+import api from "../../api";
 
 export default function DiscussionList({ problemId }) {
   const { user } = useContext(AuthContext);

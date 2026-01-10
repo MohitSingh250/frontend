@@ -129,7 +129,7 @@ export default function ProblemList() {
   return (
     <div className="min-h-screen w-full bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans selection:bg-[var(--brand-orange)]/30 pb-20 transition-colors duration-300">
       
-      <div className="max-w-full mx-auto p-4 md:p-6">
+      <div className="max-w-full mx-auto">
         
         <div className="flex gap-6">
           
@@ -137,7 +137,7 @@ export default function ProblemList() {
           <ProblemListSidebar />
 
           {/* 2. MAIN CONTENT (Promo + List) */}
-          <div className="flex-1 min-w-0 pt-8">
+          <div className="flex-1 min-w-0 pt-8 pr-6">
             
             {/* Promo Cards */}
             <PromoCards />
@@ -179,7 +179,7 @@ export default function ProblemList() {
           </div>
 
           {/* 3. RIGHT SIDEBAR (Widgets) */}
-          <aside className="hidden xl:block w-[260px] shrink-0 space-y-4">
+          <aside className="hidden xl:block w-[260px] shrink-0 space-y-4 pt-8 pr-6">
              <Calendar />
              <ImportantChapters />
              

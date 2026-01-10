@@ -13,7 +13,7 @@ export default function OrbitCalendar({ isMobile = false, onClose }) {
   // Mock streak data if API fails or for visual demo
   useEffect(() => {
     if (user) {
-      api.get(`/users/${user._id}/streak`)
+      api.get("/users/me/streak")
         .then((res) => setStreak(res.data))
         .catch(() => {
            setStreak({ currentStreak: 0, maxStreak: 0, history: [] });

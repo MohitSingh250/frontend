@@ -18,6 +18,10 @@ export default function ProblemDetail() {
   const [activeTab, setActiveTab] = useState("description"); // 'description' | 'submissions' | 'discuss'
 
   useEffect(() => {
+    setProblem(null);
+    setAnswer("");
+    setMsg(null);
+    
     api
       .get(`/problems/${id}`)
       .then((r) => setProblem(r.data))
@@ -106,9 +110,9 @@ export default function ProblemDetail() {
 
         {/* Tab Content */}
         <div className="flex-1 overflow-hidden relative">
-           {activeTab === "description" && <ProblemDescription problem={problem} />}
-           {activeTab === "submissions" && <ProblemSubmissions submissions={submissions} />}
-           {activeTab === "discuss" && <DiscussionList problemId={id} />}
+           {activeTab === "description" && <ProblemDescription key={id} problem={problem} />}
+           {activeTab === "submissions" && <ProblemSubmissions key={id} submissions={submissions} />}
+           {activeTab === "discuss" && <DiscussionList key={id} problemId={id} />}
         </div>
 
       </div>
@@ -116,6 +120,7 @@ export default function ProblemDetail() {
       {/* RIGHT PANEL: Editor */}
       <div className="w-full lg:w-1/2 flex flex-col bg-[var(--bg-primary)]">
          <ProblemEditor 
+            key={id}
             problem={problem} 
             answer={answer} 
             setAnswer={setAnswer} 

@@ -40,20 +40,11 @@ export default function ProblemFilters({ filters, setFilters, userStats }) {
         setTopics(topicsRes.data);
         setTags(tagsRes.data);
         
-        // Map subjects to include icons
-        const iconMap = {
-          "Physics": "⚡",
-          "Chemistry": "🧪",
-          "Maths": "📐",
-          "Mathematics": "📐"
-        };
-        
         const dynamicSubjects = [
-          { id: "", label: "All Subjects", icon: "📚" },
+          { id: "", label: "All Subjects" },
           ...subjectsRes.data.map(s => ({
             id: s,
-            label: s,
-            icon: iconMap[s] || "📝"
+            label: s
           }))
         ];
         setSubjects(dynamicSubjects);
@@ -157,7 +148,6 @@ export default function ProblemFilters({ filters, setFilters, userStats }) {
                   : "bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]/80 hover:text-[var(--text-primary)]"
               }`}
             >
-              <span className="text-lg">{sub.icon}</span> 
               {sub.label}
             </button>
           ))

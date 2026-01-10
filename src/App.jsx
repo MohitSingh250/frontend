@@ -35,6 +35,8 @@ import ComingSoon from "./pages/ComingSoon";
 import Notebook from "./pages/Notebook";
 import MyLists from "./pages/MyLists";
 import Store from "./pages/Store";
+import Quest from "./pages/Quest/Quest";
+import QuestDetail from "./pages/Quest/QuestDetail";
 
 import Premium from "./pages/Premium";
 
@@ -143,7 +145,8 @@ export default function App() {
         <Route path="/settings" element={<ComingSoon title="Settings" />} />
         <Route path="/store" element={<Store />} />
         <Route path="/discuss" element={<Discuss />} />
-        <Route path="/quest" element={<ComingSoon title="Quest" />} />
+        <Route path="/quest" element={<Quest />} />
+        <Route path="/quest/:id" element={<QuestDetail />} />
         <Route path="/study-plan" element={<ComingSoon title="Study Plan" />} />
         <Route path="/favorites" element={<ComingSoon title="Favorites" />} />
         <Route path="/premium" element={<Premium />} />
