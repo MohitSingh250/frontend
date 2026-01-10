@@ -10,7 +10,21 @@ import DailyProblem from "./pages/DailyProblem";
 import ProblemDetail from "./pages/ProblemDetail";
 
 import { AuthContext } from "./context/AuthContext";
-import AdminDashboard from "./admin/AdminDashboard";
+import AdminRoute from "./components/AdminRoute";
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import UserManagement from "./pages/admin/UserManagement";
+import ProblemManagement from "./pages/admin/ProblemManagement";
+import CreateProblem from "./pages/admin/CreateProblem";
+import EditProblem from "./pages/admin/EditProblem";
+import ContestManagement from "./pages/admin/ContestManagement";
+import CreateContest from "./pages/admin/CreateContest";
+import EditContest from "./pages/admin/EditContest";
+import ContestProblemManagement from "./pages/admin/ContestProblemManagement";
+import CreateContestProblem from "./pages/admin/CreateContestProblem";
+import AddContestProblem from "./pages/admin/AddContestProblem";
+import EditContestProblem from "./pages/admin/EditContestProblem";
+import DiscussionModeration from "./pages/admin/DiscussionModeration";
 
 import ContestList from "./pages/contest/ContestList";
 import ContestDetail from "./pages/contest/ContestDetail";
@@ -72,7 +86,23 @@ export default function App() {
         <Route path="/daily" element={<DailyProblem />} />
         <Route path="/problems/:id" element={<ProblemDetail />} />
 
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminRoute />}>
+          <Route element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="users" element={<UserManagement />} />
+            <Route path="problems" element={<ProblemManagement />} />
+            <Route path="problems/create" element={<CreateProblem />} />
+            <Route path="problems/edit/:id" element={<EditProblem />} />
+            <Route path="contests" element={<ContestManagement />} />
+            <Route path="contests/create" element={<CreateContest />} />
+            <Route path="contests/edit/:id" element={<EditContest />} />
+            <Route path="contests/:contestId/problems" element={<ContestProblemManagement />} />
+            <Route path="contests/problems/add" element={<AddContestProblem />} />
+            <Route path="contests/:contestId/problems/create" element={<CreateContestProblem />} />
+            <Route path="contests/:contestId/problems/edit/:problemId" element={<EditContestProblem />} />
+            <Route path="discussions" element={<DiscussionModeration />} />
+          </Route>
+        </Route>
 
         <Route path="/contests" element={<ContestList />} />
         <Route path="/contest/:contestId" element={<ContestDetail />} />
@@ -118,7 +148,7 @@ export default function App() {
         <Route path="/profile/:id" element={<Profile />} />
       </Routes>
 
-      {!useLocation().pathname.includes("/arena") && !useLocation().pathname.startsWith("/problems") && <Footer />}
+      {!useLocation().pathname.includes("/arena") && !useLocation().pathname.startsWith("/problems") && !useLocation().pathname.startsWith("/admin") && <Footer />}
     </div>
   );
 }
