@@ -4,7 +4,7 @@ import { Lightbulb, ChevronRight, ChevronDown, Layers } from "lucide-react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { Link } from "react-router-dom";
 
-export default function ProblemDescription({ problem }) {
+export default function ProblemDescription({ problem, isQuestMode }) {
   const { theme } = useContext(ThemeContext);
   const [activePanel, setActivePanel] = useState(null); // 'hints' | 'similar' | null
   const [unlockedHints, setUnlockedHints] = useState(0);
@@ -12,7 +12,7 @@ export default function ProblemDescription({ problem }) {
   if (!problem) return null;
 
   const hasHints = problem.hints && problem.hints.length > 0;
-  const hasSimilar = problem.similarProblems && problem.similarProblems.length > 0;
+  const hasSimilar = !isQuestMode && problem.similarProblems && problem.similarProblems.length > 0;
 
   const togglePanel = (panel) => {
     setActivePanel(activePanel === panel ? null : panel);

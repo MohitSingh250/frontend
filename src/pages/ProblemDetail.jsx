@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import api from "../api/index";
 import { AuthContext } from "../context/AuthContext";
 import ProblemDescription from "../components/Workspace/ProblemDescription";
@@ -43,6 +43,20 @@ export default function ProblemDetail() {
         type: res.data.correct ? "success" : "error",
         text: res.data.message || (res.data.correct ? "✅ Correct!" : "❌ Wrong"),
       });
+      
+      if (res.data.correct) {
+        // Check for Study Plan context
+        const searchParams = new URLSearchParams(window.location.search);
+        const studyPlanId = searchParams.get("studyPlanId");
+        if (studyPlanId) {
+           try {
+              await api.post("/study-plans/progress", { planId: studyPlanId, problemId: id });
+           } catch (e) {
+              console.error("Failed to update study plan progress", e);
+           }
+        }
+      }
+
       if (user) {
         const s = await api.get(`/submissions/problem/${id}`);
         setSubmissions(s.data);

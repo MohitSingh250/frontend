@@ -1,7 +1,7 @@
 import React from "react";
 import { Play, Send, RotateCcw } from "lucide-react";
 
-export default function ProblemEditor({ problem, answer, setAnswer, submit, msg }) {
+export default function ProblemEditor({ problem, answer, setAnswer, submit, msg, nextProblemId, onNextProblem }) {
   if (!problem) return null;
 
   return (
@@ -110,13 +110,24 @@ export default function ProblemEditor({ problem, answer, setAnswer, submit, msg 
                <RotateCcw size={14} />
                Reset
             </button>
-            <button 
-               onClick={submit}
-               className="px-5 py-1.5 rounded-lg text-sm font-medium bg-[var(--color-success)] text-white hover:brightness-110 transition-all flex items-center gap-2 shadow-lg shadow-[var(--color-success)]/20"
-            >
-               <Send size={14} />
-               Submit
-            </button>
+            
+            {msg?.type === "success" && nextProblemId ? (
+               <button 
+                  onClick={onNextProblem}
+                  className="px-5 py-1.5 rounded-lg text-sm font-medium bg-[#2DB55D] text-white hover:brightness-110 transition-all flex items-center gap-2 shadow-lg shadow-[#2DB55D]/20"
+               >
+                  <Play size={14} fill="currentColor" />
+                  Next Problem
+               </button>
+            ) : (
+               <button 
+                  onClick={submit}
+                  className="px-5 py-1.5 rounded-lg text-sm font-medium bg-[var(--color-success)] text-white hover:brightness-110 transition-all flex items-center gap-2 shadow-lg shadow-[var(--color-success)]/20"
+               >
+                  <Send size={14} />
+                  Submit
+               </button>
+            )}
          </div>
       </div>
     </div>

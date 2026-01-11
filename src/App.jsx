@@ -37,6 +37,10 @@ import MyLists from "./pages/MyLists";
 import Store from "./pages/Store";
 import Quest from "./pages/Quest/Quest";
 import QuestDetail from "./pages/Quest/QuestDetail";
+import QuestProblem from "./pages/Quest/QuestProblem";
+import StudyPlan from "./pages/StudyPlan/StudyPlan";
+import MyStudyPlan from "./pages/StudyPlan/MyStudyPlan";
+import StudyPlanDetail from "./pages/StudyPlan/StudyPlanDetail";
 
 import Premium from "./pages/Premium";
 
@@ -68,7 +72,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <Toaster position="top-center" reverseOrder={false} />
-      {!useLocation().pathname.includes("/arena") && <Header />}
+      {!useLocation().pathname.includes("/arena") && !useLocation().pathname.includes("/quest/problem") && <Header />}
 
       <Routes>
         <Route 
@@ -147,7 +151,10 @@ export default function App() {
         <Route path="/discuss" element={<Discuss />} />
         <Route path="/quest" element={<Quest />} />
         <Route path="/quest/:id" element={<QuestDetail />} />
-        <Route path="/study-plan" element={<ComingSoon title="Study Plan" />} />
+        <Route path="/quest/problem/:id" element={<QuestProblem />} />
+        <Route path="/study-plan" element={<StudyPlan />} />
+        <Route path="/study-plan/my" element={<MyStudyPlan />} />
+        <Route path="/study-plan/:id" element={<StudyPlanDetail />} />
         <Route path="/favorites" element={<ComingSoon title="Favorites" />} />
         <Route path="/premium" element={<Premium />} />
         <Route path="/profile/:id" element={<Profile />} />
@@ -158,6 +165,7 @@ export default function App() {
        !useLocation().pathname.startsWith("/admin") && 
        !useLocation().pathname.startsWith("/login") && 
        !useLocation().pathname.startsWith("/signup") && 
+       !useLocation().pathname.includes("/quest/problem") && 
        <Footer />}
     </div>
   );
