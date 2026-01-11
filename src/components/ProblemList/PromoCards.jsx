@@ -58,13 +58,13 @@ export default function PromoCards() {
       {/* Scroll Buttons */}
       <button 
         onClick={() => scroll('left')}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hover:bg-black/70"
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-[var(--bg-secondary)]/50 text-[var(--text-primary)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hover:bg-[var(--bg-secondary)]/70"
       >
         <ChevronLeft size={24} />
       </button>
       <button 
         onClick={() => scroll('right')}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hover:bg-black/70"
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-[var(--bg-secondary)]/50 text-[var(--text-primary)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hover:bg-[var(--bg-secondary)]/70"
       >
         <ChevronRight size={24} />
       </button>
@@ -77,7 +77,7 @@ export default function PromoCards() {
         {/* 1. Quest Card (Fixed) */}
         <div 
           onClick={() => navigate('/quest')}
-          className="relative min-w-[270px] h-[135px] overflow-hidden rounded-xl cursor-pointer hover:scale-[1.02] transition-transform shadow-lg"
+          className="relative w-[270px] h-[135px] overflow-hidden rounded-xl shrink-0 cursor-pointer hover:scale-[1.02] transition-transform shadow-lg"
           style={{
             backgroundImage: 'url(/store/quest_card.png)',
             backgroundSize: 'cover',
@@ -94,7 +94,7 @@ export default function PromoCards() {
             <div 
               key={plan._id}
               onClick={() => navigate(`/study-plan/${plan._id}`)}
-              className={`relative min-w-[270px] h-[135px] overflow-hidden rounded-xl bg-gradient-to-br ${getGradient(i)} p-5 flex flex-col justify-between shrink-0 cursor-pointer hover:scale-[1.02] transition-transform shadow-lg`}
+              className={`relative w-[270px] h-[135px] overflow-hidden rounded-xl bg-gradient-to-br ${getGradient(i)} p-5 flex flex-col justify-between shrink-0 cursor-pointer hover:scale-[1.02] transition-transform shadow-lg`}
             >
               <div className="absolute -bottom-4 -right-4 opacity-20 rotate-12">
                 <Icon size={100} className="text-white" />
@@ -108,7 +108,7 @@ export default function PromoCards() {
                 <p className="text-xs text-white/90 font-medium mt-1 line-clamp-1">{plan.description}</p>
               </div>
               
-              <button className="self-start px-4 py-1.5 rounded-full bg-white/90 text-black/80 text-xs font-bold shadow-sm">
+              <button className="self-start px-4 py-1.5 rounded-full bg-[var(--bg-primary)]/90 text-[var(--text-primary)] text-xs font-bold shadow-sm">
                 Start Learning
               </button>
             </div>

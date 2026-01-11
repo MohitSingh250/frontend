@@ -26,8 +26,8 @@ export default function ContestDetail() {
   }, [contestId, user]);
 
   if (!contest) return (
-    <div className="min-h-screen flex items-center justify-center bg-[#1A1A1A]">
-      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#FFA217]"></div>
+    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
+      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[var(--brand-orange)]"></div>
     </div>
   );
 
@@ -52,67 +52,67 @@ export default function ContestDetail() {
   };
 
   return (
-    <div className="min-h-screen font-sans pb-20 bg-[#1A1A1A] text-[#DAE0DE]">
+    <div className="min-h-screen font-sans pb-20 bg-[var(--bg-primary)] text-[var(--text-primary)]">
       
       {/* 1. HERO BANNER */}
       <div className="relative w-full py-16 overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-[#FFA217] opacity-10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-[var(--brand-orange)] opacity-10 blur-[120px] rounded-full pointer-events-none"></div>
         
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <button 
             onClick={() => navigate(-1)}
-            className="mb-8 flex items-center gap-2 text-[#8A8A8A] hover:text-white transition-colors text-sm font-medium"
+            className="mb-8 flex items-center gap-2 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors text-sm font-medium"
           >
             <ArrowLeft size={16} />
             Back to Contests
           </button>
 
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-12 bg-[#282828]/50 backdrop-blur-xl border border-[#3E3E3E] p-8 md:p-12 rounded-[3rem] shadow-2xl">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-12 bg-[var(--bg-secondary)]/50 backdrop-blur-xl border border-[var(--border-primary)] p-8 md:p-12 rounded-[3rem] shadow-2xl">
             <div className="flex-1 text-center lg:text-left">
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-6">
-                <span className="px-4 py-1 rounded-full bg-[#FFA217] text-black text-[10px] font-black uppercase tracking-widest">
+                <span className="px-4 py-1 rounded-full bg-[var(--brand-orange)] text-black text-[10px] font-black uppercase tracking-widest">
                   Official
                 </span>
-                <span className="flex items-center gap-1.5 text-[#8A8A8A] text-sm font-bold">
+                <span className="flex items-center gap-1.5 text-[var(--text-tertiary)] text-sm font-bold">
                   <Calendar size={14} />
                   {new Date(contest.startTime).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
                 </span>
               </div>
               
-              <h1 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight tracking-tight">
+              <h1 className="text-4xl md:text-6xl font-black text-[var(--text-primary)] mb-8 leading-tight tracking-tight">
                 {contest.title}
               </h1>
               
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-8">
                 <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-2xl bg-[#3E3E3E]/50 border border-[#3E3E3E]">
-                    <Clock size={24} className="text-[#FFA217]" />
+                  <div className="p-3 rounded-2xl bg-[var(--bg-tertiary)]/50 border border-[var(--border-primary)]">
+                    <Clock size={24} className="text-[var(--brand-orange)]" />
                   </div>
                   <div>
-                    <p className="text-[10px] text-[#8A8A8A] uppercase font-black tracking-widest">Duration</p>
-                    <p className="font-bold text-lg text-white">90 Mins</p>
+                    <p className="text-[10px] text-[var(--text-tertiary)] uppercase font-black tracking-widest">Duration</p>
+                    <p className="font-bold text-lg text-[var(--text-primary)]">90 Mins</p>
                   </div>
                 </div>
-                <div className="hidden md:block w-[1px] h-12 bg-[#3E3E3E]"></div>
+                <div className="hidden md:block w-[1px] h-12 bg-[var(--border-primary)]"></div>
                 <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-2xl bg-[#3E3E3E]/50 border border-[#3E3E3E]">
+                  <div className="p-3 rounded-2xl bg-[var(--bg-tertiary)]/50 border border-[var(--border-primary)]">
                     <Trophy size={24} className="text-[#FF375F]" />
                   </div>
                   <div>
-                    <p className="text-[10px] text-[#8A8A8A] uppercase font-black tracking-widest">Prizes</p>
-                    <p className="font-bold text-lg text-white">Orbit Swag</p>
+                    <p className="text-[10px] text-[var(--text-tertiary)] uppercase font-black tracking-widest">Prizes</p>
+                    <p className="font-bold text-lg text-[var(--text-primary)]">Orbit Swag</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Countdown Card */}
-            <div className="w-full lg:w-auto p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md border border-white/10 min-w-[320px] shadow-2xl">
-              <p className="text-center text-[#8A8A8A] text-[10px] font-black uppercase tracking-[0.2em] mb-6">
+            <div className="w-full lg:w-auto p-8 rounded-[2.5rem] bg-[var(--text-primary)]/5 backdrop-blur-md border border-[var(--text-primary)]/10 min-w-[320px] shadow-2xl">
+              <p className="text-center text-[var(--text-tertiary)] text-[10px] font-black uppercase tracking-[0.2em] mb-6">
                 {isUpcoming ? "Starts In" : "Ends In"}
               </p>
-              <div className="text-5xl font-mono font-black text-center text-white mb-8 tracking-tighter">
+              <div className="text-5xl font-mono font-black text-center text-[var(--text-primary)] mb-8 tracking-tighter">
                 <CountdownTimer target={targetTime} />
               </div>
               
@@ -121,12 +121,12 @@ export default function ContestDetail() {
                   {now >= targetTime ? (
                     <button 
                       onClick={() => navigate(`/contest/${contestId}/arena${now > new Date(contest.endTime).getTime() ? '?mode=virtual' : ''}`)}
-                      className="w-full py-4 rounded-2xl bg-[#FFA217] text-black font-black uppercase tracking-widest hover:bg-[#ffb347] transition-all shadow-[0_0_30px_rgba(255,162,23,0.3)]"
+                      className="w-full py-4 rounded-2xl bg-[var(--brand-orange)] text-black font-black uppercase tracking-widest hover:bg-[var(--brand-orange)]/90 transition-all shadow-[0_0_30px_rgba(255,162,23,0.3)]"
                     >
                       {now > new Date(contest.endTime).getTime() ? "Start Virtual Contest" : "Enter Arena"}
                     </button>
                   ) : (
-                    <button disabled className="w-full py-4 rounded-2xl bg-[#3E3E3E] text-[#8A8A8A] font-black uppercase tracking-widest border border-[#3E3E3E] cursor-not-allowed flex items-center justify-center gap-2">
+                    <button disabled className="w-full py-4 rounded-2xl bg-[var(--bg-tertiary)] text-[var(--text-tertiary)] font-black uppercase tracking-widest border border-[var(--border-primary)] cursor-not-allowed flex items-center justify-center gap-2">
                       <ShieldCheck size={20} />
                       Registered
                     </button>
@@ -136,7 +136,7 @@ export default function ContestDetail() {
                 <button 
                   onClick={handleJoin}
                   disabled={joining}
-                  className="w-full py-4 rounded-2xl bg-[#FFA217] text-black font-black uppercase tracking-widest hover:bg-[#ffb347] transition-all shadow-[0_0_30px_rgba(255,162,23,0.3)] disabled:opacity-50"
+                  className="w-full py-4 rounded-2xl bg-[var(--brand-orange)] text-black font-black uppercase tracking-widest hover:bg-[var(--brand-orange)]/90 transition-all shadow-[0_0_30px_rgba(255,162,23,0.3)] disabled:opacity-50"
                 >
                   {joining ? "Registering..." : now > new Date(contest.endTime).getTime() ? "Register for Virtual" : "Register Now"}
                 </button>
@@ -145,7 +145,7 @@ export default function ContestDetail() {
               <div className="mt-6 flex justify-center">
                 <button 
                   onClick={() => navigate(`/contest/${contestId}/leaderboard`)}
-                  className="text-xs font-bold text-[#8A8A8A] hover:text-white transition-colors flex items-center gap-2"
+                  className="text-xs font-bold text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-2"
                 >
                   <Trophy size={14} />
                   View Leaderboard
@@ -164,11 +164,11 @@ export default function ContestDetail() {
             
             {/* Description */}
             <section>
-              <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <Megaphone size={20} className="text-[#FFA217]" />
+              <h2 className="text-xl font-bold text-[var(--text-primary)] mb-4 flex items-center gap-2">
+                <Megaphone size={20} className="text-[var(--brand-orange)]" />
                 About Contest
               </h2>
-              <div className="prose prose-invert max-w-none text-[#DAE0DE]">
+              <div className="prose prose-invert max-w-none text-[var(--text-secondary)]">
                 <p>
                   Welcome to the <strong>{contest.title}</strong>! This is a weekly competition designed to test your problem-solving skills in Physics, Chemistry, and Mathematics.
                 </p>
@@ -180,55 +180,55 @@ export default function ContestDetail() {
 
             {/* Prizes */}
             <section>
-              <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              <h2 className="text-xl font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
                 <Gift size={20} className="text-[#FF375F]" />
                 Rewards
               </h2>
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                <div className="p-6 rounded-xl bg-[#282828] border border-[#3E3E3E] flex flex-col items-center text-center hover:border-[#FFA217] transition-colors group">
-                  <div className="w-16 h-16 rounded-full bg-[#3E3E3E] flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
+                <div className="p-6 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] flex flex-col items-center text-center hover:border-[var(--brand-orange)] transition-colors group">
+                  <div className="w-16 h-16 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
                     🎒
                   </div>
-                  <h3 className="font-bold text-white mb-1">Orbit Backpack</h3>
-                  <p className="text-xs text-[#8A8A8A]">Rank 1 - 3</p>
+                  <h3 className="font-bold text-[var(--text-primary)] mb-1">Orbit Backpack</h3>
+                  <p className="text-xs text-[var(--text-tertiary)]">Rank 1 - 3</p>
                 </div>
-                <div className="p-6 rounded-xl bg-[#282828] border border-[#3E3E3E] flex flex-col items-center text-center hover:border-[#FFA217] transition-colors group">
-                  <div className="w-16 h-16 rounded-full bg-[#3E3E3E] flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
+                <div className="p-6 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] flex flex-col items-center text-center hover:border-[var(--brand-orange)] transition-colors group">
+                  <div className="w-16 h-16 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
                     🧴
                   </div>
-                  <h3 className="font-bold text-white mb-1">Water Bottle</h3>
-                  <p className="text-xs text-[#8A8A8A]">Rank 4 - 10</p>
+                  <h3 className="font-bold text-[var(--text-primary)] mb-1">Water Bottle</h3>
+                  <p className="text-xs text-[var(--text-tertiary)]">Rank 4 - 10</p>
                 </div>
-                <div className="p-6 rounded-xl bg-[#282828] border border-[#3E3E3E] flex flex-col items-center text-center hover:border-[#FFA217] transition-colors group">
-                  <div className="w-16 h-16 rounded-full bg-[#3E3E3E] flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
+                <div className="p-6 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] flex flex-col items-center text-center hover:border-[var(--brand-orange)] transition-colors group">
+                  <div className="w-16 h-16 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
                     📓
                   </div>
-                  <h3 className="font-bold text-white mb-1">Big O Notebook</h3>
-                  <p className="text-xs text-[#8A8A8A]">Lucky Draw</p>
+                  <h3 className="font-bold text-[var(--text-primary)] mb-1">Big O Notebook</h3>
+                  <p className="text-xs text-[var(--text-tertiary)]">Lucky Draw</p>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-[#3E3E3E] overflow-hidden">
+              <div className="rounded-xl border border-[var(--border-primary)] overflow-hidden">
                 <table className="w-full text-sm text-left">
-                  <thead className="bg-[#282828] text-[#8A8A8A] uppercase text-xs">
+                  <thead className="bg-[var(--bg-secondary)] text-[var(--text-tertiary)] uppercase text-xs">
                     <tr>
                       <th className="px-6 py-3 font-bold">Rank</th>
                       <th className="px-6 py-3 font-bold text-right">Orbit Coins</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#3E3E3E]">
-                    <tr className="hover:bg-[#282828] transition-colors">
-                      <td className="px-6 py-4 font-medium text-white">1st Place</td>
-                      <td className="px-6 py-4 text-right text-[#FFA217] font-bold">5,000 🪙</td>
+                  <tbody className="divide-y divide-[var(--border-primary)]">
+                    <tr className="hover:bg-[var(--bg-tertiary)] transition-colors">
+                      <td className="px-6 py-4 font-medium text-[var(--text-primary)]">1st Place</td>
+                      <td className="px-6 py-4 text-right text-[var(--brand-orange)] font-bold">5,000 🪙</td>
                     </tr>
-                    <tr className="hover:bg-[#282828] transition-colors">
-                      <td className="px-6 py-4 font-medium text-white">2nd Place</td>
-                      <td className="px-6 py-4 text-right text-[#FFA217] font-bold">2,500 🪙</td>
+                    <tr className="hover:bg-[var(--bg-tertiary)] transition-colors">
+                      <td className="px-6 py-4 font-medium text-[var(--text-primary)]">2nd Place</td>
+                      <td className="px-6 py-4 text-right text-[var(--brand-orange)] font-bold">2,500 🪙</td>
                     </tr>
-                    <tr className="hover:bg-[#282828] transition-colors">
-                      <td className="px-6 py-4 font-medium text-white">3rd Place</td>
-                      <td className="px-6 py-4 text-right text-[#FFA217] font-bold">1,000 🪙</td>
+                    <tr className="hover:bg-[var(--bg-tertiary)] transition-colors">
+                      <td className="px-6 py-4 font-medium text-[var(--text-primary)]">3rd Place</td>
+                      <td className="px-6 py-4 text-right text-[var(--brand-orange)] font-bold">1,000 🪙</td>
                     </tr>
                   </tbody>
                 </table>
@@ -239,22 +239,22 @@ export default function ContestDetail() {
 
           {/* Right Column */}
           <div className="space-y-6">
-            <div className="p-6 rounded-xl bg-[#282828] border border-[#3E3E3E]">
-              <div className="flex items-center gap-2 mb-4 text-white">
-                <AlertCircle size={18} className="text-[#FFA217]" />
+            <div className="p-6 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)]">
+              <div className="flex items-center gap-2 mb-4 text-[var(--text-primary)]">
+                <AlertCircle size={18} className="text-[var(--brand-orange)]" />
                 <h3 className="font-bold">Rules & Regulations</h3>
               </div>
-              <ul className="space-y-4 text-sm text-[#8A8A8A]">
+              <ul className="space-y-4 text-sm text-[var(--text-secondary)]">
                 <li className="flex gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#3E3E3E] mt-1.5 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-tertiary)] mt-1.5 shrink-0" />
                   <span>You must register 15 minutes before the contest starts.</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#3E3E3E] mt-1.5 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-tertiary)] mt-1.5 shrink-0" />
                   <span>Submissions are evaluated based on test cases passed.</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#3E3E3E] mt-1.5 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-tertiary)] mt-1.5 shrink-0" />
                   <span>Plagiarism will lead to immediate disqualification.</span>
                 </li>
               </ul>

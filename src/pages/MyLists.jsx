@@ -59,7 +59,7 @@ export default function MyLists() {
             </p>
             <Link 
               to="/problems" 
-              className="inline-block mt-4 px-4 py-2 bg-[var(--brand-orange)] text-white rounded-lg text-sm font-medium hover:opacity-90"
+              className="inline-block mt-4 px-4 py-2 bg-[var(--brand-orange)] text-[var(--bg-primary)] rounded-lg text-sm font-medium hover:opacity-90"
             >
               Browse Problems
             </Link>

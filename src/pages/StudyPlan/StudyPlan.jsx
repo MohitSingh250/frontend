@@ -48,7 +48,7 @@ export default function StudyPlan() {
           relative overflow-hidden rounded-xl p-6 h-[280px] flex flex-col justify-between 
           bg-gradient-to-br ${colorFrom} ${colorTo}
           transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl ${shadowColor}
-          group border border-white/10
+          group border border-[var(--bg-primary)]/10
         `}
       >
         <div className="relative z-10">
@@ -73,7 +73,7 @@ export default function StudyPlan() {
     return (
       <Link 
         to={!isLocked ? `/study-plan/${plan._id}` : '#'}
-        className="flex items-center gap-4 p-4 rounded-xl bg-[#282828] hover:bg-[#323232] border border-[#333] transition-all group relative overflow-hidden h-[100px]"
+        className="flex items-center gap-4 p-4 rounded-xl bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-primary)] transition-all group relative overflow-hidden h-[100px]"
       >
         {/* Icon Box - Gradient Background */}
         <div className={`w-16 h-16 rounded-lg flex items-center justify-center shrink-0 bg-gradient-to-br ${iconBgFrom} ${iconBgTo} shadow-lg group-hover:scale-105 transition-transform`}>
@@ -82,18 +82,18 @@ export default function StudyPlan() {
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-           <h3 className="font-bold text-gray-100 group-hover:text-white truncate text-base">{plan.title}</h3>
-           <p className="text-xs text-[#999] line-clamp-2 mt-1 leading-relaxed">{plan.description}</p>
+           <h3 className="font-bold text-[var(--text-primary)] group-hover:text-[var(--brand-orange)] truncate text-base">{plan.title}</h3>
+           <p className="text-xs text-[var(--text-tertiary)] line-clamp-2 mt-1 leading-relaxed">{plan.description}</p>
         </div>
 
         {/* Lock Icon if needed */}
-        {isLocked && <Lock size={16} className="text-[#666] absolute top-4 right-4" />}
+        {isLocked && <Lock size={16} className="text-[var(--text-tertiary)] absolute top-4 right-4" />}
       </Link>
     );
   };
 
   return (
-    <div className="min-h-screen bg-[#1A1A1A] text-white font-sans flex">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans flex">
       <ProblemListSidebar />
       
       <div className="flex-1 p-8 overflow-y-auto h-screen">
@@ -101,14 +101,14 @@ export default function StudyPlan() {
           {/* Header */}
           <div className="flex items-center justify-between mb-12">
             <h1 className="text-3xl font-bold">Study Plan</h1>
-            <Link to="/study-plan/my" className="px-5 py-2 bg-[#282828] hover:bg-[#333] rounded-lg text-sm font-medium text-[#ccc] transition-colors flex items-center gap-2 border border-[#333]">
+            <Link to="/study-plan/my" className="px-5 py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-secondary)] rounded-lg text-sm font-medium text-[var(--text-secondary)] transition-colors flex items-center gap-2 border border-[var(--border-primary)]">
               My Study Plan <ChevronRight size={16} />
             </Link>
           </div>
 
           {/* Featured Section */}
           <div className="mb-16">
-            <h2 className="text-xl font-bold mb-6 text-white">Featured</h2>
+            <h2 className="text-xl font-bold mb-6 text-[var(--text-primary)]">Featured</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                {featured.map((plan, i) => (
                   <FeaturedCard 
@@ -135,7 +135,7 @@ export default function StudyPlan() {
           {/* Introduction To */}
           {intros.length > 0 && (
             <div className="mb-16">
-                <h2 className="text-xl font-bold mb-6 text-white">Introduction To</h2>
+                <h2 className="text-xl font-bold mb-6 text-[var(--text-primary)]">Introduction To</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {intros.map((plan, i) => (
                         <CompactCard 
@@ -153,7 +153,7 @@ export default function StudyPlan() {
           {challenges.length > 0 && (
             <div className="mb-16">
                 <div className="flex items-center gap-2 mb-6">
-                   <h2 className="text-xl font-bold bg-blue-600/20 text-blue-400 px-3 py-1 rounded-lg inline-block border border-blue-500/30">30 Days Challenge</h2>
+                   <h2 className="text-xl font-bold bg-[var(--brand-orange)]/10 text-[var(--brand-orange)] px-3 py-1 rounded-lg inline-block border border-[var(--brand-orange)]/30">30 Days Challenge</h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {challenges.map((plan, i) => (
@@ -171,7 +171,7 @@ export default function StudyPlan() {
           {/* In-Depth Topics */}
           {deepDives.length > 0 && (
             <div className="mb-16">
-                <h2 className="text-xl font-bold mb-6 text-white">In-Depth Topics</h2>
+                <h2 className="text-xl font-bold mb-6 text-[var(--text-primary)]">In-Depth Topics</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {deepDives.map((plan, i) => (
                         <CompactCard 
@@ -182,15 +182,15 @@ export default function StudyPlan() {
                         />
                     ))}
                     {/* Dummy Locked Card for Visual Match */}
-                    <div className="flex items-center gap-4 p-4 rounded-xl bg-[#282828] border border-[#333] opacity-60 cursor-not-allowed relative overflow-hidden h-[100px]">
+                    <div className="flex items-center gap-4 p-4 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-primary)] opacity-60 cursor-not-allowed relative overflow-hidden h-[100px]">
                         <div className="w-16 h-16 rounded-lg flex items-center justify-center shrink-0 bg-gradient-to-br from-red-500 to-red-700 shadow-lg">
                            <Layers size={24} className="text-white" />
                         </div>
                         <div className="flex-1 min-w-0">
-                           <h3 className="font-bold text-gray-200 truncate text-base">Advanced DP</h3>
-                           <p className="text-xs text-[#999] line-clamp-2 mt-1 leading-relaxed">Master Dynamic Programming with 8 Advanced Patterns</p>
+                           <h3 className="font-bold text-[var(--text-primary)] truncate text-base">Advanced DP</h3>
+                           <p className="text-xs text-[var(--text-tertiary)] line-clamp-2 mt-1 leading-relaxed">Master Dynamic Programming with 8 Advanced Patterns</p>
                         </div>
-                        <Lock size={16} className="text-[#666] absolute top-4 right-4" />
+                        <Lock size={16} className="text-[var(--text-tertiary)] absolute top-4 right-4" />
                     </div>
                 </div>
             </div>

@@ -71,20 +71,20 @@ export default function Quest() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#FFA217]"></div>
+      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[var(--brand-orange)]"></div>
       </div>
     );
   }
   return (
-    <div className="min-h-screen bg-[#1A1A1A] text-white font-sans selection:bg-[#FFA217]/30">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans selection:bg-[var(--brand-orange)]/30">
       <div className="max-w-full mx-auto">
         <div className="flex">
           {/* 1. LEFT SIDEBAR */}
           <ProblemListSidebar />
 
           {/* 2. MAIN CONTENT */}
-          <div className="flex-1 min-w-0 bg-[#0F0F0F] min-h-screen p-5 md:p-12">
+          <div className="flex-1 min-w-0 bg-[var(--bg-secondary)] min-h-screen p-5 md:p-12">
             {/* Hero Section */}
             <div className="relative h-[300px] w-full pt-10 flex flex-col items-center justify-center mb-0">
               {/* Background Layers */}
@@ -93,14 +93,14 @@ export default function Quest() {
                 <img 
                   src="/store/title-bg-dark-f41f2488eebcf58959fa3c0ad59469f1.svg" 
                   alt="Background" 
-                  className="h-[300px] w-[1184px] max-w-none object-cover opacity-100"
+                  className="h-[300px] w-[1184px] max-w-none object-cover opacity-100 dark:opacity-100 opacity-20"
                 />
                 {/* Silhouette Layer (big.svg) */}
                 <div className="absolute inset-0 flex  justify-center">
                   <img 
                     src="/big.svg" 
                     alt="Mountain Silhouette" 
-                    className="w-[80%] h-[80%] object-contain opacity-10"
+                    className="w-[80%] h-[80%] object-contain opacity-10 dark:opacity-10 opacity-5"
                   />
                 </div>
               </div>
@@ -113,11 +113,11 @@ export default function Quest() {
                 <img 
                   src="/store/mountain.jpeg" 
                   alt="Quest Logo" 
-                  className="h-[118px] w-[118px] object-contain"
+                  className="h-[118px] w-[118px] object-contain rounded-2xl shadow-xl"
                 />
                 <div className="flex flex-col items-center gap-3">
-                  <h1 className="text-[28px] font-medium leading-normal text-white">Orbit Quest</h1>
-                  <p className="text-[#8A8A8A] text-xs font-medium">Turn practice into progress</p>
+                  <h1 className="text-[28px] font-medium leading-normal text-[var(--text-primary)]">Orbit Quest</h1>
+                  <p className="text-[var(--text-secondary)] text-xs font-medium">Turn practice into progress</p>
                 </div>
               </motion.div>
             </div>
@@ -133,29 +133,29 @@ export default function Quest() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.1 }}
                       onClick={() => navigate(`/quest/${quest._id}`)}
-                      className="group relative bg-[#262626] rounded-3xl p-6 transition-all cursor-pointer overflow-hidden flex items-center justify-between gap-6 shadow-md w-full md:w-[calc(50%-12px)]"
+                      className="group relative bg-[var(--bg-tertiary)] rounded-3xl p-6 transition-all cursor-pointer overflow-hidden flex items-center justify-between gap-6 shadow-md border border-[var(--border-primary)] hover:border-[var(--brand-orange)]/50 w-full md:w-[calc(50%-12px)]"
                     >
                       {/* Background Glow */}
                       <div className={`absolute inset-0 bg-gradient-to-br ${getColor(quest.category)} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
                       
                       <div className="relative z-10 flex-1">
-                        <h3 className="text-xl font-bold mb-1">{quest.title}</h3>
-                        <p className="text-[#8A8A8A] text-sm font-medium mb-4">
+                        <h3 className="text-xl font-bold mb-1 text-[var(--text-primary)]">{quest.title}</h3>
+                        <p className="text-[var(--text-secondary)] text-sm font-medium mb-4">
                           {quest.category === 'maths' ? "0/5 Levels" : `${quest.totalLevels} Levels`}
                         </p>
                         
                         {quest.category === 'maths' ? (
                           <div className="relative w-full max-w-[200px] mt-2">
-                             <div className="absolute top-1/2 left-0 w-full h-1.5 bg-[#3E3E3E] -translate-y-1/2 rounded-full"></div>
+                             <div className="absolute top-1/2 left-0 w-full h-1.5 bg-[var(--bg-secondary)] -translate-y-1/2 rounded-full"></div>
                              <div className="relative flex justify-between w-full">
                                {[1, 2, 3, 4, 5].map((_, i) => (
-                                 <div key={i} className="w-3.5 h-3.5 bg-[#525252] rounded-full"></div>
+                                 <div key={i} className="w-3.5 h-3.5 bg-[var(--text-tertiary)]/30 rounded-full"></div>
                                ))}
                              </div>
                           </div>
                         ) : (
                           <div 
-                            className="inline-flex items-center gap-2 px-5 py-2 bg-[#282828] hover:bg-[#3E3E3E] text-white rounded-xl text-xs font-bold transition-all border border-[#3E3E3E] group-hover:border-[#FFA217]/50 group-hover:text-[#FFA217]"
+                            className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--bg-secondary)] hover:bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-xl text-xs font-bold transition-all border border-[var(--border-primary)] group-hover:border-[var(--brand-orange)]/50 group-hover:text-[var(--brand-orange)]"
                           >
                             <MousePointer2 size={14} className="rotate-90" />
                             Start

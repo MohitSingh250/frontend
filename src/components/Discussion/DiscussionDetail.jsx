@@ -188,32 +188,32 @@ export default function DiscussionDetail({ discussionId, onBack }) {
   };
 
   if (loading) return (
-    <div className="h-full flex items-center justify-center bg-[#1A1A1A]">
-      <div className="w-10 h-10 border-4 border-[#FFA217] border-t-transparent animate-spin rounded-full"></div>
+    <div className="h-full flex items-center justify-center bg-[var(--bg-primary)]">
+      <div className="w-10 h-10 border-4 border-[var(--brand-orange)] border-t-transparent animate-spin rounded-full"></div>
     </div>
   );
 
   if (!discussion) return (
-    <div className="h-full flex flex-col items-center justify-center bg-[#1A1A1A] text-[#8A8A8A] space-y-6">
+    <div className="h-full flex flex-col items-center justify-center bg-[var(--bg-primary)] text-[var(--text-tertiary)] space-y-6">
       <MessageSquare size={64} className="opacity-10" />
       <p className="text-xl font-bold">Discussion not found</p>
-      <button onClick={onBack} className="px-6 py-2 bg-[#3E3E3E] text-white rounded-lg hover:bg-[#4E4E4E] transition-all">Go back</button>
+      <button onClick={onBack} className="px-6 py-2 bg-[var(--bg-tertiary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-tertiary)]/80 transition-all">Go back</button>
     </div>
   );
 
   const isUpvoted = discussion.upvotes?.includes(user?.id);
 
   return (
-    <div className="h-full flex flex-col bg-[#1A1A1A] text-[#DAE0DE] font-sans">
+    <div className="h-full flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans">
       {/* Header - LeetCode Style */}
       <div className="px-6 py-4 flex items-center justify-between">
         <button 
           onClick={onBack}
-          className="p-2 hover:bg-[#282828] rounded-lg text-[#8A8A8A] hover:text-white transition-all"
+          className="p-2 hover:bg-[var(--bg-secondary)] rounded-lg text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-all"
         >
           <ArrowLeft size={20} />
         </button>
-        <button className="p-2 hover:bg-[#282828] rounded-lg text-[#8A8A8A] hover:text-white transition-all">
+        <button className="p-2 hover:bg-[var(--bg-secondary)] rounded-lg text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-all">
           <MoreHorizontal size={20} />
         </button>
       </div>
@@ -221,26 +221,26 @@ export default function DiscussionDetail({ discussionId, onBack }) {
       <div className="flex-1 overflow-y-auto px-6 pb-20 custom-scrollbar">
         <div className="max-w-4xl mx-auto">
           {/* Title & Author */}
-          <h1 className="text-2xl font-bold text-[#eff1f6] mb-6 leading-tight">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] mb-6 leading-tight">
             {discussion.title}
           </h1>
 
           <div className="flex items-center gap-3 mb-8">
-            <a href={`/profile/${discussion.author?._id}`} className="w-10 h-10 rounded-full bg-[#3E3E3E] overflow-hidden hover:opacity-80 transition-opacity">
+            <a href={`/profile/${discussion.author?._id}`} className="w-10 h-10 rounded-full bg-[var(--bg-tertiary)] overflow-hidden hover:opacity-80 transition-opacity">
               {discussion.author?.avatar ? (
                 <img src={discussion.author.avatar} alt="" className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-[#8A8A8A]">
+                <div className="w-full h-full flex items-center justify-center text-[var(--text-tertiary)]">
                   <User size={20} />
                 </div>
               )}
             </a>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <a href={`/profile/${discussion.author?._id}`} className="text-sm font-medium text-[#DAE0DE] hover:text-[#FFA217] transition-colors">{discussion.author?.username || "Anonymous"}</a>
+                <a href={`/profile/${discussion.author?._id}`} className="text-sm font-medium text-[var(--text-primary)] hover:text-[var(--brand-orange)] transition-colors">{discussion.author?.username || "Anonymous"}</a>
                 {discussion.author?.role === 'admin' && <CheckCircle2 size={14} className="text-[#2DB55D]" />}
               </div>
-              <div className="flex items-center gap-2 text-[12px] text-[#8A8A8A]">
+              <div className="flex items-center gap-2 text-[12px] text-[var(--text-tertiary)]">
                 <Clock size={12} />
                 <span>{new Date(discussion.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                 <span>•</span>
@@ -250,29 +250,29 @@ export default function DiscussionDetail({ discussionId, onBack }) {
           </div>
 
           {/* Content */}
-          <div className="prose prose-invert max-w-none text-[15px] text-[#DAE0DE] mb-12 leading-relaxed">
+          <div className="prose prose-invert max-w-none text-[15px] text-[var(--text-primary)] mb-12 leading-relaxed">
             <ReactMarkdown>{discussion.content}</ReactMarkdown>
           </div>
 
           {/* Stats Bar */}
-          <div className="flex items-center gap-6 mb-12 pb-8 border-b border-[#3E3E3E]">
-            <div className="flex items-center bg-[#282828] rounded-lg p-1">
+          <div className="flex items-center gap-6 mb-12 pb-8 border-b border-[var(--border-primary)]">
+            <div className="flex items-center bg-[var(--bg-secondary)] rounded-lg p-1">
               <button 
                 onClick={handleUpvote}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-all ${
-                  isUpvoted ? "text-[#FFA217] bg-[#3E3E3E]" : "text-[#8A8A8A] hover:text-white"
+                  isUpvoted ? "text-[var(--brand-orange)] bg-[var(--bg-tertiary)]" : "text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
                 }`}
               >
                 <ThumbsUp size={16} className={isUpvoted ? "fill-current" : ""} />
                 <span className="text-sm font-medium">{discussion.upvotes?.length || 0}</span>
               </button>
-              <div className="w-[1px] h-4 bg-[#3E3E3E] mx-1"></div>
-              <button className="flex items-center px-3 py-1.5 text-[#8A8A8A] hover:text-white transition-all">
+              <div className="w-[1px] h-4 bg-[var(--border-primary)] mx-1"></div>
+              <button className="flex items-center px-3 py-1.5 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-all">
                 <ThumbsDown size={16} />
               </button>
             </div>
             
-            <div className="flex items-center gap-1.5 text-[#8A8A8A]">
+            <div className="flex items-center gap-1.5 text-[var(--text-tertiary)]">
               <MessageSquare size={16} />
               <span className="text-sm font-medium">{discussion.commentCount || 0}</span>
             </div>
@@ -280,7 +280,7 @@ export default function DiscussionDetail({ discussionId, onBack }) {
             <button 
               onClick={handleShare}
               className={`flex items-center gap-1.5 text-sm font-medium transition-all ${
-                copied ? "text-[#2DB55D]" : "text-[#8A8A8A] hover:text-white"
+                copied ? "text-[#2DB55D]" : "text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
               }`}
             >
               <Share2 size={16} />
@@ -291,21 +291,21 @@ export default function DiscussionDetail({ discussionId, onBack }) {
           {/* Comments Section */}
           <div className="space-y-8">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-[#eff1f6]">
+              <h3 className="text-lg font-bold text-[var(--text-primary)]">
                 Comments ({comments.length})
               </h3>
-              <div className="flex items-center gap-2 text-sm text-[#8A8A8A]">
+              <div className="flex items-center gap-2 text-sm text-[var(--text-tertiary)]">
                 <span>Sort by:</span>
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={() => setCommentSort("best")}
-                    className={`font-medium transition-colors ${commentSort === "best" ? "text-[#DAE0DE]" : "hover:text-white"}`}
+                    className={`font-medium transition-colors ${commentSort === "best" ? "text-[var(--text-primary)]" : "hover:text-[var(--text-primary)]"}`}
                   >
                     Best
                   </button>
                   <button 
                     onClick={() => setCommentSort("newest")}
-                    className={`font-medium transition-colors ${commentSort === "newest" ? "text-[#DAE0DE]" : "hover:text-white"}`}
+                    className={`font-medium transition-colors ${commentSort === "newest" ? "text-[var(--text-primary)]" : "hover:text-[var(--text-primary)]"}`}
                   >
                     Newest
                   </button>
@@ -314,23 +314,23 @@ export default function DiscussionDetail({ discussionId, onBack }) {
             </div>
 
             {/* LeetCode Style Comment Box */}
-            <form onSubmit={handleAddComment} className="bg-[#282828] border border-[#3E3E3E] rounded-xl overflow-hidden">
+            <form onSubmit={handleAddComment} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
               <textarea 
                 placeholder="Type comment here..."
                 disabled={!user || submitting}
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                className="w-full p-4 bg-transparent text-[#DAE0DE] text-[14px] focus:outline-none resize-none min-h-[120px] placeholder:text-[#8A8A8A]"
+                className="w-full p-4 bg-transparent text-[var(--text-primary)] text-[14px] focus:outline-none resize-none min-h-[120px] placeholder:text-[var(--text-tertiary)]"
               />
-              <div className="px-4 py-3 bg-[#333333] flex items-center justify-between border-t border-[#3E3E3E]">
-                <div className="flex items-center gap-4 text-[#8A8A8A]">
-                  <button type="button" className="hover:text-white transition-colors"><Code size={18} /></button>
-                  <label className="cursor-pointer hover:text-white transition-colors">
+              <div className="px-4 py-3 bg-[var(--bg-tertiary)] flex items-center justify-between border-t border-[var(--border-primary)]">
+                <div className="flex items-center gap-4 text-[var(--text-tertiary)]">
+                  <button type="button" className="hover:text-[var(--text-primary)] transition-colors"><Code size={18} /></button>
+                  <label className="cursor-pointer hover:text-[var(--text-primary)] transition-colors">
                     <ImageIcon size={18} />
                     <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
                   </label>
-                  <button type="button" className="hover:text-white transition-colors"><LinkIcon size={18} /></button>
-                  <button type="button" className="hover:text-white transition-colors"><AtSign size={18} /></button>
+                  <button type="button" className="hover:text-[var(--text-primary)] transition-colors"><LinkIcon size={18} /></button>
+                  <button type="button" className="hover:text-[var(--text-primary)] transition-colors"><AtSign size={18} /></button>
                 </div>
                 <button 
                   type="submit"
@@ -346,11 +346,11 @@ export default function DiscussionDetail({ discussionId, onBack }) {
             <div className="space-y-6 pt-4">
               {comments.map((comment) => (
                 <div key={comment._id} className="flex gap-4">
-                  <a href={`/profile/${comment.author?._id}`} className="w-8 h-8 rounded-full bg-[#3E3E3E] overflow-hidden shrink-0">
+                  <a href={`/profile/${comment.author?._id}`} className="w-8 h-8 rounded-full bg-[var(--bg-tertiary)] overflow-hidden shrink-0">
                     {comment.author?.avatar ? (
                       <img src={comment.author.avatar} alt="" className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-[#8A8A8A]">
+                      <div className="w-full h-full flex items-center justify-center text-[var(--text-tertiary)]">
                         <User size={16} />
                       </div>
                     )}
@@ -358,34 +358,34 @@ export default function DiscussionDetail({ discussionId, onBack }) {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">
                       <div className="flex items-center gap-2 text-[13px]">
-                        <a href={`/profile/${comment.author?._id}`} className="font-medium text-[#DAE0DE] hover:text-[#FFA217] transition-colors">{comment.author?.username || "Anonymous"}</a>
-                        <span className="text-[#8A8A8A]">{new Date(comment.createdAt).toLocaleDateString()}</span>
+                        <a href={`/profile/${comment.author?._id}`} className="font-medium text-[var(--text-primary)] hover:text-[var(--brand-orange)] transition-colors">{comment.author?.username || "Anonymous"}</a>
+                        <span className="text-[var(--text-tertiary)]">{new Date(comment.createdAt).toLocaleDateString()}</span>
                       </div>
                       {(user?.id === comment.author?._id || user?.role === 'admin') && (
                         <button 
                           onClick={() => handleDeleteComment(comment._id)}
-                          className="text-[#8A8A8A] hover:text-red-500 transition-all"
+                          className="text-[var(--text-tertiary)] hover:text-red-500 transition-all"
                         >
                           <Trash2 size={14} />
                         </button>
                       )}
                     </div>
-                    <div className="text-[14px] text-[#DAE0DE] leading-relaxed prose prose-invert max-w-none">
+                    <div className="text-[14px] text-[var(--text-primary)] leading-relaxed prose prose-invert max-w-none">
                       <ReactMarkdown>
                         {comment.content}
                       </ReactMarkdown>
                     </div>
-                    <div className="flex items-center gap-4 mt-2 text-[12px] text-[#8A8A8A]">
+                    <div className="flex items-center gap-4 mt-2 text-[12px] text-[var(--text-tertiary)]">
                       <button 
                         onClick={() => handleCommentUpvote(comment._id)}
-                        className={`flex items-center gap-1 transition-colors ${comment.upvotes?.includes(user?.id) ? "text-[#FFA217]" : "hover:text-white"}`}
+                        className={`flex items-center gap-1 transition-colors ${comment.upvotes?.includes(user?.id) ? "text-[var(--brand-orange)]" : "hover:text-[var(--text-primary)]"}`}
                       >
                         <ThumbsUp size={12} className={comment.upvotes?.includes(user?.id) ? "fill-current" : ""} />
                         <span>{comment.upvotes?.length || 0}</span>
                       </button>
                       <button 
                         onClick={() => setReplyingTo(replyingTo === comment._id ? null : comment._id)}
-                        className="hover:text-white transition-colors"
+                        className="hover:text-[var(--text-primary)] transition-colors"
                       >
                         Reply
                       </button>
@@ -398,12 +398,12 @@ export default function DiscussionDetail({ discussionId, onBack }) {
                           placeholder="Write a reply..."
                           value={replyContent}
                           onChange={(e) => setReplyContent(e.target.value)}
-                          className="w-full p-3 bg-[#282828] border border-[#3E3E3E] rounded-lg text-sm text-[#DAE0DE] focus:outline-none focus:border-[#FFA217] transition-all resize-none min-h-[80px]"
+                          className="w-full p-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--brand-orange)] transition-all resize-none min-h-[80px]"
                         />
                         <div className="flex justify-end gap-2">
                           <button 
                             onClick={() => setReplyingTo(null)}
-                            className="px-3 py-1 text-xs font-bold text-[#8A8A8A] hover:text-white transition-all"
+                            className="px-3 py-1 text-xs font-bold text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-all"
                           >
                             Cancel
                           </button>
@@ -420,14 +420,14 @@ export default function DiscussionDetail({ discussionId, onBack }) {
 
                     {/* Replies List */}
                     {comment.replies && comment.replies.length > 0 && (
-                      <div className="mt-4 space-y-4 pl-4 border-l border-[#3E3E3E]">
+                      <div className="mt-4 space-y-4 pl-4 border-l border-[var(--border-primary)]">
                         {comment.replies.map((reply) => (
                           <div key={reply._id} className="flex gap-3">
-                            <a href={`/profile/${reply.author?._id}`} className="w-6 h-6 rounded-full bg-[#3E3E3E] overflow-hidden shrink-0">
+                            <a href={`/profile/${reply.author?._id}`} className="w-6 h-6 rounded-full bg-[var(--bg-tertiary)] overflow-hidden shrink-0">
                               {reply.author?.avatar ? (
                                 <img src={reply.author.avatar} alt="" className="w-full h-full object-cover" />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center text-[#8A8A8A]">
+                                <div className="w-full h-full flex items-center justify-center text-[var(--text-tertiary)]">
                                   <User size={12} />
                                 </div>
                               )}
@@ -435,22 +435,22 @@ export default function DiscussionDetail({ discussionId, onBack }) {
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between mb-0.5">
                                 <div className="flex items-center gap-2 text-[12px]">
-                                  <a href={`/profile/${reply.author?._id}`} className="font-medium text-[#DAE0DE] hover:text-[#FFA217] transition-colors">{reply.author?.username || "Anonymous"}</a>
-                                  <span className="text-[#8A8A8A]">{new Date(reply.createdAt).toLocaleDateString()}</span>
+                                  <a href={`/profile/${reply.author?._id}`} className="font-medium text-[var(--text-primary)] hover:text-[var(--brand-orange)] transition-colors">{reply.author?.username || "Anonymous"}</a>
+                                  <span className="text-[var(--text-tertiary)]">{new Date(reply.createdAt).toLocaleDateString()}</span>
                                 </div>
                               </div>
-                              <div className="text-[13px] text-[#DAE0DE] leading-relaxed prose prose-invert max-w-none">
+                              <div className="text-[13px] text-[var(--text-primary)] leading-relaxed prose prose-invert max-w-none">
                                 <ReactMarkdown>
                                   {reply.content}
                                 </ReactMarkdown>
                               </div>
-                              <div className="flex items-center gap-4 mt-1 text-[11px] text-[#8A8A8A]">
+                              <div className="flex items-center gap-4 mt-1 text-[11px] text-[var(--text-tertiary)]">
                                 <button 
                                   onClick={() => handleCommentUpvote(reply._id)}
-                                  className={`flex items-center gap-1 transition-colors ${reply.upvotes?.includes(user?.id) ? "text-[#FFA217]" : "hover:text-white"}`}
+                                  className={`flex items-center gap-1 transition-colors ${reply.upvotes?.includes(user?.id) ? "text-[var(--brand-orange)]" : "hover:text-[var(--text-primary)]"}`}
                                 >
                                   <ThumbsUp size={10} className={reply.upvotes?.includes(user?.id) ? "fill-current" : ""} />
-                                  <span>{reply.upvotes?.length || 0}</span>
+                                  <span className="text-[var(--text-tertiary)]">{reply.upvotes?.length || 0}</span>
                                 </button>
                               </div>
                             </div>

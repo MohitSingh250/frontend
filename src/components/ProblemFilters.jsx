@@ -102,14 +102,14 @@ export default function ProblemFilters({ filters, setFilters, userStats }) {
                 onClick={() => handleTopicClick(topic.id)}
                 className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer whitespace-nowrap ${
                   filters.topic === topic.id
-                    ? "bg-[var(--brand-orange)] text-white"
+                    ? "bg-[var(--brand-orange)] text-[var(--bg-primary)]"
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]"
                 }`}
               >
                 {topic.label}
                 <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
                   filters.topic === topic.id
-                    ? "bg-white/20"
+                    ? "bg-[var(--bg-primary)]/20"
                     : "bg-[var(--bg-tertiary)]"
                 }`}>
                   {topic.count}
@@ -193,7 +193,7 @@ export default function ProblemFilters({ filters, setFilters, userStats }) {
             onClick={() => setShowFilters(!showFilters)}
             className={`p-2 rounded-lg border transition-colors ${
               showFilters || filters.tags 
-                ? "bg-[var(--brand-primary)]/10 border-[var(--brand-primary)] text-[var(--brand-primary)]" 
+                ? "bg-[var(--brand-orange)]/10 border-[var(--brand-orange)] text-[var(--brand-orange)]" 
                 : "bg-[var(--bg-secondary)] border-[var(--border-primary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -208,7 +208,7 @@ export default function ProblemFilters({ filters, setFilters, userStats }) {
                 {filters.tags && (
                   <button 
                     onClick={() => setFilters({ ...filters, tags: "", page: 1 })}
-                    className="text-[10px] text-[var(--brand-primary)] hover:underline"
+                    className="text-[10px] text-[var(--brand-orange)] hover:underline"
                   >
                     Clear
                   </button>
@@ -227,7 +227,7 @@ export default function ProblemFilters({ filters, setFilters, userStats }) {
                         onClick={() => handleTagClick(tag.id)}
                         className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all border ${
                           isActive
-                            ? "bg-[var(--brand-primary)] text-white border-[var(--brand-primary)]"
+                            ? "bg-[var(--brand-orange)] text-[var(--bg-primary)] border-[var(--brand-orange)]"
                             : "bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border-[var(--border-secondary)] hover:border-[var(--text-tertiary)]"
                         }`}
                       >

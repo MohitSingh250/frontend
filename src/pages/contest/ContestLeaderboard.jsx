@@ -89,7 +89,7 @@ export default function ContestLeaderboard() {
             <img src={emblemUrl} alt={stateName} className="w-full h-full object-contain" />
           </div>
         ) : (
-          <div className="w-8 h-8 rounded-full bg-[#282828] flex items-center justify-center text-[8px] font-black text-[#8A8A8A] border border-[#3E3E3E]">
+          <div className="w-8 h-8 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center text-[8px] font-black text-[var(--text-tertiary)] border border-[var(--border-primary)]">
             {stateName.substring(0, 2).toUpperCase()}
           </div>
         )}
@@ -105,12 +105,12 @@ export default function ContestLeaderboard() {
   });
 
   return (
-    <div className="min-h-screen bg-[#1A1A1A] text-[#DAE0DE] font-sans pb-20 transition-colors duration-300">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans pb-20 transition-colors duration-300">
       
       {/* BACKGROUND ACCENTS */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-[#FFA217]/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#FF375F]/5 rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-[var(--brand-orange)]/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-[var(--color-error)]/5 rounded-full blur-[120px]" />
       </div>
 
       <div className="max-w-6xl mx-auto px-4 md:px-8 pt-12 relative z-10">
@@ -120,32 +120,32 @@ export default function ContestLeaderboard() {
           <div className="flex items-center gap-4 self-start md:self-auto">
             <button 
               onClick={() => navigate(-1)}
-              className="p-3 rounded-full bg-[#282828] border border-[#3E3E3E] hover:bg-[#3E3E3E] transition-colors group"
+              className="p-3 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border-primary)] hover:bg-[var(--bg-secondary)] transition-colors group"
             >
-              <ArrowLeft className="w-5 h-5 text-[#8A8A8A] group-hover:text-white" />
+              <ArrowLeft className="w-5 h-5 text-[var(--text-tertiary)] group-hover:text-[var(--text-primary)]" />
             </button>
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white flex items-center gap-3">
-                Leaderboard <span className="px-2 py-1 rounded-md bg-[#FF375F]/10 text-[#FF375F] text-xs font-bold border border-[#FF375F]/20 uppercase tracking-wider">Live</span>
+              <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--text-primary)] flex items-center gap-3">
+                Leaderboard <span className="px-2 py-1 rounded-md bg-[var(--color-error)]/10 text-[var(--color-error)] text-xs font-bold border border-[var(--color-error)]/20 uppercase tracking-wider">Live</span>
               </h1>
-              <p className="text-[#8A8A8A] text-sm mt-1">Real-time rankings & performance stats</p>
+              <p className="text-[var(--text-tertiary)] text-sm mt-1">Real-time rankings & performance stats</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3 w-full md:w-auto">
             <div className="relative w-full md:w-auto flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8A8A8A]" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" />
               <input 
                 type="text" 
                 placeholder="Search participant..." 
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full md:w-[300px] pl-10 pr-4 py-3 rounded-xl bg-[#282828] border border-[#3E3E3E] focus:border-[#FFA217] focus:bg-[#1A1A1A] outline-none transition-all text-sm placeholder:text-[#8A8A8A] text-white"
+                className="w-full md:w-[300px] pl-10 pr-4 py-3 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-primary)] focus:border-[var(--brand-orange)] focus:bg-[var(--bg-primary)] outline-none transition-all text-sm placeholder:text-[var(--text-tertiary)] text-[var(--text-primary)]"
               />
             </div>
             <button 
               onClick={fetchLeaderboard}
-              className="p-3 rounded-xl bg-[#282828] border border-[#3E3E3E] hover:bg-[#3E3E3E] transition-colors text-[#8A8A8A] hover:text-white hover:rotate-180 duration-500"
+              className="p-3 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-primary)] hover:bg-[var(--bg-secondary)] transition-colors text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:rotate-180 duration-500"
               title="Refresh Leaderboard"
             >
               <RefreshCw className="w-5 h-5" />
@@ -155,19 +155,19 @@ export default function ContestLeaderboard() {
 
         {loading && board.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20">
-            <div className="w-12 h-12 border-4 border-[#FFA217]/30 border-t-[#FFA217] rounded-full animate-spin mb-4" />
-            <p className="text-[#8A8A8A] animate-pulse">Calculating ranks...</p>
+            <div className="w-12 h-12 border-4 border-[var(--brand-orange)]/30 border-t-[var(--brand-orange)] rounded-full animate-spin mb-4" />
+            <p className="text-[var(--text-tertiary)] animate-pulse">Calculating ranks...</p>
           </div>
         ) : error ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mb-4">
               <TrendingUp className="w-8 h-8 text-red-500" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">Failed to load leaderboard</h3>
-            <p className="text-[#8A8A8A] mb-6 max-w-md">{error}</p>
+            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">Failed to load leaderboard</h3>
+            <p className="text-[var(--text-tertiary)] mb-6 max-w-md">{error}</p>
             <button 
               onClick={fetchLeaderboard}
-              className="px-6 py-2 rounded-lg bg-[#282828] hover:bg-[#3E3E3E] transition-colors font-bold text-sm text-white"
+              className="px-6 py-2 rounded-lg bg-[var(--bg-tertiary)] hover:bg-[var(--bg-secondary)] transition-colors font-bold text-sm text-[var(--text-primary)]"
             >
               Try Again
             </button>
@@ -189,8 +189,8 @@ export default function ContestLeaderboard() {
             )}
 
             {/* LIST SECTION */}
-            <div className="bg-[#282828]/50 backdrop-blur-xl border border-[#3E3E3E] rounded-3xl overflow-hidden shadow-2xl">
-              <div className="grid grid-cols-12 gap-4 p-4 border-b border-[#3E3E3E] text-xs font-bold uppercase tracking-wider text-[#8A8A8A]">
+            <div className="bg-[var(--bg-secondary)]/50 backdrop-blur-xl border border-[var(--border-primary)] rounded-3xl overflow-hidden shadow-2xl">
+              <div className="grid grid-cols-12 gap-4 p-4 border-b border-[var(--border-primary)] text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)]">
                 <div className="col-span-2 md:col-span-1 text-center">Rank</div>
                 <div className="col-span-6 md:col-span-5">Participant</div>
                 <div className="col-span-2 md:col-span-2 text-center hidden md:block">Accuracy</div>
@@ -198,9 +198,9 @@ export default function ContestLeaderboard() {
                 <div className="col-span-4 md:col-span-2 text-right pr-4">Score</div>
               </div>
 
-              <div className="divide-y divide-[#3E3E3E]">
+              <div className="divide-y divide-[var(--border-primary)]">
                 {rest.length === 0 && top3.length === 0 ? (
-                  <div className="py-20 text-center text-[#8A8A8A]">
+                  <div className="py-20 text-center text-[var(--text-tertiary)]">
                     <p>No participants found.</p>
                     <p className="text-xs mt-2 opacity-50">Contest ID: {contestId}</p>
                   </div>
@@ -221,9 +221,9 @@ export default function ContestLeaderboard() {
 function PodiumCard({ user, rank, delay }) {
   const isFirst = rank === 1;
   const colors = {
-    1: "from-yellow-400 to-amber-600 shadow-yellow-500/20",
-    2: "from-slate-300 to-slate-500 shadow-slate-400/20",
-    3: "from-orange-400 to-amber-800 shadow-orange-500/20"
+    1: "from-[var(--brand-orange)] to-amber-600 shadow-[var(--brand-orange)]/20",
+    2: "from-[var(--text-tertiary)] to-slate-500 shadow-[var(--text-tertiary)]/20",
+    3: "from-[var(--color-medium)] to-amber-800 shadow-[var(--color-medium)]/20"
   };
 
   const username = user.user?.username || "Unknown";
@@ -238,30 +238,30 @@ function PodiumCard({ user, rank, delay }) {
     >
       <div className="relative">
         {isFirst && (
-          <Crown className="absolute -top-10 left-1/2 -translate-x-1/2 w-10 h-10 text-[#FFA217] fill-[#FFA217] animate-bounce" />
+          <Crown className="absolute -top-10 left-1/2 -translate-x-1/2 w-10 h-10 text-[var(--brand-orange)] fill-[var(--brand-orange)] animate-bounce" />
         )}
         <div className={`w-20 h-20 md:w-24 md:h-24 rounded-full p-1 bg-gradient-to-br ${colors[rank]} shadow-2xl`}>
-          <div className="w-full h-full rounded-full bg-[#1A1A1A] flex items-center justify-center overflow-hidden border-4 border-[#1A1A1A]">
-             <span className="text-2xl font-bold text-white">
+          <div className="w-full h-full rounded-full bg-[var(--bg-primary)] flex items-center justify-center overflow-hidden border-4 border-[var(--bg-primary)]">
+             <span className="text-2xl font-bold text-[var(--text-primary)]">
                {initial}
              </span>
           </div>
         </div>
-        <div className={`absolute -bottom-3 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-gradient-to-br ${colors[rank]} flex items-center justify-center text-white font-bold text-sm shadow-lg border-2 border-[#1A1A1A]`}>
+        <div className={`absolute -bottom-3 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-gradient-to-br ${colors[rank]} flex items-center justify-center text-[var(--bg-primary)] font-bold text-sm shadow-lg border-2 border-[var(--bg-primary)]`}>
           {rank}
         </div>
       </div>
 
       <div className="mt-6 text-center">
         <div className="flex items-center justify-center gap-2 mb-1">
-          <h3 className="font-bold text-white text-lg truncate max-w-[120px]">{username}</h3>
+          <h3 className="font-bold text-[var(--text-primary)] text-lg truncate max-w-[120px]">{username}</h3>
           {getStateEmblem(user.user?.location)}
         </div>
         <div className="flex items-center justify-center gap-2 mt-1">
-          <span className="text-[#FFA217] font-bold text-xl">{user.score}</span>
-          <span className="text-xs text-[#8A8A8A] uppercase font-bold">pts</span>
+          <span className="text-[var(--brand-orange)] font-bold text-xl">{user.score}</span>
+          <span className="text-xs text-[var(--text-tertiary)] uppercase font-bold">pts</span>
         </div>
-        <div className="flex items-center justify-center gap-3 mt-2 text-xs text-[#8A8A8A]">
+        <div className="flex items-center justify-center gap-3 mt-2 text-xs text-[var(--text-tertiary)]">
            <span className="flex items-center gap-1"><Target className="w-3 h-3" /> {user.accuracy}%</span>
            <span className="flex items-center gap-1"><Timer className="w-3 h-3" /> {user.timeTaken}</span>
         </div>
@@ -279,22 +279,22 @@ function RankRow({ user, rank, index }) {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-[#3E3E3E]/20 transition-colors group"
+      className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-[var(--bg-tertiary)]/20 transition-colors group"
     >
-      <div className="col-span-2 md:col-span-1 text-center font-mono font-bold text-[#8A8A8A] group-hover:text-white transition-colors">
+      <div className="col-span-2 md:col-span-1 text-center font-mono font-bold text-[var(--text-tertiary)] group-hover:text-[var(--text-primary)] transition-colors">
         #{rank}
       </div>
       
       <div className="col-span-6 md:col-span-5 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-[#3E3E3E] flex items-center justify-center text-sm font-bold text-white">
+        <div className="w-10 h-10 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center text-sm font-bold text-[var(--text-primary)]">
           {initial}
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <div className="font-bold text-white/90 group-hover:text-white transition-colors">{username}</div>
+            <div className="font-bold text-[var(--text-primary)]/90 group-hover:text-[var(--text-primary)] transition-colors">{username}</div>
             {getStateEmblem(user.user?.location)}
           </div>
-          <div className="text-xs text-[#8A8A8A] md:hidden">{user.accuracy}% Acc • {user.timeTaken}</div>
+          <div className="text-xs text-[var(--text-tertiary)] md:hidden">{user.accuracy}% Acc • {user.timeTaken}</div>
         </div>
       </div>
 

@@ -40,8 +40,8 @@ export default function QuestDetail() {
 
   if (loading || !quest) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#FFA217]"></div>
+      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[var(--brand-orange)]"></div>
       </div>
     );
   }
@@ -83,26 +83,26 @@ export default function QuestDetail() {
 
 
   return (
-    <div className="min-h-screen bg-[#1A1A1A] text-white font-sans selection:bg-[#FFA217]/30 flex overflow-hidden">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans selection:bg-[var(--brand-orange)]/30 flex overflow-hidden">
       <ProblemListSidebar />
       
       <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
         {/* Header */}
-        <div className="h-16 border-b border-[#282828] bg-[#1A1A1A] flex items-center justify-between px-6 shrink-0 z-20">
+        <div className="h-16 border-b border-[var(--border-primary)] bg-[var(--bg-secondary)] flex items-center justify-between px-6 shrink-0 z-20">
           <div className="flex items-center gap-4">
-            <Link to="/quest" className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#282828] text-[#8A8A8A] hover:text-white hover:bg-[#333] transition-all">
+            <Link to="/quest" className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--bg-tertiary)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-primary)] transition-all border border-[var(--border-primary)]">
               <ChevronLeft size={20} />
             </Link>
-            <h1 className="text-xl font-bold text-white tracking-tight">{quest.title}</h1>
+            <h1 className="text-xl font-bold text-[var(--text-primary)] tracking-tight">{quest.title}</h1>
           </div>
           
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono text-[#8A8A8A]">{progress.completedNodes.length}/{totalNodes}</span>
+            <span className="text-xs font-mono text-[var(--text-tertiary)]">{progress.completedNodes.length}/{totalNodes}</span>
             <div className="flex gap-1">
               {Array.from({ length: totalNodes }).map((_, i) => (
                 <div 
                   key={i} 
-                  className={`h-2 w-2 rounded-full ${i < progress.completedNodes.length ? 'bg-[#58CC02]' : 'bg-[#333]'}`}
+                  className={`h-2 w-2 rounded-full ${i < progress.completedNodes.length ? 'bg-[var(--color-easy)]' : 'bg-[var(--bg-tertiary)]'}`}
                 ></div>
               ))}
             </div>
@@ -110,13 +110,13 @@ export default function QuestDetail() {
         </div>
 
         {/* Scrollable Map Area */}
-        <div className="flex-1 overflow-y-auto relative bg-[#151515]">
-          <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+        <div className="flex-1 overflow-y-auto relative bg-[var(--bg-secondary)]">
+          <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none"></div>
           
           <div className="relative max-w-3xl mx-auto px-6 py-12 min-h-full">
             {quest.sections.map((section) => (
               <div key={section.id} className="mb-16 relative">
-                <div className="text-xs font-medium text-[#555] uppercase tracking-widest mb-12 pl-4 border-l-2 border-[#333]">
+                <div className="text-xs font-medium text-[var(--text-tertiary)] uppercase tracking-widest mb-12 pl-4 border-l-2 border-[var(--border-primary)]">
                   {section.title}
                 </div>
                 
@@ -131,7 +131,7 @@ export default function QuestDetail() {
                         return `L ${x} ${y}`;
                       }).join(' ')}`}
                       fill="none"
-                      stroke="#333"
+                      stroke="var(--border-primary)"
                       strokeWidth="2"
                       strokeDasharray="6 6"
                       strokeLinecap="round"
@@ -156,10 +156,10 @@ export default function QuestDetail() {
                         className={`
                           group relative flex items-center gap-4 px-5 py-3 rounded-2xl border-2 transition-all duration-300 cursor-pointer
                           ${status === 'active' 
-                            ? 'bg-[#1A2A1A] border-[#2DB55D] shadow-[0_0_30px_-5px_rgba(45,181,93,0.4)] scale-110 animate-pulse' 
+                            ? 'bg-[var(--bg-tertiary)] border-[var(--color-easy)] shadow-[0_0_30px_-5px_rgba(45,181,93,0.4)] scale-110 animate-pulse' 
                             : status === 'completed'
-                              ? 'bg-[#1A1A1A] border-[#333] opacity-80'
-                              : 'bg-[#1A1A1A] border-[#282828] opacity-50'}
+                              ? 'bg-[var(--bg-tertiary)] border-[var(--border-primary)] opacity-80'
+                              : 'bg-[var(--bg-tertiary)] border-[var(--border-primary)] opacity-50'}
                         `}
                         onClick={() => handleNodeClick(node)}
                       >
@@ -167,17 +167,17 @@ export default function QuestDetail() {
                         <div className={`
                           w-12 h-12 rounded-xl flex items-center justify-center border overflow-hidden relative
                           ${status === 'active' 
-                            ? 'bg-[#1D3A1D] border-[#2DB55D]/30' 
+                            ? 'bg-[var(--bg-secondary)] border-[var(--color-easy)]/30' 
                             : status === 'completed'
-                              ? 'bg-[#2DB55D]/10 border-[#2DB55D]/30'
-                              : 'bg-[#222] border-[#333]'}
+                              ? 'bg-[var(--color-easy)]/10 border-[var(--color-easy)]/30'
+                              : 'bg-[var(--bg-secondary)] border-[var(--border-primary)]'}
                         `}>
-                          {status === 'active' && <div className="absolute inset-0 bg-[#2DB55D]/10 animate-pulse"></div>}
+                          {status === 'active' && <div className="absolute inset-0 bg-[var(--color-easy)]/10 animate-pulse"></div>}
                           
                           {node.type === 'chest' ? (
                             <img src="/store/treasure.png" alt="Chest" className={`w-8 h-8 object-contain ${status === 'locked' ? 'grayscale opacity-40' : ''}`} />
                           ) : node.type === 'mystery' ? (
-                            <HelpCircle size={20} className="text-[#555]" />
+                            <HelpCircle size={20} className="text-[var(--text-tertiary)]" />
                           ) : (
                             <img 
                               src="/store/hometree.png" 
@@ -189,17 +189,17 @@ export default function QuestDetail() {
 
                         {/* Text Content */}
                         <div className="flex flex-col">
-                          <span className={`text-sm font-medium ${status === 'locked' ? 'text-[#555]' : 'text-gray-200'}`}>
+                          <span className={`text-sm font-medium ${status === 'locked' ? 'text-[var(--text-tertiary)]' : 'text-[var(--text-primary)]'}`}>
                             {node.title || (node.type === 'chest' ? 'Bonus Chest' : 'Mystery')}
                           </span>
                           {status === 'active' && (
-                            <span className="text-[10px] text-[#2DB55D] font-bold uppercase tracking-wider">Current</span>
+                            <span className="text-[10px] text-[var(--color-easy)] font-bold uppercase tracking-wider">Current</span>
                           )}
                         </div>
 
                         {/* Active Glow */}
                         {status === 'active' && (
-                          <div className="absolute inset-0 rounded-2xl border border-[#2DB55D]/50 animate-pulse pointer-events-none"></div>
+                          <div className="absolute inset-0 rounded-2xl border border-[var(--color-easy)]/50 animate-pulse pointer-events-none"></div>
                         )}
                       </div>
                     </motion.div>
@@ -208,7 +208,7 @@ export default function QuestDetail() {
               </div>
             ))}
             {/* Locked Section Placeholder */}
-            <div className="mt-24 p-12 rounded-[2rem] border-2 border-dashed border-[#282828] flex flex-col items-center justify-center text-[#3E3E3E]">
+            <div className="mt-24 p-12 rounded-[2rem] border-2 border-dashed border-[var(--border-primary)] flex flex-col items-center justify-center text-[var(--text-tertiary)]">
               <Lock size={48} className="mb-4" />
               <p className="text-lg font-bold">Complete the units above to unlock</p>
             </div>

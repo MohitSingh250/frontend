@@ -123,30 +123,30 @@ export default function QuestProblem() {
   return (
     <div className="h-screen flex flex-col bg-[var(--bg-primary)] overflow-hidden">
       {/* Quest Header */}
-      <div className="h-16 border-b border-[#282828] bg-[#1A1A1A] flex items-center justify-between px-6 shadow-sm z-50">
+      <div className="h-16 border-b border-[var(--border-primary)] bg-[var(--bg-secondary)] flex items-center justify-between px-6 shadow-sm z-50">
         <div className="flex items-center gap-4">
           <button 
             onClick={() => navigate(`/quest/${questId}`)}
-            className="flex items-center gap-2 text-[#8A8A8A] hover:text-white transition-colors text-sm font-bold uppercase tracking-wide"
+            className="flex items-center gap-2 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors text-sm font-bold uppercase tracking-wide"
           >
             <ChevronLeft size={18} />
             Map
           </button>
-          <div className="h-6 w-[1px] bg-[#282828]"></div>
-          <div className="flex items-center gap-2 text-[#58CC02] font-black tracking-wider">
+          <div className="h-6 w-[1px] bg-[var(--border-primary)]"></div>
+          <div className="flex items-center gap-2 text-[var(--color-easy)] font-black tracking-wider">
             <Map size={20} />
             <span>QUEST MODE</span>
           </div>
         </div>
         
-        <div className="absolute left-1/2 -translate-x-1/2 text-lg font-bold text-white">
+        <div className="absolute left-1/2 -translate-x-1/2 text-lg font-bold text-[var(--text-primary)]">
           {problem.title}
         </div>
 
         <div className="w-[150px] flex justify-end">
            {questNode && questNode.problemIds && (
-             <div className="px-3 py-1 rounded-full bg-[#282828] border border-[#333] text-xs font-mono text-[#8A8A8A]">
-               Problem <span className="text-white font-bold">{questNode.problemIds.findIndex(pid => pid === id) + 1}</span>
+             <div className="px-3 py-1 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-xs font-mono text-[var(--text-tertiary)]">
+               Problem <span className="text-[var(--text-primary)] font-bold">{questNode.problemIds.findIndex(pid => pid === id) + 1}</span>
                <span className="mx-1">/</span>
                <span>{questNode.problemIds.length}</span>
              </div>

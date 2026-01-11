@@ -64,12 +64,7 @@ export default function OrbitCalendar({ isMobile = false, onClose }) {
       const dateString = localDate.toISOString().split('T')[0];
 
       // Check if any history timestamp falls on this local date
-      const isSolved = streak?.history?.some(timestamp => {
-        const d = new Date(timestamp);
-        // Convert history timestamp to local YYYY-MM-DD
-        const localD = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
-        return localD.toISOString().split('T')[0] === dateString;
-      });
+      const isSolved = streak?.dailyHistory?.includes(dateString);
 
       days.push(
         <div
@@ -77,7 +72,7 @@ export default function OrbitCalendar({ isMobile = false, onClose }) {
           onClick={() => setActiveDay(i)}
           className={`
             h-8 w-8 flex items-center justify-center rounded-full text-xs font-medium cursor-pointer transition-all relative
-            ${isActive ? "bg-[var(--white)] text-black" : "text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"}
+            ${isActive ? "bg-[var(--text-primary)] text-[var(--bg-primary)]" : "text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"}
             ${isToday && !isActive && !isSolved ? "text-[var(--text-primary)] font-bold" : ""}
             ${isSolved && !isActive ? "text-[var(--color-success)] font-bold" : ""}
           `}
@@ -98,10 +93,10 @@ export default function OrbitCalendar({ isMobile = false, onClose }) {
              </div>
           )}
           
-          {/* Solved + Active Indicator (Black Checkmark) */}
+          {/* Solved + Active Indicator (Checkmark) */}
           {isSolved && isActive && (
              <div className="absolute -bottom-1.5 flex items-center justify-center">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="text-black">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--bg-primary)]">
                    <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
              </div>
@@ -161,14 +156,19 @@ export default function OrbitCalendar({ isMobile = false, onClose }) {
       {/* Footer: Check-in Button */}
       <div className="p-4 border-t border-[var(--border-secondary)] bg-[var(--bg-tertiary)]/10">
          <Link to="/daily" className="w-full py-2 rounded-lg bg-[var(--brand-orange)] hover:bg-[var(--brand-orange)]/90 text-white text-xs font-bold shadow-lg shadow-[var(--brand-orange)]/20 transition-all flex items-center justify-center gap-2">
-            <CalendarIcon size={14} />
-            {streak?.history?.some(ts => {
-               const d = new Date(ts);
-               const localD = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
-               const today = new Date();
-               const localToday = new Date(today.getTime() - (today.getTimezoneOffset() * 60000));
-               return localD.toISOString().split('T')[0] === localToday.toISOString().split('T')[0];
-            }) ? "Solved Today" : "Daily Challenge"}
+            {streak?.dailyHistory?.includes(new Date().toISOString().split('T')[0]) ? (
+              <>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Solved
+              </>
+            ) : (
+              <>
+                <CalendarIcon size={14} />
+                Daily Challenge
+              </>
+            )}
          </Link>
       </div>
     </>

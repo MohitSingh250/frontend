@@ -40,17 +40,17 @@ export default function StudyPlanModal({ isOpen, onClose, onConfirm, planTitle }
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="bg-[#282828] w-full max-w-lg rounded-2xl border border-[#333] shadow-2xl overflow-hidden"
+          className="bg-[var(--bg-secondary)] w-full max-w-lg rounded-2xl border border-[var(--border-primary)] shadow-2xl overflow-hidden"
         >
           {/* Header */}
-          <div className="p-6 border-b border-[#333] flex items-center justify-between">
+          <div className="p-6 border-b border-[var(--border-primary)] flex items-center justify-between">
             <div className="flex items-center gap-3">
-               <div className="p-2 bg-[#2DB55D]/10 rounded-lg text-[#2DB55D]">
+               <div className="p-2 bg-[var(--color-success)]/10 rounded-lg text-[var(--color-success)]">
                   <Calendar size={20} />
                </div>
-               <h2 className="text-xl font-bold text-white">New Study Plan</h2>
+               <h2 className="text-xl font-bold text-[var(--text-primary)]">New Study Plan</h2>
             </div>
-            <button onClick={onClose} className="text-[#888] hover:text-white transition-colors">
+            <button onClick={onClose} className="text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors">
               <X size={20} />
             </button>
           </div>
@@ -60,13 +60,13 @@ export default function StudyPlanModal({ isOpen, onClose, onConfirm, planTitle }
              {/* 3D Icon Placeholder (simulated with gradient circle) */}
              <div className="flex justify-center mb-8">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 blur-md opacity-50 absolute"></div>
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 relative flex items-center justify-center shadow-lg border-4 border-[#282828]">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 relative flex items-center justify-center shadow-lg border-4 border-[var(--bg-secondary)]">
                    <div className="w-16 h-16 rounded-full border-4 border-white/20"></div>
                 </div>
              </div>
 
              <div className="text-center mb-8">
-                <p className="text-[#ccc] text-lg">
+                <p className="text-[var(--text-secondary)] text-lg">
                    I commit to solve 
                    <input 
                       type="number" 
@@ -74,7 +74,7 @@ export default function StudyPlanModal({ isOpen, onClose, onConfirm, planTitle }
                       max="10" 
                       value={problemsPerDay}
                       onChange={(e) => setProblemsPerDay(parseInt(e.target.value) || 1)}
-                      className="w-12 mx-2 bg-[#333] border border-[#444] rounded text-center text-white font-bold py-1 focus:outline-none focus:border-[#2DB55D]"
+                      className="w-12 mx-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded text-center text-[var(--text-primary)] font-bold py-1 focus:outline-none focus:border-[var(--color-success)]"
                    />
                    problems on every
                 </p>
@@ -88,8 +88,8 @@ export default function StudyPlanModal({ isOpen, onClose, onConfirm, planTitle }
                       className={`
                          w-10 h-12 rounded-lg flex flex-col items-center justify-center text-[10px] font-bold transition-all border
                          ${selectedDays.includes(day.id) 
-                            ? 'bg-[#333] border-[#2DB55D] text-white shadow-[0_0_10px_rgba(45,181,93,0.3)]' 
-                            : 'bg-[#1A1A1A] border-[#333] text-[#666] hover:border-[#444]'}
+                            ? 'bg-[var(--bg-tertiary)] border-[var(--color-success)] text-[var(--text-primary)] shadow-[0_0_10px_rgba(var(--color-success-rgb),0.3)]' 
+                            : 'bg-[var(--bg-primary)] border-[var(--border-secondary)] text-[var(--text-tertiary)] hover:border-[var(--border-primary)]'}
                       `}
                    >
                       <span>{day.label}</span>
@@ -100,11 +100,11 @@ export default function StudyPlanModal({ isOpen, onClose, onConfirm, planTitle }
           </div>
 
           {/* Footer */}
-          <div className="p-6 bg-[#222] border-t border-[#333] flex justify-end gap-3">
-             <button onClick={onClose} className="px-6 py-2 rounded-lg text-[#888] hover:text-white font-medium transition-colors">
+          <div className="p-6 bg-[var(--bg-tertiary)] border-t border-[var(--border-primary)] flex justify-end gap-3">
+             <button onClick={onClose} className="px-6 py-2 rounded-lg text-[var(--text-tertiary)] hover:text-[var(--text-primary)] font-medium transition-colors">
                 Cancel
              </button>
-             <button onClick={handleConfirm} className="px-6 py-2 rounded-lg bg-white text-black font-bold hover:bg-gray-200 transition-colors">
+             <button onClick={handleConfirm} className="px-6 py-2 rounded-lg bg-[var(--text-primary)] text-[var(--bg-primary)] font-bold hover:opacity-90 transition-colors">
                 Confirm
              </button>
           </div>

@@ -16,25 +16,25 @@ export default function ContestListItem({ contest }) {
   const totalProblems = contest.problems?.length || 0;
 
   return (
-    <div className="flex items-center justify-between p-4 rounded-2xl hover:bg-[#3E3E3E]/30 transition-all group">
+    <div className="flex items-center justify-between p-4 rounded-2xl hover:bg-[var(--bg-tertiary)]/30 transition-all group">
       <div className="flex items-center gap-4">
         {/* Thumbnail Gradient */}
         <div className={`w-16 h-10 rounded-lg bg-gradient-to-br ${
-          isWeekly ? "from-[#FFA217] to-[#FFB84D]" : "from-[#6366F1] to-[#A855F7]"
+          isWeekly ? "from-[var(--brand-orange)] to-[#FFB84D]" : "from-[#6366F1] to-[#A855F7]"
         } opacity-80 shadow-inner`} />
         
         <div>
-          <h4 className="font-bold text-white group-hover:text-[#FFA217] transition-colors">
+          <h4 className="font-bold text-[var(--text-primary)] group-hover:text-[var(--brand-orange)] transition-colors">
             {contest.title}
           </h4>
-          <p className="text-xs text-[#8A8A8A]">
+          <p className="text-xs text-[var(--text-tertiary)]">
             {start.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}, {start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} GMT+05:30
           </p>
         </div>
       </div>
 
       <div className="flex items-center gap-4">
-        <span className="text-xs font-bold text-[#8A8A8A] bg-[#3E3E3E] px-3 py-1 rounded-full">
+        <span className="text-xs font-bold text-[var(--text-tertiary)] bg-[var(--bg-tertiary)] px-3 py-1 rounded-full">
           {solvedCount} / {totalProblems || 4}
         </span>
         <Link 

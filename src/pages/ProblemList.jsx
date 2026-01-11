@@ -137,7 +137,7 @@ export default function ProblemList() {
           <ProblemListSidebar />
 
           {/* 2. MAIN CONTENT (Promo + List) */}
-          <div className="flex-1 min-w-0 pt-8 pr-6">
+          <div className="flex-1 min-w-0 pt-12 pr-6">
             
             {/* Promo Cards */}
             <PromoCards />

@@ -90,17 +90,17 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
   const selectedCategory = CATEGORIES.find(c => c.id === category) || CATEGORIES[5];
 
   return (
-    <div className="h-full flex flex-col bg-[#1A1A1A] text-[#DAE0DE] font-sans">
+    <div className="h-full flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-[#3E3E3E] flex items-center justify-between bg-[#282828]">
+      <div className="px-6 py-4 border-b border-[var(--border-primary)] flex items-center justify-between bg-[var(--bg-secondary)]">
         <div className="flex items-center gap-4">
           <button 
             onClick={onBack}
-            className="p-2 hover:bg-[#3E3E3E] rounded-lg text-[#8A8A8A] hover:text-white transition-all"
+            className="p-2 hover:bg-[var(--bg-tertiary)] rounded-lg text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-all"
           >
             <X size={20} />
           </button>
-          <h2 className="text-lg font-bold text-[#eff1f6]">New Post</h2>
+          <h2 className="text-lg font-bold text-[var(--text-primary)]">New Post</h2>
         </div>
         <div className="flex items-center gap-3">
           <button 
@@ -108,8 +108,8 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
             onClick={() => setPreview(!preview)}
             className={`flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-lg transition-all ${
               preview 
-                ? "bg-[#3E3E3E] text-white" 
-                : "text-[#8A8A8A] hover:text-white"
+                ? "bg-[var(--bg-tertiary)] text-[var(--text-primary)]" 
+                : "text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
             }`}
           >
             {preview ? <Type size={16} /> : <Eye size={16} />}
@@ -133,21 +133,21 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
             
             {/* Category Selection */}
             <div className="relative">
-              <label className="block text-xs font-bold text-[#8A8A8A] uppercase tracking-wider mb-2">Category</label>
+              <label className="block text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-wider mb-2">Category</label>
               <button 
                 type="button"
                 onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-                className="w-full flex items-center justify-between px-4 py-2.5 bg-[#282828] border border-[#3E3E3E] rounded-lg text-sm text-white focus:border-[#FFA217] transition-all"
+                className="w-full flex items-center justify-between px-4 py-2.5 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg text-sm text-[var(--text-primary)] focus:border-[var(--brand-orange)] transition-all"
               >
                 <div className="flex items-center gap-3">
-                  <selectedCategory.icon size={18} className="text-[#FFA217]" />
+                  <selectedCategory.icon size={18} className="text-[var(--brand-orange)]" />
                   <span>{selectedCategory.label}</span>
                 </div>
-                <ChevronDown size={18} className={`text-[#8A8A8A] transition-transform ${showCategoryDropdown ? 'rotate-180' : ''}`} />
+                <ChevronDown size={18} className={`text-[var(--text-tertiary)] transition-transform ${showCategoryDropdown ? 'rotate-180' : ''}`} />
               </button>
 
               {showCategoryDropdown && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-[#282828] border border-[#3E3E3E] rounded-lg shadow-2xl z-50 overflow-hidden py-1">
+                <div className="absolute top-full left-0 right-0 mt-2 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-2xl z-50 overflow-hidden py-1">
                   {CATEGORIES.map((cat) => (
                     <button
                       key={cat.id}
@@ -156,10 +156,10 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
                         setCategory(cat.id);
                         setShowCategoryDropdown(false);
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-[#3E3E3E] transition-colors text-left"
+                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-[var(--bg-tertiary)] transition-colors text-left"
                     >
-                      <cat.icon size={18} className={category === cat.id ? "text-[#FFA217]" : "text-[#8A8A8A]"} />
-                      <span className={`text-sm ${category === cat.id ? 'text-white font-bold' : 'text-[#DAE0DE]'}`}>
+                      <cat.icon size={18} className={category === cat.id ? "text-[var(--brand-orange)]" : "text-[var(--text-tertiary)]"} />
+                      <span className={`text-sm ${category === cat.id ? 'text-[var(--text-primary)] font-bold' : 'text-[var(--text-primary)]'}`}>
                         {cat.label}
                       </span>
                     </button>
@@ -170,17 +170,17 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
 
             {/* Title */}
             <div>
-              <label className="block text-xs font-bold text-[#8A8A8A] uppercase tracking-wider mb-2">Title</label>
+              <label className="block text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-wider mb-2">Title</label>
               <input 
                 type="text" 
                 maxLength={100}
                 placeholder="Enter a descriptive title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-3 bg-[#282828] border border-[#3E3E3E] rounded-lg text-lg font-bold text-white focus:outline-none focus:border-[#FFA217] transition-all placeholder:text-[#8A8A8A]"
+                className="w-full px-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg text-lg font-bold text-[var(--text-primary)] focus:outline-none focus:border-[var(--brand-orange)] transition-all placeholder:text-[var(--text-tertiary)]"
               />
               <div className="mt-1 flex justify-end">
-                <span className={`text-[10px] font-medium ${title.length < 10 ? 'text-red-500' : 'text-[#8A8A8A]'}`}>
+                <span className={`text-[10px] font-medium ${title.length < 10 ? 'text-red-500' : 'text-[var(--text-tertiary)]'}`}>
                   {title.length}/100 (min 10)
                 </span>
               </div>
@@ -188,10 +188,10 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
 
             {/* Tags */}
             <div>
-              <label className="block text-xs font-bold text-[#8A8A8A] uppercase tracking-wider mb-2">Tags (max 5)</label>
-              <div className="flex flex-wrap gap-2 p-2 bg-[#282828] border border-[#3E3E3E] rounded-lg min-h-[46px] focus-within:border-[#FFA217] transition-all">
+              <label className="block text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-wider mb-2">Tags (max 5)</label>
+              <div className="flex flex-wrap gap-2 p-2 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg min-h-[46px] focus-within:border-[var(--brand-orange)] transition-all">
                 {tags.map(tag => (
-                  <span key={tag} className="flex items-center gap-1.5 px-2.5 py-1 bg-[#3E3E3E] text-[#DAE0DE] text-xs font-medium rounded-md">
+                  <span key={tag} className="flex items-center gap-1.5 px-2.5 py-1 bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-xs font-medium rounded-md">
                     {tag}
                     <button onClick={() => removeTag(tag)} className="hover:text-red-500 transition-colors">
                       <X size={14} />
@@ -205,7 +205,7 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyDown={handleAddTag}
                   disabled={tags.length >= 5}
-                  className="flex-1 min-w-[120px] bg-transparent border-none focus:ring-0 text-sm text-white placeholder:text-[#8A8A8A]"
+                  className="flex-1 min-w-[120px] bg-transparent border-none focus:ring-0 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)]"
                 />
               </div>
             </div>
@@ -213,19 +213,19 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
             {/* Content */}
             <div className="flex flex-col min-h-[400px]">
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-xs font-bold text-[#8A8A8A] uppercase tracking-wider">Content</label>
-                <div className="flex items-center gap-4 text-[#8A8A8A]">
-                  <button type="button" className="hover:text-white transition-colors"><Code size={16} /></button>
-                  <label className="cursor-pointer hover:text-white transition-colors">
+                <label className="block text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-wider">Content</label>
+                <div className="flex items-center gap-4 text-[var(--text-tertiary)]">
+                  <button type="button" className="hover:text-[var(--text-primary)] transition-colors"><Code size={16} /></button>
+                  <label className="cursor-pointer hover:text-[var(--text-primary)] transition-colors">
                     <ImageIcon size={16} />
                     <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
                   </label>
-                  <button type="button" className="hover:text-white transition-colors"><LinkIcon size={16} /></button>
-                  <div className="w-[1px] h-4 bg-[#3E3E3E] mx-1"></div>
+                  <button type="button" className="hover:text-[var(--text-primary)] transition-colors"><LinkIcon size={16} /></button>
+                  <div className="w-[1px] h-4 bg-[var(--border-primary)] mx-1"></div>
                   <button 
                     type="button"
                     onClick={() => setPreview(!preview)}
-                    className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded transition-all ${preview ? "bg-[#FFA217] text-white" : "hover:text-white"}`}
+                    className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded transition-all ${preview ? "bg-[var(--brand-orange)] text-white" : "hover:text-[var(--text-primary)]"}`}
                   >
                     {preview ? "Edit" : "Preview"}
                   </button>
@@ -233,7 +233,7 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
               </div>
               <div className="flex-1 relative">
                 {preview ? (
-                  <div className="w-full h-full p-6 bg-[#282828] border border-[#3E3E3E] rounded-lg overflow-y-auto prose prose-invert max-w-none text-sm">
+                  <div className="w-full h-full p-6 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg overflow-y-auto prose prose-invert max-w-none text-sm">
                     <ReactMarkdown>{content || "*Nothing to preview yet...*"}</ReactMarkdown>
                   </div>
                 ) : (
@@ -241,7 +241,7 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
                     placeholder="Write your post content here. Markdown and LaTeX are supported..."
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    className="w-full h-full p-6 bg-[#282828] border border-[#3E3E3E] rounded-lg text-sm text-[#DAE0DE] focus:outline-none focus:border-[#FFA217] transition-all resize-none custom-scrollbar placeholder:text-[#8A8A8A]"
+                    className="w-full h-full p-6 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--brand-orange)] transition-all resize-none custom-scrollbar placeholder:text-[var(--text-tertiary)]"
                   />
                 )}
               </div>
@@ -250,9 +250,9 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
         </div>
 
         {/* Sidebar */}
-        <aside className="hidden xl:block w-80 border-l border-[#3E3E3E] bg-[#282828] p-8 space-y-8 overflow-y-auto">
+        <aside className="hidden xl:block w-80 border-l border-[var(--border-primary)] bg-[var(--bg-secondary)] p-8 space-y-8 overflow-y-auto">
           <div className="space-y-6">
-            <div className="flex items-center gap-2 text-[#FFA217]">
+            <div className="flex items-center gap-2 text-[var(--brand-orange)]">
               <Info size={18} />
               <h3 className="text-sm font-bold uppercase tracking-wider">Posting Tips</h3>
             </div>
@@ -264,19 +264,19 @@ export default function CreateDiscussion({ problemId, onBack, onCreated }) {
                 { title: "Be Respectful", desc: "Maintain an academic and helpful tone." }
               ].map((item, i) => (
                 <li key={i} className="space-y-1">
-                  <h4 className="text-xs font-bold text-[#eff1f6]">{item.title}</h4>
-                  <p className="text-[11px] text-[#8A8A8A] leading-relaxed">{item.desc}</p>
+                  <h4 className="text-xs font-bold text-[var(--text-primary)]">{item.title}</h4>
+                  <p className="text-[11px] text-[var(--text-tertiary)] leading-relaxed">{item.desc}</p>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="p-4 bg-[#1A1A1A] border border-[#3E3E3E] rounded-lg space-y-3">
+          <div className="p-4 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg space-y-3">
             <div className="flex items-center gap-2 text-[#2DB55D]">
               <AlertCircle size={16} />
               <span className="text-xs font-bold uppercase tracking-wider">Community Rules</span>
             </div>
-            <p className="text-[10px] text-[#8A8A8A] leading-relaxed">
+            <p className="text-[10px] text-[var(--text-tertiary)] leading-relaxed">
               No spam, promotional content, or irrelevant topics. Posts violating rules will be removed.
             </p>
           </div>

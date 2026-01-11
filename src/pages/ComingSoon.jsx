@@ -14,7 +14,7 @@ export default function ComingSoon({ title = "Coming Soon" }) {
       </p>
       <Link 
         to="/problems" 
-        className="px-6 py-2.5 rounded-lg bg-[var(--brand-orange)] text-white font-medium hover:opacity-90 transition-opacity"
+        className="px-6 py-2.5 rounded-lg bg-[var(--brand-orange)] text-[var(--bg-primary)] font-medium hover:opacity-90 transition-opacity"
       >
         Back to Problems
       </Link>

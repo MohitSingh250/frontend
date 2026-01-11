@@ -6,13 +6,13 @@ export default function Sidebar() {
   return (
     <aside
       className="
-        w-64 bg-[var(--dark-slate-gray)]/80 
-        border-r border-[var(--dark-pastel-green)]/15 
+        w-64 bg-[var(--bg-secondary)]
+        border-r border-[var(--border-primary)]
         p-6 flex-col hidden md:flex 
         shadow-md backdrop-blur-md
       "
     >
-      <h2 className="text-xl font-semibold text-[var(--white)] mb-8 tracking-tight flex items-center gap-2">
+      <h2 className="text-xl font-semibold text-[var(--text-primary)] mb-8 tracking-tight flex items-center gap-2">
         📚 <span>Library</span>
       </h2>
 
@@ -24,11 +24,11 @@ export default function Sidebar() {
             w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 
             transition duration-200
             ${location.pathname === "/problems" 
-              ? "bg-[var(--raisin-black)]/50 text-[var(--dark-pastel-green)]" 
-              : "text-[var(--white)]/70 hover:text-[var(--dark-pastel-green)] hover:bg-[var(--raisin-black)]/50"}
+              ? "bg-[var(--bg-tertiary)] text-[var(--brand-orange)]" 
+              : "text-[var(--text-secondary)] hover:text-[var(--brand-orange)] hover:bg-[var(--bg-tertiary)]"}
           `}
         >
-          <BookOpen size={18} className="text-[var(--white)]/60" />
+          <BookOpen size={18} className="text-[var(--text-tertiary)]" />
           <span>All Problems</span>
         </Link>
 
@@ -39,11 +39,11 @@ export default function Sidebar() {
             w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 
             transition duration-200
             ${location.pathname === "/study-plan" 
-              ? "bg-[var(--raisin-black)]/50 text-[var(--orange-peel)]" 
-              : "text-[var(--white)]/70 hover:text-[var(--orange-peel)] hover:bg-[var(--raisin-black)]/50"}
+              ? "bg-[var(--bg-tertiary)] text-[var(--brand-orange)]" 
+              : "text-[var(--text-secondary)] hover:text-[var(--brand-orange)] hover:bg-[var(--bg-tertiary)]"}
           `}
         >
-          <GraduationCap size={18} className="text-[var(--white)]/60" />
+          <GraduationCap size={18} className="text-[var(--text-tertiary)]" />
           <span>Study Plan</span>
         </Link>
 
@@ -54,13 +54,13 @@ export default function Sidebar() {
             w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 
             transition duration-200
             ${location.pathname === "/quest" 
-              ? "bg-[var(--raisin-black)]/50 text-[#FFA217]" 
-              : "text-[var(--white)]/70 hover:text-[#FFA217] hover:bg-[var(--raisin-black)]/50"}
+              ? "bg-[var(--bg-tertiary)] text-[var(--brand-orange)]" 
+              : "text-[var(--text-secondary)] hover:text-[var(--brand-orange)] hover:bg-[var(--bg-tertiary)]"}
           `}
         >
-          <Zap size={18} className="text-[var(--white)]/60" />
+          <Zap size={18} className="text-[var(--text-tertiary)]" />
           <span>Quest</span>
-          <span className="ml-auto px-1.5 py-0.5 text-[10px] font-bold bg-[#00b8a3] text-white rounded">New</span>
+          <span className="ml-auto px-1.5 py-0.5 text-[10px] font-bold bg-[var(--color-easy)] text-white rounded">New</span>
         </Link>
 
         {/* Favorites (Active) */}
@@ -70,16 +70,16 @@ export default function Sidebar() {
             w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 
             transition duration-200
             ${location.pathname === "/favorites" 
-              ? "bg-[var(--dark-pastel-green)]/20 border border-[var(--dark-pastel-green)]/30 text-[var(--white)]" 
-              : "text-[var(--white)]/70 hover:text-[var(--white)] hover:bg-[var(--dark-pastel-green)]/20 hover:border-[var(--dark-pastel-green)]/30"}
+              ? "bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-[var(--text-primary)]" 
+              : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] hover:border-[var(--border-primary)]"}
           `}
         >
-          <Star size={18} className={location.pathname === "/favorites" ? "text-[var(--dark-pastel-green)]" : "text-[var(--white)]/60"} />
+          <Star size={18} className={location.pathname === "/favorites" ? "text-[var(--brand-orange)]" : "text-[var(--text-tertiary)]"} />
           <span>Favorites</span>
         </Link>
       </nav>
 
-      <div className="mt-auto pt-8 border-t border-[var(--dark-pastel-green)]/15 text-sm text-[var(--white)]/50">
+      <div className="mt-auto pt-8 border-t border-[var(--border-primary)] text-sm text-[var(--text-tertiary)]">
         <p>© 2025 JEE Physics Arena</p>
       </div>
     </aside>

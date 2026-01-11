@@ -99,13 +99,13 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#1A1A1A] text-white p-6">
+    <div className="min-h-screen w-full flex items-center justify-center bg-[var(--bg-primary)] text-[var(--text-primary)] p-6">
       <div className="w-full max-w-[440px]">
-        <div className="bg-[#222] rounded-2xl p-10 shadow-xl border border-[#2A2A2A]">
+        <div className="bg-[var(--bg-secondary)] rounded-2xl p-10 shadow-xl border border-[var(--border-primary)]">
           {/* Logo & Header */}
           <div className="text-center mb-10">
             <div className="flex justify-center mb-4">
-              <img src="/orbits.png" alt="Orbit" className="h-10 w-10 opacity-100" />
+              <img src="/orbit.png" alt="Orbit" className="h-10 w-10 opacity-100" />
             </div>
             <h1 className="text-2xl font-bold mb-2">
               {step === 1 ? "Sign up" : step === 2 ? "Your Journey" : "Final Touches"}
@@ -115,7 +115,7 @@ export default function Signup() {
                 <div 
                   key={s} 
                   className={`h-1 rounded-full transition-all duration-300 ${
-                    s === step ? "w-6 bg-[#FFA217]" : "w-2 bg-[#333]"
+                    s === step ? "w-6 bg-[var(--brand-orange)]" : "w-2 bg-[var(--bg-tertiary)]"
                   }`}
                 />
               ))}
@@ -142,20 +142,20 @@ export default function Signup() {
                   <input
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg bg-[#2A2A2A] border border-[#333] text-white placeholder-[#666] focus:outline-none focus:border-[#FFA217] transition-colors text-sm"
+                    className="w-full px-4 py-3 rounded-lg bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--brand-orange)] transition-colors text-sm"
                     placeholder="Username"
                   />
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg bg-[#2A2A2A] border border-[#333] text-white placeholder-[#666] focus:outline-none focus:border-[#FFA217] transition-colors text-sm"
+                    className="w-full px-4 py-3 rounded-lg bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--brand-orange)] transition-colors text-sm"
                     placeholder="Email address"
                   />
                   <select
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg bg-[#2A2A2A] border border-[#333] text-white focus:outline-none focus:border-[#FFA217] transition-colors text-sm appearance-none cursor-pointer"
+                    className="w-full px-4 py-3 rounded-lg bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--brand-orange)] transition-colors text-sm appearance-none cursor-pointer"
                   >
                     <option value="" disabled>Select State</option>
                     {states.map(s => <option key={s} value={s}>{s}</option>)}
@@ -164,7 +164,7 @@ export default function Signup() {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg bg-[#2A2A2A] border border-[#333] text-white placeholder-[#666] focus:outline-none focus:border-[#FFA217] transition-colors text-sm"
+                    className="w-full px-4 py-3 rounded-lg bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--brand-orange)] transition-colors text-sm"
                     placeholder="Password"
                   />
                 </motion.div>
@@ -180,7 +180,7 @@ export default function Signup() {
                   className="space-y-6"
                 >
                   <div className="space-y-3">
-                    <label className="text-xs font-medium text-[#888] ml-1 uppercase tracking-wider">Current Class</label>
+                    <label className="text-xs font-medium text-[var(--text-secondary)] ml-1 uppercase tracking-wider">Current Class</label>
                     <div className="flex flex-wrap gap-2">
                       {classes.map(c => (
                         <button
@@ -188,7 +188,7 @@ export default function Signup() {
                           type="button"
                           onClick={() => setUserClass(c)}
                           className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                            userClass === c ? "bg-[#FFA217] text-[#1A1A1A]" : "bg-[#2A2A2A] text-[#888] hover:bg-[#333]"
+                            userClass === c ? "bg-[var(--brand-orange)] text-[var(--bg-primary)]" : "bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]/80"
                           }`}
                         >
                           {c}
@@ -198,7 +198,7 @@ export default function Signup() {
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-xs font-medium text-[#888] ml-1 uppercase tracking-wider">Skill Level</label>
+                    <label className="text-xs font-medium text-[var(--text-secondary)] ml-1 uppercase tracking-wider">Skill Level</label>
                     <div className="grid grid-cols-1 gap-2">
                       {skills.map(s => (
                         <button
@@ -206,21 +206,21 @@ export default function Signup() {
                           type="button"
                           onClick={() => setSkillLevel(s.id)}
                           className={`flex items-center justify-between p-4 rounded-lg border transition-all ${
-                            skillLevel === s.id ? "bg-[#FFA217]/5 border-[#FFA217]" : "bg-[#2A2A2A] border-[#333]"
+                            skillLevel === s.id ? "bg-[var(--brand-orange)]/5 border-[var(--brand-orange)]" : "bg-[var(--bg-tertiary)] border-[var(--border-secondary)]"
                           }`}
                         >
                           <div className="text-left">
-                            <div className={`text-sm font-bold ${skillLevel === s.id ? "text-[#FFA217]" : "text-white"}`}>{s.label}</div>
-                            <div className="text-[10px] text-[#666]">{s.desc}</div>
+                            <div className={`text-sm font-bold ${skillLevel === s.id ? "text-[var(--brand-orange)]" : "text-[var(--text-primary)]"}`}>{s.label}</div>
+                            <div className="text-[10px] text-[var(--text-tertiary)]">{s.desc}</div>
                           </div>
-                          {skillLevel === s.id && <Check size={16} className="text-[#FFA217]" />}
+                          {skillLevel === s.id && <Check size={16} className="text-[var(--brand-orange)]" />}
                         </button>
                       ))}
                     </div>
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-xs font-medium text-[#888] ml-1 uppercase tracking-wider">Goals</label>
+                    <label className="text-xs font-medium text-[var(--text-secondary)] ml-1 uppercase tracking-wider">Goals</label>
                     <div className="flex flex-wrap gap-2">
                       {goals.map(g => (
                         <button
@@ -228,7 +228,7 @@ export default function Signup() {
                           type="button"
                           onClick={() => toggleGoal(g)}
                           className={`px-3 py-1.5 rounded-full text-[10px] font-bold border transition-all ${
-                            learningGoals.includes(g) ? "bg-[#38BDF8] border-[#38BDF8] text-[#1A1A1A]" : "bg-transparent border-[#333] text-[#888]"
+                            learningGoals.includes(g) ? "bg-[var(--accent-blue)] border-[var(--accent-blue)] text-[var(--bg-primary)]" : "bg-transparent border-[var(--border-secondary)] text-[var(--text-secondary)]"
                           }`}
                         >
                           {g}
@@ -249,7 +249,7 @@ export default function Signup() {
                   className="space-y-6"
                 >
                   <div className="space-y-3">
-                    <label className="text-xs font-medium text-[#888] ml-1 uppercase tracking-wider">Interests</label>
+                    <label className="text-xs font-medium text-[var(--text-secondary)] ml-1 uppercase tracking-wider">Interests</label>
                     <div className="grid grid-cols-2 gap-2">
                       {interestOptions.map(i => (
                         <button
@@ -257,7 +257,7 @@ export default function Signup() {
                           type="button"
                           onClick={() => toggleInterest(i)}
                           className={`p-3 rounded-lg text-xs font-bold border transition-all flex items-center justify-between ${
-                            interests.includes(i) ? "bg-[#FFA217]/5 border-[#FFA217] text-[#FFA217]" : "bg-[#2A2A2A] border-[#333] text-[#888]"
+                            interests.includes(i) ? "bg-[var(--brand-orange)]/5 border-[var(--brand-orange)] text-[var(--brand-orange)]" : "bg-[var(--bg-tertiary)] border-[var(--border-secondary)] text-[var(--text-secondary)]"
                           }`}
                         >
                           {i}
@@ -271,13 +271,13 @@ export default function Signup() {
                     <input
                       value={referral}
                       onChange={(e) => setReferral(e.target.value)}
-                      className="w-full px-4 py-3 rounded-lg bg-[#2A2A2A] border border-[#333] text-white placeholder-[#666] focus:outline-none focus:border-[#FFA217] transition-colors text-sm"
+                      className="w-full px-4 py-3 rounded-lg bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--brand-orange)] transition-colors text-sm"
                       placeholder="Referral Code (Optional)"
                     />
                     <input
                       value={coupon}
                       onChange={(e) => setCoupon(e.target.value)}
-                      className="w-full px-4 py-3 rounded-lg bg-[#2A2A2A] border border-[#333] text-white placeholder-[#666] focus:outline-none focus:border-[#FFA217] transition-colors text-sm"
+                      className="w-full px-4 py-3 rounded-lg bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--brand-orange)] transition-colors text-sm"
                       placeholder="Coupon Code (Optional)"
                     />
                   </div>
@@ -289,10 +289,10 @@ export default function Signup() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 rounded-lg bg-[#FFA217] text-[#1A1A1A] font-bold text-sm hover:bg-[#FFB237] transition-all flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-lg bg-[var(--brand-orange)] text-[var(--bg-primary)] font-bold text-sm hover:bg-[var(--brand-orange-hover)] transition-all flex items-center justify-center gap-2"
               >
                 {loading ? (
-                  <div className="w-5 h-5 border-2 border-[#1A1A1A]/20 border-t-[#1A1A1A] rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-[var(--bg-primary)]/20 border-t-[var(--bg-primary)] rounded-full animate-spin" />
                 ) : (
                   <>
                     {step === 3 ? "Sign Up" : "Continue"}
@@ -305,7 +305,7 @@ export default function Signup() {
                 <button
                   type="button"
                   onClick={prevStep}
-                  className="w-full py-3 rounded-lg bg-transparent text-[#888] font-medium text-sm hover:text-white transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-lg bg-transparent text-[var(--text-secondary)] font-medium text-sm hover:text-[var(--text-primary)] transition-all flex items-center justify-center gap-2"
                 >
                   <ChevronLeft size={16} /> Back
                 </button>
@@ -313,8 +313,8 @@ export default function Signup() {
             </div>
             
             <div className="text-center mt-8 text-sm">
-               <span className="text-[#666]">Already have an account? </span>
-               <a href="/login" className="text-[#FFA217] font-bold hover:underline">Sign In</a>
+               <span className="text-[var(--text-tertiary)]">Already have an account? </span>
+               <a href="/login" className="text-[var(--brand-orange)] font-bold hover:underline">Sign In</a>
             </div>
           </form>
         </div>

@@ -102,28 +102,28 @@ export default function Dashboard() {
             <h3 className="text-xs font-bold text-[var(--text-secondary)] mb-4 uppercase tracking-wider">Community Stats</h3>
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                 <div className="text-blue-500"><Globe size={16} /></div>
+                 <div className="text-[var(--accent-blue)]"><Globe size={16} /></div>
                  <div className="flex-1 flex justify-between items-center">
                     <span className="text-sm text-[var(--text-secondary)]">Views</span>
                     <span className="text-sm font-medium text-[var(--text-primary)]">{data.views || 0}</span>
                  </div>
               </div>
               <div className="flex items-center gap-3">
-                 <div className="text-blue-500"><CheckCircle2 size={16} /></div>
+                 <div className="text-[var(--accent-blue)]"><CheckCircle2 size={16} /></div>
                  <div className="flex-1 flex justify-between items-center">
                     <span className="text-sm text-[var(--text-secondary)]">Solutions</span>
                     <span className="text-sm font-medium text-[var(--text-primary)]">{data.solutions || 0}</span>
                  </div>
               </div>
               <div className="flex items-center gap-3">
-                 <div className="text-green-500"><Github size={16} /></div>
+                 <div className="text-[var(--color-success)]"><Github size={16} /></div>
                  <div className="flex-1 flex justify-between items-center">
                     <span className="text-sm text-[var(--text-secondary)]">Discuss</span>
                     <span className="text-sm font-medium text-[var(--text-primary)]">{data.discuss || 0}</span>
                  </div>
               </div>
               <div className="flex items-center gap-3">
-                 <div className="text-yellow-500"><Award size={16} /></div>
+                 <div className="text-[var(--color-medium)]"><Award size={16} /></div>
                  <div className="flex-1 flex justify-between items-center">
                     <span className="text-sm text-[var(--text-secondary)]">Reputation</span>
                     <span className="text-sm font-medium text-[var(--text-primary)]">{data.reputation || 0}</span>

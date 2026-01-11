@@ -26,7 +26,7 @@ export default function Login() {
           
           <div className="text-center mb-8">
              <div className="flex justify-center mb-4">
-                <img src="/orbits.png" alt="Orbit" className="h-10 w-10 opacity-100" /> 
+                <img src="/orbit.png" alt="Orbit" className="h-10 w-10 opacity-100" /> 
              </div>
              <h1 className="text-2xl font-semibold text-[var(--text-primary)] mb-2">
                 Sign in

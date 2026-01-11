@@ -3,14 +3,14 @@ import { Search, ChevronRight, ChevronLeft, BookOpen, X } from 'lucide-react';
 
 export default function ImportantChapters({ isMobileModal = false, onClose }) {
   const chapters = [
-    { name: 'Rotational Motion', subject: 'Physics', count: 120, color: 'bg-blue-500/10 text-blue-500' },
-    { name: 'Thermodynamics', subject: 'Physics', count: 95, color: 'bg-blue-500/10 text-blue-500' },
-    { name: 'Calculus', subject: 'Maths', count: 210, color: 'bg-red-500/10 text-red-500' },
-    { name: 'Organic Chem', subject: 'Chemistry', count: 180, color: 'bg-yellow-500/10 text-yellow-600' },
-    { name: 'Electrostatics', subject: 'Physics', count: 85, color: 'bg-blue-500/10 text-blue-500' },
-    { name: 'Coordination Comp', subject: 'Chemistry', count: 75, color: 'bg-yellow-500/10 text-yellow-600' },
-    { name: 'Probability', subject: 'Maths', count: 110, color: 'bg-red-500/10 text-red-500' },
-    { name: 'Optics', subject: 'Physics', count: 130, color: 'bg-blue-500/10 text-blue-500' },
+    { name: 'Rotational Motion', subject: 'Physics', count: 120, color: 'bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]' },
+    { name: 'Thermodynamics', subject: 'Physics', count: 95, color: 'bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]' },
+    { name: 'Calculus', subject: 'Maths', count: 210, color: 'bg-[var(--color-hard)]/10 text-[var(--color-hard)]' },
+    { name: 'Organic Chem', subject: 'Chemistry', count: 180, color: 'bg-[var(--color-medium)]/10 text-[var(--color-medium)]' },
+    { name: 'Electrostatics', subject: 'Physics', count: 85, color: 'bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]' },
+    { name: 'Coordination Comp', subject: 'Chemistry', count: 75, color: 'bg-[var(--color-medium)]/10 text-[var(--color-medium)]' },
+    { name: 'Probability', subject: 'Maths', count: 110, color: 'bg-[var(--color-hard)]/10 text-[var(--color-hard)]' },
+    { name: 'Optics', subject: 'Physics', count: 130, color: 'bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]' },
   ];
 
   const content = (

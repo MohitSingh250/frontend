@@ -56,22 +56,22 @@ const FEATURES = [
   {
     title: "Premium Problem Bank",
     description: "10,000+ hand-picked problems curated by top IITians with varying difficulty levels.",
-    icon: <Target className="text-orange-500" size={24} />
+    icon: <Target className="text-[var(--brand-orange)]" size={24} />
   },
   {
     title: "Real-time Analytics",
     description: "Deep dive into your performance with subject-wise and topic-wise accuracy tracking.",
-    icon: <Zap className="text-yellow-500" size={24} />
+    icon: <Zap className="text-[var(--color-medium)]" size={24} />
   },
   {
     title: "Mock Test Series",
     description: "Full-length tests simulated on the exact JEE pattern with All India Ranking.",
-    icon: <Trophy className="text-purple-500" size={24} />
+    icon: <Trophy className="text-[var(--accent-purple)]" size={24} />
   },
   {
     title: "Expert Solutions",
     description: "Step-by-step video and text solutions for every problem to ensure conceptual clarity.",
-    icon: <ShieldCheck className="text-green-500" size={24} />
+    icon: <ShieldCheck className="text-[var(--color-success)]" size={24} />
   }
 ];
 
@@ -122,7 +122,7 @@ export default function Premium() {
               `}
             >
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-[var(--brand-orange)] text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-[var(--brand-orange)] text-[var(--bg-primary)] text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">
                   Most Popular
                 </div>
               )}
@@ -141,8 +141,8 @@ export default function Premium() {
               <div className="space-y-4 mb-10 flex-1">
                 {plan.features.map((feature, idx) => (
                   <div key={idx} className="flex items-start gap-3">
-                    <div className="mt-1 w-5 h-5 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
-                      <Check size={12} className="text-green-500" />
+                    <div className="mt-1 w-5 h-5 rounded-full bg-[var(--color-success)]/10 flex items-center justify-center shrink-0">
+                      <Check size={12} className="text-[var(--color-success)]" />
                     </div>
                     <span className="text-sm text-[var(--text-secondary)] font-light leading-tight">
                       {feature}
@@ -154,7 +154,7 @@ export default function Premium() {
               <button className={`
                 w-full py-4 rounded-2xl font-bold transition-all active:scale-95
                 ${plan.popular 
-                  ? "bg-[var(--brand-orange)] text-white shadow-xl shadow-orange-500/20 hover:bg-[var(--brand-orange-hover)]" 
+                  ? "bg-[var(--brand-orange)] text-[var(--bg-primary)] shadow-xl shadow-[var(--brand-orange)]/20 hover:bg-[var(--brand-orange-hover)]" 
                   : "bg-[var(--bg-tertiary)] text-[var(--text-primary)] border border-[var(--border-primary)] hover:bg-[var(--bg-primary)]"}
               `}>
                 {plan.buttonText}
@@ -188,7 +188,7 @@ export default function Premium() {
 
       {/* Trust Section */}
       <div className="max-w-[1000px] mx-auto px-6 mt-24 md:mt-32 text-center">
-        <div className="p-8 md:p-12 rounded-[2rem] md:rounded-[40px] bg-gradient-to-br from-orange-500/5 to-transparent border border-orange-500/10">
+        <div className="p-8 md:p-12 rounded-[2rem] md:rounded-[40px] bg-gradient-to-br from-[var(--brand-orange)]/5 to-transparent border border-[var(--brand-orange)]/10">
           <Globe className="mx-auto text-[var(--brand-orange)] mb-6" size={48} />
           <h2 className="text-2xl md:text-3xl font-bold mb-6">Trusted by 50,000+ Aspirants</h2>
           <div className="flex flex-wrap justify-center gap-8 md:gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
@@ -202,16 +202,16 @@ export default function Premium() {
 
       {/* Final CTA */}
       <div className="max-w-[1200px] mx-auto px-6 mt-24 md:mt-32">
-         <div className="relative overflow-hidden rounded-[2rem] md:rounded-[40px] bg-[var(--brand-orange)] p-12 md:p-20 text-center text-white">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-[100px] -mr-48 -mt-48" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-black/10 rounded-full blur-[100px] -ml-48 -mb-48" />
+         <div className="relative overflow-hidden rounded-[2rem] md:rounded-[40px] bg-[var(--brand-orange)] p-12 md:p-20 text-center text-[var(--bg-primary)]">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--text-primary)]/10 rounded-full blur-[100px] -mr-48 -mt-48" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--bg-primary)]/10 rounded-full blur-[100px] -ml-48 -mb-48" />
             
             <Rocket className="mx-auto mb-8 animate-bounce" size={64} />
             <h2 className="text-3xl md:text-6xl font-black mb-8 tracking-tighter">Ready to Start Your Journey?</h2>
-            <p className="text-orange-100 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light">
+            <p className="text-[var(--bg-primary)]/80 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light">
                Don't leave your JEE success to chance. Get the tools you need to succeed today.
             </p>
-            <button className="w-full sm:w-auto px-12 py-5 bg-white text-[var(--brand-orange)] rounded-2xl font-black text-xl hover:bg-orange-50 transition-colors shadow-2xl shadow-black/20 active:scale-95">
+            <button className="w-full sm:w-auto px-12 py-5 bg-[var(--text-primary)] text-[var(--brand-orange)] rounded-2xl font-black text-xl hover:bg-[var(--text-primary)]/90 transition-colors shadow-2xl shadow-[var(--bg-primary)]/20 active:scale-95">
                Get Orbit Premium Now
             </button>
          </div>

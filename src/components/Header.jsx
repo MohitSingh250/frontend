@@ -40,7 +40,7 @@ export default function Header() {
         {/* Left: Logo & Nav */}
         <div className="flex items-center gap-6 h-full">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/orbits.png" alt="Orbit" className="w-6 h-6" />
+            <img src="/orbit.png" alt="Orbit" className="w-6 h-6" />
             <span className="font-bold text-lg tracking-tight text-[var(--text-primary)] hidden sm:block">Orbit</span>
           </Link>
 

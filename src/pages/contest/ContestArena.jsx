@@ -101,21 +101,21 @@ export default function ContestArena() {
   };
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-[#1A1A1A]">
-      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#FFA217]"></div>
+    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
+      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[var(--brand-orange)]"></div>
     </div>
   );
   
   if (!contest || problems.length === 0) return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#1A1A1A] text-white p-6 text-center">
-      <Trophy className="w-16 h-16 text-[#3E3E3E] mb-6" />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--bg-primary)] text-[var(--text-primary)] p-6 text-center">
+      <Trophy className="w-16 h-16 text-[var(--text-tertiary)] mb-6" />
       <h2 className="text-2xl font-bold mb-2">No problems available</h2>
-      <p className="text-[#8A8A8A] max-w-md mb-8">
+      <p className="text-[var(--text-secondary)] max-w-md mb-8">
         We couldn't find any problems for contest {contestId}. This might be because the contest hasn't started yet or the problems haven't been seeded.
       </p>
       <button 
         onClick={() => navigate('/contest')}
-        className="px-8 py-3 rounded-xl bg-[#3E3E3E] hover:bg-[#4E4E4E] transition-colors font-bold"
+        className="px-8 py-3 rounded-xl bg-[var(--bg-tertiary)] hover:bg-[var(--bg-secondary)] transition-colors font-bold border border-[var(--border-primary)]"
       >
         Back to Contests
       </button>
@@ -126,7 +126,7 @@ export default function ContestArena() {
   const currentAnswer = answers[activeProblem?._id];
 
   return (
-    <div className="h-screen w-screen flex flex-col bg-[#1A1A1A] text-[#DAE0DE] overflow-hidden font-sans">
+    <div className="h-screen w-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] overflow-hidden font-sans">
       
       {/* SUCCESS MODAL */}
       <AnimatePresence>
@@ -140,19 +140,19 @@ export default function ContestArena() {
             <motion.div 
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              className="relative w-full max-w-md p-8 rounded-3xl bg-[#282828] border border-[#3E3E3E] shadow-2xl text-center overflow-hidden"
+              className="relative w-full max-w-md p-8 rounded-3xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] shadow-2xl text-center overflow-hidden"
             >
-              <div className="absolute top-0 left-0 w-full h-1.5 bg-[#FFA217]" />
-              <div className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center bg-[#FFA217]/10">
-                <Trophy className="w-10 h-10 text-[#FFA217]" />
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-[var(--brand-orange)]" />
+              <div className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center bg-[var(--brand-orange)]/10">
+                <Trophy className="w-10 h-10 text-[var(--brand-orange)]" />
               </div>
-              <h2 className="text-2xl font-bold mb-2 text-white">Contest Submitted!</h2>
-              <p className="text-sm text-[#8A8A8A] mb-8">
+              <h2 className="text-2xl font-bold mb-2 text-[var(--text-primary)]">Contest Submitted!</h2>
+              <p className="text-sm text-[var(--text-secondary)] mb-8">
                 Your responses have been recorded successfully. Check the leaderboard to see your rank.
               </p>
               <button 
                 onClick={() => navigate(`/contest/${contestId}`)}
-                className="w-full py-3.5 rounded-xl font-bold text-sm text-black bg-[#FFA217] hover:bg-[#ffb347] transition-all shadow-lg flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl font-bold text-sm text-black bg-[var(--brand-orange)] hover:bg-[var(--brand-orange)]/90 transition-all shadow-lg flex items-center justify-center gap-2"
               >
                 Return to Contest Page <ArrowRight className="w-4 h-4" />
               </button>
@@ -162,27 +162,27 @@ export default function ContestArena() {
       </AnimatePresence>
 
       {/* 1. HEADER */}
-      <header className="h-16 shrink-0 bg-[#282828] border-b border-[#3E3E3E] flex items-center justify-between px-4 md:px-6 z-30 shadow-sm relative">
+      <header className="h-16 shrink-0 bg-[var(--bg-secondary)] border-b border-[var(--border-primary)] flex items-center justify-between px-4 md:px-6 z-30 shadow-sm relative">
         <div className="flex items-center gap-4 md:gap-6">
           <div className="flex items-center gap-3">
-             <div className="w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center font-bold text-lg md:text-xl shadow-md bg-[#FFA217] text-black shadow-orange-500/20">O</div>
+             <div className="w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center font-bold text-lg md:text-xl shadow-md bg-[var(--brand-orange)] text-black shadow-orange-500/20">O</div>
              <div className="hidden md:block">
-               <h1 className="font-bold text-lg tracking-tight leading-none text-white">Orbit Arena</h1>
-               <span className="text-[10px] text-[#8A8A8A] font-bold uppercase tracking-widest">Professional Exam Suite</span>
+               <h1 className="font-bold text-lg tracking-tight leading-none text-[var(--text-primary)]">Orbit Arena</h1>
+               <span className="text-[10px] text-[var(--text-tertiary)] font-bold uppercase tracking-widest">Professional Exam Suite</span>
              </div>
              <div className="md:hidden">
-               <h1 className="font-bold text-base tracking-tight leading-none text-white">Orbit Arena</h1>
+               <h1 className="font-bold text-base tracking-tight leading-none text-[var(--text-primary)]">Orbit Arena</h1>
              </div>
           </div>
-          <div className="h-6 w-px bg-[#3E3E3E] mx-2 hidden md:block"></div>
-          <h2 className="text-xs md:text-sm font-medium text-[#8A8A8A] truncate max-w-[150px] md:max-w-[400px]">{contest.title} {isVirtual && <span className="text-[#FFA217] font-bold ml-2">(VIRTUAL)</span>}</h2>
+          <div className="h-6 w-px bg-[var(--border-primary)] mx-2 hidden md:block"></div>
+          <h2 className="text-xs md:text-sm font-medium text-[var(--text-tertiary)] truncate max-w-[150px] md:max-w-[400px]">{contest.title} {isVirtual && <span className="text-[var(--brand-orange)] font-bold ml-2">(VIRTUAL)</span>}</h2>
         </div>
 
         <div className="flex items-center gap-3 md:gap-6">
-          <div className="flex items-center gap-3 md:gap-4 px-3 py-1.5 md:px-5 md:py-2 rounded-lg border bg-[#1A1A1A] border-[#3E3E3E]">
-            <Clock className="w-4 h-4 md:w-5 md:h-5 text-[#FFA217]" />
+          <div className="flex items-center gap-3 md:gap-4 px-3 py-1.5 md:px-5 md:py-2 rounded-lg border bg-[var(--bg-tertiary)] border-[var(--border-primary)]">
+            <Clock className="w-4 h-4 md:w-5 md:h-5 text-[var(--brand-orange)]" />
             <div className="flex flex-col items-end">
-              <span className="text-[8px] md:text-[9px] text-[#8A8A8A] font-bold uppercase tracking-wider leading-none mb-0.5">Time Left</span>
+              <span className="text-[8px] md:text-[9px] text-[var(--text-tertiary)] font-bold uppercase tracking-wider leading-none mb-0.5">Time Left</span>
               <CountdownTimer target={isVirtual ? virtualEndTime : new Date(contest.endTime).getTime()} />
             </div>
           </div>
@@ -190,7 +190,7 @@ export default function ContestArena() {
           {/* Mobile Menu Toggle */}
           <button 
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="md:hidden p-2 rounded-lg transition-colors hover:bg-[#3E3E3E] text-[#8A8A8A] hover:text-white"
+            className="md:hidden p-2 rounded-lg transition-colors hover:bg-[var(--bg-tertiary)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
           >
             {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -202,7 +202,7 @@ export default function ContestArena() {
                 navigate(`/contest/${contestId}`);
               }
             }} 
-            className="hidden md:flex group items-center gap-2 text-sm font-bold text-[#8A8A8A] hover:text-[#FF375F] transition-colors px-4 py-2 rounded-lg hover:bg-[#FF375F]/10"
+            className="hidden md:flex group items-center gap-2 text-sm font-bold text-[var(--text-tertiary)] hover:text-[#FF375F] transition-colors px-4 py-2 rounded-lg hover:bg-[#FF375F]/10"
           >
             <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" /> Quit
           </button>
@@ -213,48 +213,48 @@ export default function ContestArena() {
       <div className="flex-1 flex overflow-hidden relative">
         
         {/* LEFT PANEL: Question & Answer */}
-        <main className="flex-1 flex flex-col relative min-w-0 bg-[#1A1A1A] transition-colors duration-300">
+        <main className="flex-1 flex flex-col relative min-w-0 bg-[var(--bg-primary)] transition-colors duration-300">
           
           {/* SCROLLABLE CONTENT AREA */}
           <div className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-12 scroll-smooth">
             <div className="max-w-4xl mx-auto pb-20">
               
               {/* Question Header */}
-              <div className="flex flex-col md:flex-row md:items-start justify-between mb-6 md:mb-8 pb-6 border-b border-[#3E3E3E] gap-4">
+              <div className="flex flex-col md:flex-row md:items-start justify-between mb-6 md:mb-8 pb-6 border-b border-[var(--border-primary)] gap-4">
                 <div className="flex items-start gap-4 md:gap-5">
-                  <span className="text-4xl md:text-5xl font-black text-[#3E3E3E]/50 tracking-tighter shrink-0 select-none">Q{activeProblemIndex + 1}</span>
+                  <span className="text-4xl md:text-5xl font-black text-[var(--text-tertiary)]/30 tracking-tighter shrink-0 select-none">Q{activeProblemIndex + 1}</span>
                   <div>
                     <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-2">
-                      <span className="px-2 md:px-2.5 py-1 rounded-md text-[9px] md:text-[10px] font-bold uppercase tracking-wide border bg-[#FFA217]/10 text-[#FFA217] border-[#FFA217]/20">
+                      <span className="px-2 md:px-2.5 py-1 rounded-md text-[9px] md:text-[10px] font-bold uppercase tracking-wide border bg-[var(--brand-orange)]/10 text-[var(--brand-orange)] border-[var(--brand-orange)]/20">
                         {activeProblem.inputType === "mcq_single" ? "Single Correct" : "Numeric Value"}
                       </span>
                       <span className={`px-2 md:px-2.5 py-1 rounded-md text-[9px] md:text-[10px] font-bold uppercase tracking-wide border ${
                         activeProblem.difficulty === 'Hard' ? 'border-[#FF375F]/20 text-[#FF375F] bg-[#FF375F]/5' :
-                        activeProblem.difficulty === 'Medium' ? 'border-[#FFA217]/20 text-[#FFA217] bg-[#FFA217]/5' :
-                        'border-[#2DB55D]/20 text-[#2DB55D] bg-[#2DB55D]/5'
+                        activeProblem.difficulty === 'Medium' ? 'border-[var(--brand-orange)]/20 text-[var(--brand-orange)] bg-[var(--brand-orange)]/5' :
+                        'border-[var(--color-easy)]/20 text-[var(--color-easy)] bg-[var(--color-easy)]/5'
                       }`}>
                         {activeProblem.difficulty || "Medium"}
                       </span>
                     </div>
-                    <h3 className="text-lg md:text-xl font-semibold text-white leading-snug">{activeProblem.title}</h3>
+                    <h3 className="text-lg md:text-xl font-semibold text-[var(--text-primary)] leading-snug">{activeProblem.title}</h3>
                   </div>
                 </div>
-                <button className="hidden md:block p-2.5 rounded-full hover:bg-[#3E3E3E] text-[#8A8A8A] hover:text-white transition-all">
+                <button className="hidden md:block p-2.5 rounded-full hover:bg-[var(--bg-tertiary)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-all">
                   <HelpCircle className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Question Content */}
-              <div className="prose prose-invert max-w-none prose-base md:prose-lg prose-p:leading-relaxed prose-headings:text-white prose-strong:text-white prose-img:rounded-xl prose-img:border prose-img:border-[#3E3E3E] prose-img:shadow-lg mb-12">
+              <div className="prose prose-invert max-w-none prose-base md:prose-lg prose-p:leading-relaxed prose-headings:text-[var(--text-primary)] prose-strong:text-[var(--text-primary)] prose-img:rounded-xl prose-img:border prose-img:border-[var(--border-primary)] prose-img:shadow-lg mb-12">
                 <ReactMarkdown rehypePlugins={[rehypeKatex]}>
                   {activeProblem.statement}
                 </ReactMarkdown>
               </div>
 
               {/* INLINE ANSWER SHEET SECTION */}
-              <div className="bg-[#282828]/50 backdrop-blur-md border border-[#3E3E3E] rounded-2xl p-6 md:p-8 shadow-sm mt-8 transition-colors duration-300">
-                <h4 className="text-xs font-bold text-[#8A8A8A] uppercase tracking-wider mb-6 border-b border-[#3E3E3E] pb-2 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#FFA217]"></span>
+              <div className="bg-[var(--bg-secondary)]/50 backdrop-blur-md border border-[var(--border-primary)] rounded-2xl p-6 md:p-8 shadow-sm mt-8 transition-colors duration-300">
+                <h4 className="text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-wider mb-6 border-b border-[var(--border-primary)] pb-2 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[var(--brand-orange)]"></span>
                   Answer Sheet
                 </h4>
                 
@@ -266,31 +266,31 @@ export default function ContestArena() {
                         onClick={() => handleAnswerChange(opt.id)}
                         className={`w-full flex items-center gap-4 p-4 rounded-xl border transition-all text-left group ${
                           currentAnswer === opt.id
-                            ? "bg-[#FFA217]/10 border-[#FFA217] shadow-sm"
-                            : "bg-[#1A1A1A] border-[#3E3E3E] hover:border-[#FFA217]/50 hover:bg-[#3E3E3E]/50"
+                            ? "bg-[var(--brand-orange)]/10 border-[var(--brand-orange)] shadow-sm"
+                            : "bg-[var(--bg-secondary)] border-[var(--border-primary)] hover:border-[var(--brand-orange)]/50 hover:bg-[var(--bg-tertiary)]/50"
                         }`}
                       >
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold border transition-all ${
                           currentAnswer === opt.id
-                            ? "bg-[#FFA217] border-[#FFA217] text-black"
-                            : "border-[#3E3E3E] text-[#8A8A8A] group-hover:border-[#FFA217] group-hover:text-[#FFA217]"
+                            ? "bg-[var(--brand-orange)] border-[var(--brand-orange)] text-black"
+                            : "border-[var(--border-primary)] text-[var(--text-tertiary)] group-hover:border-[var(--brand-orange)] group-hover:text-[var(--brand-orange)]"
                         }`}>
                           {opt.id}
                         </div>
-                        <span className={`text-base md:text-lg ${currentAnswer === opt.id ? "text-white font-semibold" : "text-[#DAE0DE]"}`}>
+                        <span className={`text-base md:text-lg ${currentAnswer === opt.id ? "text-[var(--text-primary)] font-semibold" : "text-[var(--text-secondary)]"}`}>
                           {opt.text}
                         </span>
-                        {currentAnswer === opt.id && <CheckCircle className="w-5 h-5 text-[#FFA217] ml-auto" />}
+                        {currentAnswer === opt.id && <CheckCircle className="w-5 h-5 text-[var(--brand-orange)] ml-auto" />}
                       </button>
                     ))}
                   </div>
                 ) : (
                   <div className="max-w-md">
-                    <label className="block text-xs text-[#8A8A8A] uppercase font-bold mb-2">Enter Numeric Value</label>
+                    <label className="block text-xs text-[var(--text-tertiary)] uppercase font-bold mb-2">Enter Numeric Value</label>
                     <input 
                       type="number" 
                       step="any"
-                      className="w-full bg-[#1A1A1A] border border-[#3E3E3E] rounded-xl px-4 py-4 text-2xl font-mono focus:border-[#FFA217] focus:ring-1 focus:ring-[#FFA217]/50 outline-none transition-all text-white placeholder:text-[#3E3E3E]"
+                      className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-2xl font-mono focus:border-[var(--brand-orange)] focus:ring-1 focus:ring-[var(--brand-orange)]/50 outline-none transition-all text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)]"
                       placeholder="Enter answer..."
                       value={currentAnswer || ""}
                       onChange={(e) => handleAnswerChange(e.target.value)}
@@ -299,16 +299,16 @@ export default function ContestArena() {
                 )}
 
                 {/* Action Buttons */}
-                <div className="flex items-center gap-4 mt-8 pt-6 border-t border-[#3E3E3E]">
+                <div className="flex items-center gap-4 mt-8 pt-6 border-t border-[var(--border-primary)]">
                   <button 
                     onClick={handleSaveAndNext}
-                    className="px-8 py-3 rounded-xl font-bold text-black bg-[#FFA217] hover:bg-[#ffb347] transition-all shadow-lg flex items-center gap-2"
+                    className="px-8 py-3 rounded-xl font-bold text-black bg-[var(--brand-orange)] hover:bg-[var(--brand-orange)]/90 transition-all shadow-lg flex items-center gap-2"
                   >
                     Save & Next <ChevronRight className="w-4 h-4" />
                   </button>
                   <button 
                     onClick={handleClearResponse}
-                    className="px-6 py-3 rounded-xl font-bold text-[#8A8A8A] hover:text-white hover:bg-[#3E3E3E] transition-colors flex items-center gap-2"
+                    className="px-6 py-3 rounded-xl font-bold text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors flex items-center gap-2"
                   >
                     <RotateCcw className="w-4 h-4" /> Clear Response
                   </button>
@@ -319,19 +319,19 @@ export default function ContestArena() {
           </div>
 
           {/* Bottom Navigation Bar */}
-          <div className="h-16 border-t border-[#3E3E3E] bg-[#282828] flex items-center justify-between px-8 shrink-0 absolute bottom-0 left-0 right-0 z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.2)]">
+          <div className="h-16 border-t border-[var(--border-primary)] bg-[var(--bg-secondary)] flex items-center justify-between px-8 shrink-0 absolute bottom-0 left-0 right-0 z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.2)]">
              <div className="flex gap-4">
                 <button 
                   onClick={() => setActiveProblemIndex(Math.max(0, activeProblemIndex - 1))}
                   disabled={activeProblemIndex === 0}
-                  className="px-4 py-2 rounded-lg bg-[#3E3E3E] hover:bg-[#4E4E4E] disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium text-[#DAE0DE] transition-colors flex items-center gap-2"
+                  className="px-4 py-2 rounded-lg bg-[var(--bg-tertiary)] hover:bg-[var(--bg-primary)] disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium text-[var(--text-primary)] transition-colors flex items-center gap-2 border border-[var(--border-primary)]"
                 >
                   <ChevronLeft className="w-4 h-4" /> Previous
                 </button>
                 <button 
                   onClick={() => setActiveProblemIndex(Math.min(problems.length - 1, activeProblemIndex + 1))}
                   disabled={activeProblemIndex === problems.length - 1}
-                  className="px-4 py-2 rounded-lg bg-[#3E3E3E] hover:bg-[#4E4E4E] disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium text-[#DAE0DE] transition-colors flex items-center gap-2"
+                  className="px-4 py-2 rounded-lg bg-[var(--bg-tertiary)] hover:bg-[var(--bg-primary)] disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium text-[var(--text-primary)] transition-colors flex items-center gap-2 border border-[var(--border-primary)]"
                 >
                   Next <ChevronRight className="w-4 h-4" />
                 </button>
@@ -358,37 +358,37 @@ export default function ContestArena() {
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed md:relative right-0 top-0 bottom-0 w-[280px] md:w-[320px] bg-[#282828] border-l border-[#3E3E3E] flex flex-col shadow-2xl md:shadow-none z-50 md:z-auto h-full"
+                className="fixed md:relative right-0 top-0 bottom-0 w-[280px] md:w-[320px] bg-[var(--bg-secondary)] border-l border-[var(--border-primary)] flex flex-col shadow-2xl md:shadow-none z-50 md:z-auto h-full"
               >
                 
                 {/* Mobile Sidebar Header */}
-                <div className="md:hidden p-4 border-b border-[#3E3E3E] flex items-center justify-between bg-[#282828]">
-                  <span className="font-bold text-white">Menu</span>
-                  <button onClick={() => setSidebarOpen(false)} className="p-2 text-[#8A8A8A] hover:text-white">
+                <div className="md:hidden p-4 border-b border-[var(--border-primary)] flex items-center justify-between bg-[var(--bg-secondary)]">
+                  <span className="font-bold text-[var(--text-primary)]">Menu</span>
+                  <button onClick={() => setSidebarOpen(false)} className="p-2 text-[var(--text-tertiary)] hover:text-[var(--text-primary)]">
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
                 {/* User Profile */}
-                <div className="p-6 border-b border-[#3E3E3E] bg-[#282828]">
+                <div className="p-6 border-b border-[var(--border-primary)] bg-[var(--bg-secondary)]">
                    <div className="flex items-center gap-4 mb-6">
-                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#FFA217] to-[#FF375F] flex items-center justify-center text-white font-bold text-lg shadow-md">
+                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--brand-orange)] to-[#FF375F] flex items-center justify-center text-white font-bold text-lg shadow-md">
                        {user?.username?.[0]?.toUpperCase() || <User className="w-6 h-6" />}
                      </div>
                      <div>
-                       <div className="text-sm font-bold text-white">{user?.username || "Candidate"}</div>
-                       <div className="text-[10px] font-mono text-[#8A8A8A] bg-[#1A1A1A] border border-[#3E3E3E] px-1.5 py-0.5 rounded mt-1 inline-block">ID: {user?._id?.slice(-6) || "N/A"}</div>
+                       <div className="text-sm font-bold text-[var(--text-primary)]">{user?.username || "Candidate"}</div>
+                       <div className="text-[10px] font-mono text-[var(--text-tertiary)] bg-[var(--bg-tertiary)] border border-[var(--border-primary)] px-1.5 py-0.5 rounded mt-1 inline-block">ID: {user?._id?.slice(-6) || "N/A"}</div>
                      </div>
                    </div>
                    
                    <div className="grid grid-cols-2 gap-3">
-                     <div className="p-3 rounded-xl bg-[#1A1A1A] border border-[#3E3E3E] text-center">
-                       <div className="text-[9px] text-[#8A8A8A] uppercase font-bold tracking-wider mb-1">Answered</div>
-                       <div className="text-xl font-bold text-[#FFA217]">{Object.keys(answers).length}</div>
+                     <div className="p-3 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-center">
+                       <div className="text-[9px] text-[var(--text-tertiary)] uppercase font-bold tracking-wider mb-1">Answered</div>
+                       <div className="text-xl font-bold text-[var(--brand-orange)]">{Object.keys(answers).length}</div>
                      </div>
-                     <div className="p-3 rounded-xl bg-[#1A1A1A] border border-[#3E3E3E] text-center">
-                       <div className="text-[9px] text-[#8A8A8A] uppercase font-bold tracking-wider mb-1">Remaining</div>
-                       <div className="text-xl font-bold text-[#DAE0DE]">{problems.length - Object.keys(answers).length}</div>
+                     <div className="p-3 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-center">
+                       <div className="text-[9px] text-[var(--text-tertiary)] uppercase font-bold tracking-wider mb-1">Remaining</div>
+                       <div className="text-xl font-bold text-[var(--text-primary)]">{problems.length - Object.keys(answers).length}</div>
                      </div>
                    </div>
                 </div>
@@ -396,10 +396,10 @@ export default function ContestArena() {
                 {/* Question Palette */}
                 <div className="flex-1 p-6 overflow-y-auto custom-scrollbar">
                   <div className="flex items-center justify-between mb-4">
-                     <h4 className="text-[10px] font-bold text-[#8A8A8A] uppercase tracking-widest flex items-center gap-2">
+                     <h4 className="text-[10px] font-bold text-[var(--text-tertiary)] uppercase tracking-widest flex items-center gap-2">
                        <LayoutGrid className="w-3 h-3" /> Question Palette
                      </h4>
-                     <span className="text-[10px] text-[#8A8A8A]">{problems.length} Total</span>
+                     <span className="text-[10px] text-[var(--text-tertiary)]">{problems.length} Total</span>
                   </div>
                   
                   <div className="grid grid-cols-5 gap-2.5">
@@ -412,50 +412,50 @@ export default function ContestArena() {
                         }}
                          className={`aspect-square rounded-lg flex items-center justify-center text-xs font-bold transition-all relative group ${
                           activeProblemIndex === i
-                            ? "ring-2 ring-[#FFA217] ring-offset-2 ring-offset-[#282828] bg-white text-black z-10"
+                            ? "ring-2 ring-[var(--brand-orange)] ring-offset-2 ring-offset-[var(--bg-secondary)] bg-[var(--text-primary)] text-[var(--bg-primary)] z-10"
                             : ""
                         } ${
                           answers[p._id]
-                            ? "bg-[#2DB55D] text-white shadow-sm"
-                            : "bg-[#1A1A1A] border border-[#3E3E3E] text-[#8A8A8A] hover:bg-[#3E3E3E] hover:text-white"
+                            ? "bg-[var(--color-easy)] text-white shadow-sm"
+                            : "bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-[var(--text-tertiary)] hover:bg-[var(--bg-primary)] hover:text-[var(--text-primary)]"
                         }`}
                       >
                         {i + 1}
                         {answers[p._id] && (
-                          <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#2DB55D] border-[#282828] rounded-full border-2" />
+                          <div className="absolute -top-1 -right-1 w-2 h-2 bg-[var(--color-easy)] border-[var(--bg-secondary)] rounded-full border-2" />
                         )}
                       </button>
                     ))}
                   </div>
                   
-                  <div className="mt-8 space-y-3 p-4 rounded-xl bg-[#1A1A1A] border border-[#3E3E3E]">
-                     <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-wide text-[#8A8A8A]">
-                       <div className="w-2.5 h-2.5 rounded-full bg-[#2DB55D]"></div>
+                  <div className="mt-8 space-y-3 p-4 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-primary)]">
+                     <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]">
+                       <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-easy)]"></div>
                        <span>Answered</span>
                      </div>
-                     <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-wide text-[#8A8A8A]">
-                       <div className="w-2.5 h-2.5 rounded-full bg-[#1A1A1A] border border-[#3E3E3E]"></div>
+                     <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]">
+                       <div className="w-2.5 h-2.5 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-primary)]"></div>
                        <span>Not Answered</span>
                      </div>
-                     <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-wide text-[#8A8A8A]">
-                       <div className="w-2.5 h-2.5 rounded-full bg-white ring-1 ring-[#FFA217]"></div>
+                     <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]">
+                       <div className="w-2.5 h-2.5 rounded-full bg-[var(--text-primary)] ring-1 ring-[var(--brand-orange)]"></div>
                        <span>Current</span>
                      </div>
                   </div>
                 </div>
 
                 {/* Submit Button */}
-                <div className="p-6 border-t border-[#3E3E3E] bg-[#282828]">
+                <div className="p-6 border-t border-[var(--border-primary)] bg-[var(--bg-secondary)]">
                   <button 
                     onClick={handleSubmit}
                     disabled={submitting}
-                    className="w-full py-4 rounded-xl font-bold text-sm text-black bg-[#FFA217] hover:bg-[#ffb347] transition-all shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-4 rounded-xl font-bold text-sm text-black bg-[var(--brand-orange)] hover:bg-[var(--brand-orange)]/90 transition-all shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {submitting ? "Submitting..." : "Submit Final Test"}
                   </button>
                   <button 
                     onClick={() => navigate(`/contest/${contestId}`)} 
-                    className="md:hidden w-full mt-3 py-3 rounded-xl font-bold text-sm text-[#8A8A8A] hover:text-[#FF375F] transition-colors border border-[#3E3E3E] hover:bg-[#FF375F]/10"
+                    className="md:hidden w-full mt-3 py-3 rounded-xl font-bold text-sm text-[var(--text-tertiary)] hover:text-[#FF375F] transition-colors border border-[var(--border-primary)] hover:bg-[#FF375F]/10"
                   >
                     Quit Exam
                   </button>

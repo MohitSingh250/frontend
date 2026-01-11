@@ -76,7 +76,7 @@ export default function ProblemDescription({ problem, isQuestMode }) {
                 onClick={() => togglePanel('hints')}
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors
                   ${activePanel === 'hints' 
-                    ? "text-[var(--brand-primary)] bg-[var(--brand-primary)]/10" 
+                    ? "text-[var(--brand-orange)] bg-[var(--brand-orange)]/10" 
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
               >
@@ -91,7 +91,7 @@ export default function ProblemDescription({ problem, isQuestMode }) {
                 onClick={() => togglePanel('similar')}
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors
                   ${activePanel === 'similar' 
-                    ? "text-[var(--brand-primary)] bg-[var(--brand-primary)]/10" 
+                    ? "text-[var(--brand-orange)] bg-[var(--brand-orange)]/10" 
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
               >
@@ -110,7 +110,7 @@ export default function ProblemDescription({ problem, isQuestMode }) {
                   index < unlockedHints && (
                     <div key={index} className="p-4 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-300">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="flex items-center justify-center w-5 h-5 rounded-full bg-[var(--brand-primary)]/20 text-[var(--brand-primary)] text-xs font-bold">
+                        <div className="flex items-center justify-center w-5 h-5 rounded-full bg-[var(--brand-orange)]/20 text-[var(--brand-orange)] text-xs font-bold">
                           {index + 1}
                         </div>
                         <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Hint</span>
@@ -125,7 +125,7 @@ export default function ProblemDescription({ problem, isQuestMode }) {
                 {unlockedHints < problem.hints.length && (
                   <button 
                     onClick={revealNextHint}
-                    className="w-full py-3 rounded-xl border-2 border-dashed border-[var(--border-secondary)] text-[var(--text-secondary)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/5 transition-all flex items-center justify-center gap-2 text-sm font-medium group"
+                    className="w-full py-3 rounded-xl border-2 border-dashed border-[var(--border-secondary)] text-[var(--text-secondary)] hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange)] hover:bg-[var(--brand-orange)]/5 transition-all flex items-center justify-center gap-2 text-sm font-medium group"
                   >
                     <Lightbulb size={16} className="group-hover:scale-110 transition-transform" />
                     <span>Reveal Hint {unlockedHints + 1}</span>
@@ -140,7 +140,7 @@ export default function ProblemDescription({ problem, isQuestMode }) {
                   <Link 
                     key={p._id}
                     to={`/problems/${p._id}`}
-                    className="flex items-center justify-between p-4 rounded-xl bg-[var(--bg-tertiary)] hover:bg-[var(--bg-primary)] border border-[var(--border-secondary)] hover:border-[var(--brand-primary)]/50 transition-all group shadow-sm"
+                    className="flex items-center justify-between p-4 rounded-xl bg-[var(--bg-tertiary)] hover:bg-[var(--bg-primary)] border border-[var(--border-secondary)] hover:border-[var(--brand-orange)]/50 transition-all group shadow-sm"
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-1 h-8 rounded-full ${
@@ -148,7 +148,7 @@ export default function ProblemDescription({ problem, isQuestMode }) {
                         p.difficulty?.toLowerCase() === 'medium' ? 'bg-[var(--color-medium)]' :
                         'bg-[var(--color-hard)]'
                       }`} />
-                      <span className="text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors">{p.title}</span>
+                      <span className="text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--brand-orange)] transition-colors">{p.title}</span>
                     </div>
                     <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wide ${
                       p.difficulty?.toLowerCase() === 'easy' ? 'text-[var(--color-easy)] bg-[var(--color-easy)]/10' :

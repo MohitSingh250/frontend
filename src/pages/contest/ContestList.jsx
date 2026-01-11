@@ -41,10 +41,10 @@ export default function ContestList() {
   }).sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
 
   return (
-    <div className="min-h-screen bg-[#1A1A1A] text-[#DAE0DE] pb-20 font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] pb-20 font-sans relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-           style={{ backgroundImage: `radial-gradient(#ffffff 1px, transparent 1px)`, backgroundSize: '30px 30px' }}></div>
+           style={{ backgroundImage: `radial-gradient(var(--text-primary) 1px, transparent 1px)`, backgroundSize: '30px 30px' }}></div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* 1. HERO SECTION */}
@@ -65,10 +65,10 @@ export default function ContestList() {
                   className="w-32 h-32 md:w-44 md:h-44 object-contain relative z-10 drop-shadow-[0_0_15px_rgba(255,162,23,0.4)]" 
                 />
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
+              <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--text-primary)] mb-2">
                 Orbit Contest
               </h1>
-              <p className="text-[#8A8A8A] text-base max-w-2xl mx-auto leading-relaxed">
+              <p className="text-[var(--text-secondary)] text-base max-w-2xl mx-auto leading-relaxed">
                 Contest every week. Compete and see your ranking!
               </p>
             </motion.div>
@@ -82,16 +82,16 @@ export default function ContestList() {
               <ContestCard key={contest._id} contest={contest} variant="featured" />
             ))}
             {upcomingContests.length === 0 && (
-              <div className="lg:col-span-2 text-center py-12 bg-[#282828] rounded-[2rem] border border-[#3E3E3E] border-dashed">
-                <p className="text-[#8A8A8A]">No upcoming contests scheduled yet.</p>
+              <div className="lg:col-span-2 text-center py-12 bg-[var(--bg-secondary)] rounded-[2rem] border border-[var(--border-primary)] border-dashed">
+                <p className="text-[var(--text-tertiary)]">No upcoming contests scheduled yet.</p>
               </div>
             )}
           </div>
         </div>
 
         <div className="text-center mb-8">
-          <button className="text-[#8A8A8A] hover:text-white transition-colors flex items-center gap-2 mx-auto text-xs font-medium">
-            <Handshake size={16} className="text-[#FFA217]" />
+          <button className="text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-2 mx-auto text-xs font-medium">
+            <Handshake size={16} className="text-[var(--brand-orange)]" />
             Sponsor a Contest
           </button>
         </div>
@@ -101,8 +101,8 @@ export default function ContestList() {
           {/* 3. LEFT COLUMN: LEADERBOARD PREVIEW (Bottom Left in image) */}
           <div className="w-full lg:w-[400px] shrink-0 order-2 lg:order-1">
              <div className="relative">
-                <div className="flex items-center gap-1 mb-8 bg-[#282828] p-1 rounded-2xl w-fit border border-[#3E3E3E]">
-                   <button className="px-6 py-2 rounded-xl bg-[#FFA217] text-black text-[10px] font-black uppercase transition-all shadow-[0_0_20px_rgba(255,162,23,0.3)]">Global Ranking</button>
+                <div className="flex items-center gap-1 mb-8 bg-[var(--bg-tertiary)] p-1 rounded-2xl w-fit border border-[var(--border-primary)]">
+                   <button className="px-6 py-2 rounded-xl bg-[var(--brand-orange)] text-black text-[10px] font-black uppercase transition-all shadow-[0_0_20px_rgba(255,162,23,0.3)]">Global Ranking</button>
                 </div>
                 <GlobalRankingWidget variant="minimal" />
              </div>
@@ -110,15 +110,15 @@ export default function ContestList() {
 
           {/* 4. RIGHT COLUMN: TABBED LIST */}
           <div className="flex-1 order-1 lg:order-2 w-full">
-            <div className="bg-[#282828] border border-[#3E3E3E] rounded-[2rem] overflow-hidden">
-              <div className="flex items-center justify-between p-6 border-b border-[#3E3E3E]">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-[2rem] overflow-hidden">
+              <div className="flex items-center justify-between p-6 border-b border-[var(--border-primary)]">
                 <div className="flex items-center gap-4">
                   <button 
                     onClick={() => setActiveTab("past")}
                     className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
                       activeTab === "past" 
-                        ? "bg-[#3E3E3E] text-white" 
-                        : "text-[#8A8A8A] hover:text-white"
+                        ? "bg-[var(--bg-tertiary)] text-[var(--text-primary)]" 
+                        : "text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
                     }`}
                   >
                     Past Contests
@@ -127,8 +127,8 @@ export default function ContestList() {
                     onClick={() => setActiveTab("my")}
                     className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
                       activeTab === "my" 
-                        ? "bg-[#3E3E3E] text-white" 
-                        : "text-[#8A8A8A] hover:text-white"
+                        ? "bg-[var(--bg-tertiary)] text-[var(--text-primary)]" 
+                        : "text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
                     }`}
                   >
                     My Contests
@@ -142,15 +142,15 @@ export default function ContestList() {
 
               <div className="p-6 space-y-4">
                 {loading ? (
-                  <div className="text-center py-20 text-[#8A8A8A]">Loading contests...</div>
+                  <div className="text-center py-20 text-[var(--text-tertiary)]">Loading contests...</div>
                 ) : filteredContests.length > 0 ? (
                   filteredContests.map((contest) => (
                     <ContestListItem key={contest._id} contest={contest} />
                   ))
                 ) : (
                   <div className="text-center py-20">
-                    <Trophy className="mx-auto text-[#3E3E3E] mb-4" size={48} />
-                    <p className="text-[#8A8A8A]">No contests found.</p>
+                    <Trophy className="mx-auto text-[var(--border-primary)] mb-4" size={48} />
+                    <p className="text-[var(--text-tertiary)]">No contests found.</p>
                   </div>
                 )}
               </div>

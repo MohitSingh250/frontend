@@ -66,13 +66,13 @@ export default function ContestCard({ contest, index, variant = "default" }) {
     >
       <Link 
         to={`/contest/${contest._id}`}
-        className="group relative flex flex-col h-full min-h-[200px] rounded-xl overflow-hidden border border-[#3E3E3E] bg-[#282828] hover:border-[#FFA217] transition-all duration-300 hover:shadow-lg"
+        className="group relative flex flex-col h-full min-h-[200px] rounded-xl overflow-hidden border border-[var(--border-primary)] bg-[var(--bg-secondary)] hover:border-[var(--brand-orange)] transition-all duration-300 hover:shadow-lg"
       >
         {/* Card Header with Gradient */}
         <div className={`h-24 w-full relative overflow-hidden ${
-           isLive ? "bg-gradient-to-r from-[#FF375F]/10 to-[#FFA217]/10" : 
+           isLive ? "bg-gradient-to-r from-[#FF375F]/10 to-[var(--brand-orange)]/10" : 
            isUpcoming ? "bg-gradient-to-r from-[#0a84ff]/10 to-[#bf5af2]/10" : 
-           "bg-[#323232]"
+           "bg-[var(--bg-tertiary)]"
         }`}>
            <div className="absolute top-4 right-4">
               {isLive ? (
@@ -84,36 +84,36 @@ export default function ContestCard({ contest, index, variant = "default" }) {
                     <Calendar size={12} /> UPCOMING
                  </span>
               ) : (
-                 <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#323232] text-[#8A8A8A] text-xs font-bold border border-[#3E3E3E]">
+                 <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-tertiary)] text-xs font-bold border border-[var(--border-primary)]">
                     ENDED
                  </span>
               )}
            </div>
            
            <div className="absolute bottom-4 left-4">
-              <div className="p-2 rounded-lg bg-[#1A1A1A] border border-[#3E3E3E] shadow-sm">
-                 <Trophy className={`w-5 h-5 ${isLive ? "text-[#FF375F]" : isUpcoming ? "text-[#0a84ff]" : "text-[#8A8A8A]"}`} />
+              <div className="p-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-primary)] shadow-sm">
+                 <Trophy className={`w-5 h-5 ${isLive ? "text-[#FF375F]" : isUpcoming ? "text-[#0a84ff]" : "text-[var(--text-tertiary)]"}`} />
               </div>
            </div>
         </div>
 
         {/* Content */}
         <div className="p-5 flex flex-col flex-1">
-          <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-[#FFA217] transition-colors">
+          <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2 line-clamp-2 group-hover:text-[var(--brand-orange)] transition-colors">
             {contest.title}
           </h3>
           
           <div className="mt-auto space-y-3">
-             <div className="flex items-center gap-2 text-xs text-[#8A8A8A]">
+             <div className="flex items-center gap-2 text-xs text-[var(--text-tertiary)]">
                 <Calendar size={14} />
                 <span>{start.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}</span>
-                <span className="w-1 h-1 rounded-full bg-[#3E3E3E]" />
+                <span className="w-1 h-1 rounded-full bg-[var(--border-primary)]" />
                 <span>{start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
              </div>
 
              {(isLive || isUpcoming) && (
-                <div className="flex items-center gap-2 text-xs font-medium text-white bg-[#323232]/50 p-2 rounded-lg">
-                   <Clock size={14} className="text-[#FFA217]" />
+                <div className="flex items-center gap-2 text-xs font-medium text-[var(--text-primary)] bg-[var(--bg-tertiary)]/50 p-2 rounded-lg">
+                   <Clock size={14} className="text-[var(--brand-orange)]" />
                    <span>
                       {isLive ? "Ends in " : "Starts in "} 
                       <CountdownTimer target={isLive ? end.getTime() : start.getTime()} compact />

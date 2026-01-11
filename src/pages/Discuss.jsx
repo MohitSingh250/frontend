@@ -135,8 +135,8 @@ export default function Discuss() {
 
   if (view === "detail" && selectedDiscussion) {
     return (
-      <div className="min-h-[calc(100vh-50px)] bg-[#1A1A1A] p-4 md:p-8">
-        <div className="max-w-7xl mx-auto min-h-[850px] bg-[#1A1A1A] overflow-hidden">
+      <div className="min-h-[calc(100vh-50px)] bg-[var(--bg-primary)] p-4 md:p-8">
+        <div className="max-w-7xl mx-auto min-h-[850px] bg-[var(--bg-primary)] overflow-hidden">
           <DiscussionDetail 
             discussionId={selectedDiscussion._id} 
             onBack={() => {
@@ -151,8 +151,8 @@ export default function Discuss() {
 
   if (view === "create") {
     return (
-      <div className="min-h-[calc(100vh-50px)] bg-[#1A1A1A] p-4 md:p-8">
-        <div className="max-w-5xl mx-auto min-h-[800px] bg-[#282828] border border-[#3E3E3E] rounded-xl overflow-hidden shadow-2xl">
+      <div className="min-h-[calc(100vh-50px)] bg-[var(--bg-primary)] p-4 md:p-8">
+        <div className="max-w-5xl mx-auto min-h-[800px] bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden shadow-2xl">
           <CreateDiscussion 
             onBack={() => setView("list")} 
             onCreated={() => {
@@ -166,7 +166,7 @@ export default function Discuss() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-50px)] bg-[#1A1A1A] text-[#DAE0DE] font-sans selection:bg-[#FFA217] selection:text-black">
+    <div className="min-h-[calc(100vh-50px)] bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans selection:bg-[var(--brand-orange)] selection:text-black">
       <div className="max-w-[1400px] mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
         
         {/* Main Content Area */}
@@ -186,8 +186,8 @@ export default function Discuss() {
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[10px] font-bold bg-white/20 px-2 py-0.5 rounded uppercase tracking-wider">New</span>
                   </div>
-                  <h3 className="text-xl font-black leading-tight">{item.title}</h3>
-                  <p className="text-xs font-medium opacity-80 mt-1">{item.subtitle}</p>
+                  <h3 className="text-xl font-black leading-tight text-white">{item.title}</h3>
+                  <p className="text-xs font-medium opacity-80 mt-1 text-white">{item.subtitle}</p>
                 </div>
                 
                 <button className="relative z-10 w-fit px-4 py-2 bg-white text-black text-[11px] font-black rounded-lg hover:bg-gray-100 transition-colors">
@@ -199,7 +199,7 @@ export default function Discuss() {
 
           {/* Tab Navigation & Sort */}
           <div className="flex flex-col space-y-6 mb-8">
-            <div className="flex items-center justify-between border-b border-[#3E3E3E]">
+            <div className="flex items-center justify-between border-b border-[var(--border-primary)]">
               <div className="flex items-center gap-8">
                 {CATEGORIES.map((cat) => (
                   <button
@@ -207,13 +207,13 @@ export default function Discuss() {
                     onClick={() => setActiveCategory(cat.id)}
                     className={`pb-4 text-sm font-medium transition-all relative ${
                       activeCategory === cat.id 
-                        ? "text-white" 
-                        : "text-[#8A8A8A] hover:text-white"
+                        ? "text-[var(--text-primary)]" 
+                        : "text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
                     }`}
                   >
                     {cat.label}
                     {activeCategory === cat.id && (
-                      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-white"></div>
+                      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[var(--text-primary)]"></div>
                     )}
                   </button>
                 ))}
@@ -227,17 +227,17 @@ export default function Discuss() {
               </button>
             </div>
 
-            <div className="flex items-center gap-6 text-xs font-medium text-[#8A8A8A]">
+            <div className="flex items-center gap-6 text-xs font-medium text-[var(--text-tertiary)]">
               <button 
                 onClick={() => setSortBy("top")}
-                className={`flex items-center gap-1.5 hover:text-white transition-colors ${sortBy === 'top' ? 'text-white' : ''}`}
+                className={`flex items-center gap-1.5 hover:text-[var(--text-primary)] transition-colors ${sortBy === 'top' ? 'text-[var(--text-primary)]' : ''}`}
               >
                 <TrendingUp size={14} />
                 Most Votes
               </button>
               <button 
                 onClick={() => setSortBy("newest")}
-                className={`flex items-center gap-1.5 hover:text-white transition-colors ${sortBy === 'newest' ? 'text-white' : ''}`}
+                className={`flex items-center gap-1.5 hover:text-[var(--text-primary)] transition-colors ${sortBy === 'newest' ? 'text-[var(--text-primary)]' : ''}`}
               >
                 <Clock size={14} />
                 Newest
@@ -259,14 +259,14 @@ export default function Discuss() {
                     setSelectedDiscussion(d);
                     setView("detail");
                   }}
-                  className="group py-6 border-b border-[#3E3E3E] hover:bg-[#282828]/50 transition-all cursor-pointer px-2 -mx-2 rounded-lg"
+                  className="group py-6 border-b border-[var(--border-primary)] hover:bg-[var(--bg-tertiary)]/50 transition-all cursor-pointer px-2 -mx-2 rounded-lg"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-[#3E3E3E] overflow-hidden shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-[var(--bg-tertiary)] overflow-hidden shrink-0">
                       {d.author?.avatar ? (
                         <img src={d.author.avatar} alt="" className="w-full h-full object-cover" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[#8A8A8A]">
+                        <div className="w-full h-full flex items-center justify-center text-[var(--text-tertiary)]">
                           <User size={16} />
                         </div>
                       )}
@@ -274,20 +274,20 @@ export default function Discuss() {
                     
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 text-[13px] mb-1">
-                        <span className="font-medium text-[#DAE0DE]">{d.author?.username || "Anonymous"}</span>
-                        <span className="text-[#8A8A8A]">•</span>
-                        <span className="text-[#8A8A8A]">{new Date(d.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                        <span className="font-medium text-[var(--text-primary)]">{d.author?.username || "Anonymous"}</span>
+                        <span className="text-[var(--text-tertiary)]">•</span>
+                        <span className="text-[var(--text-tertiary)]">{new Date(d.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                       </div>
                       
-                      <h3 className="text-lg font-bold text-[#eff1f6] group-hover:text-[#2DB55D] transition-colors mb-2 line-clamp-1">
+                      <h3 className="text-lg font-bold text-[var(--text-primary)] group-hover:text-[#2DB55D] transition-colors mb-2 line-clamp-1">
                         {d.title}
                       </h3>
                       
-                      <p className="text-[14px] text-[#8A8A8A] line-clamp-2 mb-4 leading-relaxed">
+                      <p className="text-[14px] text-[var(--text-secondary)] line-clamp-2 mb-4 leading-relaxed">
                         {d.content?.replace(/[#*`]/g, '').slice(0, 180)}...
                       </p>
 
-                      <div className="flex items-center gap-6 text-[13px] text-[#8A8A8A]">
+                      <div className="flex items-center gap-6 text-[13px] text-[var(--text-tertiary)]">
                         <div className="flex items-center gap-1.5">
                           <ThumbsUp size={14} />
                           <span>{d.upvotes?.length || 0}</span>
@@ -305,7 +305,7 @@ export default function Discuss() {
 
                     {d.category && (
                       <div className="hidden sm:block">
-                        <span className="px-2 py-1 bg-[#3E3E3E] text-[#DAE0DE] text-[10px] font-bold rounded uppercase tracking-wider">
+                        <span className="px-2 py-1 bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-[10px] font-bold rounded uppercase tracking-wider">
                           {d.category}
                         </span>
                       </div>
@@ -316,7 +316,7 @@ export default function Discuss() {
             ) : (
               <div className="py-20 text-center">
                 <MessageSquare size={48} className="mx-auto mb-4 opacity-20" />
-                <p className="text-[#8A8A8A]">No discussions found in this category.</p>
+                <p className="text-[var(--text-tertiary)]">No discussions found in this category.</p>
               </div>
             )}
           </div>
@@ -327,21 +327,21 @@ export default function Discuss() {
           
           {/* Search Bar */}
           <div className="relative group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#8A8A8A] group-focus-within:text-[#FFA217] transition-colors" size={18} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] group-focus-within:text-[var(--brand-orange)] transition-colors" size={18} />
             <input 
               type="text" 
               placeholder="Search discussions..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleSearch}
-              className="w-full pl-12 pr-4 py-2.5 bg-[#282828] border border-[#3E3E3E] rounded-lg text-sm text-white focus:outline-none focus:border-[#FFA217] transition-all placeholder:text-[#8A8A8A]"
+              className="w-full pl-12 pr-4 py-2.5 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--brand-orange)] transition-all placeholder:text-[var(--text-tertiary)]"
             />
           </div>
 
-          <div className="bg-[#282828] border border-[#3E3E3E] rounded-xl overflow-hidden">
-            <div className="p-5 border-b border-[#3E3E3E] flex items-center gap-2">
-              <TrendingUp size={18} className="text-[#FFA217]" />
-              <h2 className="text-sm font-bold text-white uppercase tracking-wider">Explore</h2>
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+            <div className="p-5 border-b border-[var(--border-primary)] flex items-center gap-2">
+              <TrendingUp size={18} className="text-[var(--brand-orange)]" />
+              <h2 className="text-sm font-bold text-[var(--text-primary)] uppercase tracking-wider">Explore</h2>
             </div>
             
             <div className="p-2">
@@ -353,15 +353,15 @@ export default function Discuss() {
                       setSearchQuery(item.tag);
                       fetchDiscussions();
                     }}
-                    className="w-full p-3 hover:bg-[#3E3E3E] rounded-lg transition-all text-left group"
+                    className="w-full p-3 hover:bg-[var(--bg-tertiary)] rounded-lg transition-all text-left group"
                   >
-                    <p className="text-[11px] text-[#8A8A8A] font-bold uppercase tracking-widest mb-2">#{item.tag}</p>
+                    <p className="text-[11px] text-[var(--text-tertiary)] font-bold uppercase tracking-widest mb-2">#{item.tag}</p>
                     <div className="flex items-center justify-between">
-                      <p className="text-[13px] font-bold text-[#eff1f6] group-hover:text-[#FFA217] transition-colors line-clamp-1">{item.tag}</p>
+                      <p className="text-[13px] font-bold text-[var(--text-primary)] group-hover:text-[var(--brand-orange)] transition-colors line-clamp-1">{item.tag}</p>
                       <div className="flex -space-x-2">
                         {[...Array(3)].map((_, j) => (
-                          <div key={j} className="w-5 h-5 rounded-full border border-[#282828] bg-[#3E3E3E] flex items-center justify-center overflow-hidden">
-                            <User size={10} className="text-[#8A8A8A]" />
+                          <div key={j} className="w-5 h-5 rounded-full border border-[var(--bg-secondary)] bg-[var(--bg-tertiary)] flex items-center justify-center overflow-hidden">
+                            <User size={10} className="text-[var(--text-tertiary)]" />
                           </div>
                         ))}
                       </div>
@@ -369,21 +369,21 @@ export default function Discuss() {
                   </button>
                 ))
               ) : (
-                <div className="p-4 text-center text-xs text-[#8A8A8A]">No trending topics yet</div>
+                <div className="p-4 text-center text-xs text-[var(--text-tertiary)]">No trending topics yet</div>
               )}
             </div>
             
-            <button className="w-full p-4 text-center text-xs font-bold text-[#2DB55D] hover:bg-[#3E3E3E] transition-all border-t border-[#3E3E3E]">
+            <button className="w-full p-4 text-center text-xs font-bold text-[#2DB55D] hover:bg-[var(--bg-tertiary)] transition-all border-t border-[var(--border-primary)]">
               Show More
             </button>
           </div>
 
           {/* Footer Links */}
-          <div className="px-4 flex flex-wrap gap-x-4 gap-y-2 text-[11px] text-[#8A8A8A] font-medium">
-            <a href="#" className="hover:text-white transition-colors">Support</a>
-            <a href="#" className="hover:text-white transition-colors">Terms</a>
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">More</a>
+          <div className="px-4 flex flex-wrap gap-x-4 gap-y-2 text-[11px] text-[var(--text-tertiary)] font-medium">
+            <a href="#" className="hover:text-[var(--text-primary)] transition-colors">Support</a>
+            <a href="#" className="hover:text-[var(--text-primary)] transition-colors">Terms</a>
+            <a href="#" className="hover:text-[var(--text-primary)] transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-[var(--text-primary)] transition-colors">More</a>
             <p className="w-full mt-2">Copyright © 2026 Orbit</p>
           </div>
         </aside>

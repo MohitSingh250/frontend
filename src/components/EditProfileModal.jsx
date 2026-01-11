@@ -61,12 +61,12 @@ export default function EditProfileModal({ user, onClose, onUpdated }) {
     <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50">
       <div
         className="
-          bg-[var(--dark-slate-gray)]/80 border border-[var(--spanish-orange)]/20
-          rounded-2xl w-full max-w-md p-6 sm:p-8 shadow-[0_0_25px_rgba(233,111,30,0.15)]
+          bg-[var(--bg-secondary)] border border-[var(--border-primary)]
+          rounded-2xl w-full max-w-md p-6 sm:p-8 shadow-2xl
           transition-all duration-300
         "
       >
-        <h2 className="text-2xl font-semibold text-center text-[var(--white)] mb-6">
+        <h2 className="text-2xl font-semibold text-center text-[var(--text-primary)] mb-6">
           Edit Profile
         </h2>
 
@@ -78,10 +78,10 @@ export default function EditProfileModal({ user, onClose, onUpdated }) {
               alt="avatar"
               className="
                 w-28 h-28 rounded-full object-cover border-2
-                border-[var(--orange-peel)]/20
+                border-[var(--brand-orange)]/20
                 transition-all duration-300
-                group-hover:border-[var(--orange-peel)]/40
-                shadow-[0_0_15px_rgba(255,162,24,0.1)]
+                group-hover:border-[var(--brand-orange)]/40
+                shadow-[0_0_15px_rgba(var(--brand-orange-rgb),0.1)]
               "
             />
 
@@ -89,7 +89,7 @@ export default function EditProfileModal({ user, onClose, onUpdated }) {
               htmlFor="avatar-upload"
               className="
                 absolute inset-0 flex items-center justify-center
-                bg-black/60 text-[var(--white)] text-xs rounded-full
+                bg-black/60 text-[var(--text-primary)] text-xs rounded-full
                 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer
               "
             >
@@ -106,7 +106,7 @@ export default function EditProfileModal({ user, onClose, onUpdated }) {
             />
           </div>
           {uploading && (
-            <p className="text-xs text-[var(--orange-peel)] mt-2">Uploading...</p>
+            <p className="text-xs text-[var(--brand-orange)] mt-2">Uploading...</p>
           )}
         </div>
 
@@ -151,8 +151,8 @@ export default function EditProfileModal({ user, onClose, onUpdated }) {
           <p
             className={`text-center text-sm mt-4 ${
               message.includes("✅")
-                ? "text-[var(--dark-pastel-green)]"
-                : "text-[var(--spanish-orange)]"
+                ? "text-[var(--color-success)]"
+                : "text-[var(--brand-orange)]"
             }`}
           >
             {message}
@@ -165,9 +165,9 @@ export default function EditProfileModal({ user, onClose, onUpdated }) {
             onClick={onClose}
             className="
               px-4 py-2 rounded-lg font-medium
-              bg-[var(--raisin-black)]/60 text-[var(--white)]/90
-              border border-[var(--orange-peel)]/20
-              hover:bg-[var(--orange-peel)]/10
+              bg-[var(--bg-tertiary)] text-[var(--text-secondary)]
+              border border-[var(--border-primary)]
+              hover:bg-[var(--bg-primary)]
               transition-all
             "
           >
@@ -178,9 +178,9 @@ export default function EditProfileModal({ user, onClose, onUpdated }) {
             onClick={handleSave}
             disabled={loading || uploading}
             className="
-              px-5 py-2 rounded-lg font-semibold text-white
-              bg-[var(--spanish-orange)] hover:bg-[var(--orange-peel)]
-              shadow-[0_0_12px_rgba(233,111,30,0.3)]
+              px-5 py-2 rounded-lg font-semibold text-[var(--bg-primary)]
+              bg-[var(--brand-orange)] hover:bg-[var(--brand-orange-hover)]
+              shadow-[0_0_12px_rgba(var(--brand-orange-rgb),0.3)]
               transition-all duration-200
               disabled:opacity-50
             "
@@ -196,7 +196,7 @@ export default function EditProfileModal({ user, onClose, onUpdated }) {
 function Field({ label, value, onChange, type = "text", placeholder }) {
   return (
     <div>
-      <label className="block text-sm text-[var(--white)]/70 mb-1">{label}</label>
+      <label className="block text-sm text-[var(--text-secondary)] mb-1">{label}</label>
       <input
         type={type}
         value={value}
@@ -204,10 +204,10 @@ function Field({ label, value, onChange, type = "text", placeholder }) {
         placeholder={placeholder}
         className="
           w-full px-3 py-2 rounded-lg
-          bg-[var(--raisin-black)]/70 border border-[var(--orange-peel)]/20
-          text-[var(--white)]
-          placeholder-[var(--white)]/40
-          focus:outline-none focus:border-[var(--orange-peel)]
+          bg-[var(--bg-tertiary)] border border-[var(--border-primary)]
+          text-[var(--text-primary)]
+          placeholder-[var(--text-tertiary)]
+          focus:outline-none focus:border-[var(--brand-orange)]
           transition-all duration-200
         "
       />

@@ -61,7 +61,7 @@ export default function GlobalLeaderboard() {
             <img src={emblemUrl} alt={stateName} className="w-full h-full object-contain" />
           </div>
         ) : (
-          <div className="w-10 h-10 rounded-full bg-[#282828] flex items-center justify-center text-[10px] font-black text-[#8A8A8A] border border-[#3E3E3E]" title={stateName}>
+          <div className="w-10 h-10 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center text-[10px] font-black text-[var(--text-tertiary)] border border-[var(--border-primary)]" title={stateName}>
             {stateName.substring(0, 2).toUpperCase()}
           </div>
         )}
@@ -90,14 +90,14 @@ export default function GlobalLeaderboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#1A1A1A] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFA217]"></div>
+      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--brand-orange)]"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#1A1A1A] text-white relative overflow-hidden">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] relative overflow-hidden">
       {/* Checkered Background Pattern */}
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none"></div>
       
@@ -106,21 +106,21 @@ export default function GlobalLeaderboard() {
         <div className="mb-12">
           <button 
             onClick={() => navigate(-1)}
-            className="w-10 h-10 rounded-full bg-[#282828] border border-[#3E3E3E] flex items-center justify-center mb-8 hover:bg-[#3E3E3E] transition-colors"
+            className="w-10 h-10 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border-primary)] flex items-center justify-center mb-8 hover:bg-[var(--bg-secondary)] transition-colors"
           >
             <ChevronLeft size={20} />
           </button>
           
           <h1 className="text-4xl font-bold mb-2">Global Ranking</h1>
-          <p className="text-[#8A8A8A] text-lg flex items-center gap-2">
-            Total Participants: <span className="text-white font-bold">{totalParticipants.toLocaleString()}</span>
+          <p className="text-[var(--text-tertiary)] text-lg flex items-center gap-2">
+            Total Participants: <span className="text-[var(--text-primary)] font-bold">{totalParticipants.toLocaleString()}</span>
           </p>
         </div>
 
         {/* Leaderboard Table */}
         <div className="space-y-4">
           {/* Table Header */}
-          <div className="grid grid-cols-12 px-6 py-4 text-sm font-bold text-[#8A8A8A] border-b border-[#3E3E3E]/30">
+          <div className="grid grid-cols-12 px-6 py-4 text-sm font-bold text-[var(--text-tertiary)] border-b border-[var(--border-primary)]/30">
             <div className="col-span-1">Rank</div>
             <div className="col-span-5">Name</div>
             <div className="col-span-3 text-center">Emblem</div>
@@ -133,27 +133,27 @@ export default function GlobalLeaderboard() {
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="grid grid-cols-12 items-center px-6 py-4 rounded-2xl bg-[#282828] border border-[#3E3E3E] shadow-xl mb-8"
+              className="grid grid-cols-12 items-center px-6 py-4 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] shadow-xl mb-8"
             >
-              <div className="col-span-1 font-black text-lg text-white">
+              <div className="col-span-1 font-black text-lg text-[var(--text-primary)]">
                 {userRank.rank}
               </div>
               <div className="col-span-5 flex items-center gap-4">
                 <img 
                   src={userRank.avatar} 
                   alt={userRank.name} 
-                  className="w-10 h-10 rounded-full border-2 border-[#3E3E3E] object-cover" 
+                  className="w-10 h-10 rounded-full border-2 border-[var(--border-primary)] object-cover" 
                 />
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-white">{userRank.name}</span>
-                  <span className="text-[#38BDF8] text-sm font-medium">(You)</span>
+                  <span className="font-bold text-[var(--text-primary)]">{userRank.name}</span>
+                  <span className="text-[var(--accent-blue)] text-sm font-medium">(You)</span>
                 </div>
               </div>
               <div className="col-span-3 flex justify-center">
                 {getStateEmblem(userRank.state)}
               </div>
-              <div className="col-span-1 text-center font-bold text-white">{userRank.attended}</div>
-              <div className="col-span-2 text-right font-black text-lg text-white">{userRank.rating}</div>
+              <div className="col-span-1 text-center font-bold text-[var(--text-primary)]">{userRank.attended}</div>
+              <div className="col-span-2 text-right font-black text-lg text-[var(--text-primary)]">{userRank.rating}</div>
             </motion.div>
           )}
 
@@ -169,25 +169,25 @@ export default function GlobalLeaderboard() {
                   transition={{ delay: idx * 0.02 }}
                   className={`grid grid-cols-12 items-center px-6 py-4 rounded-2xl border transition-all duration-200 ${
                     isMe 
-                      ? "bg-[#282828] border-[#3E3E3E] shadow-lg" 
-                      : "bg-[#282828]/40 border-[#3E3E3E]/50 hover:bg-[#282828]/60 hover:border-[#555]"
+                      ? "bg-[var(--bg-secondary)] border-[var(--border-primary)] shadow-lg" 
+                      : "bg-[var(--bg-secondary)]/40 border-[var(--border-primary)]/50 hover:bg-[var(--bg-secondary)]/60 hover:border-[var(--border-secondary)]"
                   }`}
                 >
                   <div className="col-span-1 flex items-center">
                     {item.rank === 1 ? (
-                      <div className="w-8 h-8 rounded-full bg-[#FFA217] flex items-center justify-center text-[#1A1A1A] font-black text-sm">
+                      <div className="w-8 h-8 rounded-full bg-[var(--brand-orange)] flex items-center justify-center text-[var(--bg-primary)] font-black text-sm">
                         1
                       </div>
                     ) : item.rank === 2 ? (
-                      <div className="w-8 h-8 rounded-full bg-[#C0C0C0] flex items-center justify-center text-[#1A1A1A] font-black text-sm">
+                      <div className="w-8 h-8 rounded-full bg-[var(--text-tertiary)] flex items-center justify-center text-[var(--bg-primary)] font-black text-sm">
                         2
                       </div>
                     ) : item.rank === 3 ? (
-                      <div className="w-8 h-8 rounded-full bg-[#CD7F32] flex items-center justify-center text-[#1A1A1A] font-black text-sm">
+                      <div className="w-8 h-8 rounded-full bg-[var(--color-medium)] flex items-center justify-center text-[var(--bg-primary)] font-black text-sm">
                         3
                       </div>
                     ) : (
-                      <span className="text-[#8A8A8A] font-bold pl-3">{item.rank}</span>
+                      <span className="text-[var(--text-tertiary)] font-bold pl-3">{item.rank}</span>
                     )}
                   </div>
                   
@@ -198,13 +198,13 @@ export default function GlobalLeaderboard() {
                     <img 
                       src={item.avatar} 
                       alt={item.name} 
-                      className="w-10 h-10 rounded-full border-2 border-[#3E3E3E] object-cover group-hover:border-[#FFA217] transition-colors" 
+                      className="w-10 h-10 rounded-full border-2 border-[var(--border-primary)] object-cover group-hover:border-[var(--brand-orange)] transition-colors" 
                     />
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-white group-hover:text-[#FFA217] transition-colors">
+                      <span className="font-bold text-[var(--text-primary)] group-hover:text-[var(--brand-orange)] transition-colors">
                         {item.name}
                       </span>
-                      {isMe && <span className="text-[#38BDF8] text-sm font-medium">(You)</span>}
+                      {isMe && <span className="text-[var(--accent-blue)] text-sm font-medium">(You)</span>}
                     </div>
                   </Link>
 
@@ -212,11 +212,11 @@ export default function GlobalLeaderboard() {
                     {getStateEmblem(item.state)}
                   </div>
                   
-                  <div className="col-span-1 text-center font-bold text-white">
+                  <div className="col-span-1 text-center font-bold text-[var(--text-primary)]">
                     {item.attended}
                   </div>
                   
-                  <div className="col-span-2 text-right font-black text-lg text-white">
+                  <div className="col-span-2 text-right font-black text-lg text-[var(--text-primary)]">
                     {item.rating}
                   </div>
                 </motion.div>

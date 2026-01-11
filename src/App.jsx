@@ -41,6 +41,7 @@ import QuestProblem from "./pages/Quest/QuestProblem";
 import StudyPlan from "./pages/StudyPlan/StudyPlan";
 import MyStudyPlan from "./pages/StudyPlan/MyStudyPlan";
 import StudyPlanDetail from "./pages/StudyPlan/StudyPlanDetail";
+import EarnCoins from "./pages/EarnCoins";
 
 import Premium from "./pages/Premium";
 
@@ -148,6 +149,7 @@ export default function App() {
         <Route path="/playgrounds" element={<ComingSoon title="My Playgrounds" />} />
         <Route path="/settings" element={<ComingSoon title="Settings" />} />
         <Route path="/store" element={<Store />} />
+        <Route path="/earn" element={<EarnCoins />} />
         <Route path="/discuss" element={<Discuss />} />
         <Route path="/quest" element={<Quest />} />
         <Route path="/quest/:id" element={<QuestDetail />} />

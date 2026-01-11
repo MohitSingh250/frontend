@@ -40,7 +40,7 @@ export default function Profile() {
       <div className="flex flex-col justify-center items-center h-screen text-[var(--text-secondary)] space-y-4">
         <MessageSquare size={64} className="opacity-10" />
         <p className="text-xl font-bold">User not found</p>
-        <Link to="/" className="px-6 py-2 bg-[#3E3E3E] text-white rounded-lg hover:bg-[#4E4E4E] transition-all">Go Home</Link>
+        <Link to="/" className="px-6 py-2 bg-[var(--bg-tertiary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-tertiary)]/80 transition-all">Go Home</Link>
       </div>
     );
 
