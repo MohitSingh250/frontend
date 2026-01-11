@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import ProfileMenu from "./ProfileMenu";
+import NotificationDropdown from "./NotificationDropdown";
 import { AuthContext } from "../context/AuthContext";
 import { Bell, ChevronDown } from "lucide-react";
 
 export default function Header() {
   const { user, logout } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
   const menuRef = useRef(null);
+  const notifRef = useRef(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -20,6 +23,9 @@ export default function Header() {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpen(false);
+      }
+      if (notifRef.current && !notifRef.current.contains(event.target)) {
+        setNotifOpen(false);
       }
     };
     document.addEventListener("click", handleClickOutside);
@@ -70,9 +76,21 @@ export default function Header() {
           {user ? (
             <>
               {/* Notifications */}
-              <button className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-lg transition">
-                <Bell size={18} />
-              </button>
+              <div ref={notifRef} className="relative">
+                <button 
+                  onClick={() => setNotifOpen(!notifOpen)}
+                  className={`p-2 rounded-lg transition ${
+                    notifOpen 
+                      ? "text-[var(--text-primary)] bg-[var(--bg-tertiary)]" 
+                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]"
+                  }`}
+                >
+                  <Bell size={18} />
+                </button>
+                {notifOpen && (
+                  <NotificationDropdown onClose={() => setNotifOpen(false)} />
+                )}
+              </div>
 
               {/* Premium Button */}
               <Link 

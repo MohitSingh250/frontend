@@ -68,14 +68,20 @@ import Discuss from "./pages/Discuss";
 
 import Profile from "./pages/Profile";
 
+import { CollectionContext } from "./context/CollectionContext";
+import CreateListModal from "./components/ProblemList/CreateListModal";
+
 export default function App() {
   const { user, loading } = useContext(AuthContext);
+  const { isCreateModalOpen, closeCreateModal, createCollection, editingList } = useContext(CollectionContext);
+
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <Toaster position="top-center" reverseOrder={false} />
       {!useLocation().pathname.includes("/arena") && !useLocation().pathname.includes("/quest/problem") && <Header />}
 
       <Routes>
+        {/* ... existing routes ... */}
         <Route 
           path="/" 
           element={
@@ -140,7 +146,7 @@ export default function App() {
           }
         />
 
-        <Route path="/list" element={<MyLists />} />
+        <Route path="/list/:listId?" element={<MyLists />} />
         <Route path="/notebook" element={<Notebook />} />
         <Route path="/progress" element={<ComingSoon title="Progress" />} />
         <Route path="/points" element={<ComingSoon title="Points" />} />
@@ -169,6 +175,13 @@ export default function App() {
        !useLocation().pathname.startsWith("/signup") && 
        !useLocation().pathname.includes("/quest/problem") && 
        <Footer />}
+
+      <CreateListModal 
+        isOpen={isCreateModalOpen} 
+        onClose={closeCreateModal}
+        onCreate={createCollection}
+        initialData={editingList}
+      />
     </div>
   );
 }
