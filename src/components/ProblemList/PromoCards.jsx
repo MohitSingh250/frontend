@@ -1,12 +1,51 @@
-import { useRef } from "react";
-import { ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
+import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../api";
+import { Target, FlaskConical, Settings, Sigma, ArrowUpRight, Triangle, Zap, Sparkles, Map, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function PromoCards() {
+  const navigate = useNavigate();
   const scrollRef = useRef(null);
+  const [plans, setPlans] = useState([]);
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const res = await api.get("/study-plans");
+        // Get featured plans (first 4)
+        const featured = res.data.filter(p => p.isFeatured).slice(0, 4);
+        setPlans(featured);
+      } catch (err) {
+        console.error("Failed to fetch promo plans", err);
+      }
+    };
+    fetchPlans();
+  }, []);
+
+  const getIcon = (title) => {
+    if (title.includes("Sprint")) return Target;
+    if (title.includes("Organic") || title.includes("Mole")) return FlaskConical;
+    if (title.includes("Mechanics") || title.includes("Physics")) return Settings;
+    if (title.includes("Calculus")) return Sigma;
+    if (title.includes("Trigonometry")) return Triangle;
+    if (title.includes("Vector")) return ArrowUpRight;
+    if (title.includes("Electro")) return Zap;
+    return Sparkles;
+  };
+
+  const getGradient = (index) => {
+    const gradients = [
+      "from-[#FF7F50] to-[#FF4500]", // Orange
+      "from-[#00C853] to-[#00E676]", // Green
+      "from-[#007AFF] to-[#0055B3]", // Blue
+      "from-[#E91E63] to-[#F06292]", // Pink
+    ];
+    return gradients[index % gradients.length];
+  };
 
   const scroll = (direction) => {
     if (scrollRef.current) {
-      const scrollAmount = 240;
+      const scrollAmount = 300;
       scrollRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
@@ -15,100 +54,66 @@ export default function PromoCards() {
   };
 
   return (
-    <div className="relative mb-6 pl-4">
-      {/* Carousel Container */}
+    <div className="relative mb-8 group">
+      {/* Scroll Buttons */}
+      <button 
+        onClick={() => scroll('left')}
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hover:bg-black/70"
+      >
+        <ChevronLeft size={24} />
+      </button>
+      <button 
+        onClick={() => scroll('right')}
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hover:bg-black/70"
+      >
+        <ChevronRight size={24} />
+      </button>
+
       <div 
         ref={scrollRef}
-        className="flex gap-5 overflow-x-auto scrollbar-hide scroll-smooth"
+        className="flex gap-5 overflow-x-auto scrollbar-hide scroll-smooth pb-2"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {/* Card 1: JEE Physics 30 Days Challenge */}
-        <div className="relative min-w-[270px] h-[135px] overflow-hidden rounded-lg bg-gradient-to-br from-[#ff9800] to-[#f57c00] p-4 flex flex-col justify-between shrink-0">
-          {/* Day Badge */}
-          <div className="absolute top-2 right-2 w-14 h-14 bg-white/20 rounded-lg flex flex-col items-center justify-center backdrop-blur-sm border border-white/30">
-            <span className="text-[10px] text-white/80 font-medium">DAY</span>
-            <span className="text-2xl font-black text-white leading-none">30</span>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-bold text-white leading-tight">JEE Physics</h3>
-            <p className="text-sm font-semibold text-white/90">30 Days Challenge</p>
-            <p className="text-[11px] text-white/70">Beginner Friendly</p>
-          </div>
-          
-          <button className="self-start px-4 py-1.5 rounded-md bg-white text-[#f57c00] text-xs font-bold">
-            Start Learning
-          </button>
+        {/* 1. Quest Card (Fixed) */}
+        <div 
+          onClick={() => navigate('/quest')}
+          className="relative min-w-[270px] h-[135px] overflow-hidden rounded-xl cursor-pointer hover:scale-[1.02] transition-transform shadow-lg"
+          style={{
+            backgroundImage: 'url(/store/quest_card.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        >
+          {/* Empty - image has all content */}
         </div>
 
-        {/* Card 2: JEE Store */}
-        <div className="relative min-w-[270px] h-[135px] overflow-hidden rounded-lg bg-gradient-to-br from-[#00bcd4] to-[#00acc1] p-4 flex flex-col justify-between shrink-0">
-          <div className="absolute top-3 right-3 opacity-20">
-            <BookOpen size={60} className="text-white" />
-          </div>
-          
-          <div>
-            <h3 className="text-xl font-bold text-white leading-tight">JEE Premium</h3>
-            <p className="text-xl font-bold text-white">Store</p>
-          </div>
-          
-          <button className="self-start px-4 py-1.5 rounded-md bg-white text-[#00acc1] text-xs font-bold">
-            Visit Now
-          </button>
-        </div>
-
-        {/* Card 3: Formula Cheat Sheets */}
-        <div className="relative min-w-[270px] h-[135px] overflow-hidden rounded-lg bg-gradient-to-br from-[#7c4dff] to-[#651fff] p-4 flex flex-col justify-between shrink-0">
-          <div className="absolute top-0 right-0 w-24 h-24 opacity-20">
-            <div className="absolute top-4 right-4 w-12 h-12 border-4 border-white rounded-lg rotate-12" />
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-bold text-white leading-tight">Formula Sheets</h3>
-            <p className="text-lg font-bold text-white">Quick Revision</p>
-            <p className="text-[11px] text-white/80">Physics, Chemistry & Maths</p>
-          </div>
-          
-          <button className="self-start px-4 py-1.5 rounded-md bg-white/20 border border-white/30 text-white text-xs font-bold">
-            Download PDF
-          </button>
-        </div>
-
-        {/* Card 4: Chemistry Organic */}
-        <div className="relative min-w-[270px] h-[135px] overflow-hidden rounded-lg bg-gradient-to-br from-[#00c853] to-[#00e676] p-4 flex flex-col justify-between shrink-0">
-          {/* Illustration */}
-          <div className="absolute top-2 right-2 opacity-30">
-            <div className="w-14 h-14 border-4 border-white rounded-full" />
-            <div className="w-8 h-8 bg-white/50 rounded-full absolute top-3 right-3" />
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-bold text-white leading-tight">Organic</h3>
-            <p className="text-lg font-bold text-white">Chemistry</p>
-            <p className="text-[11px] text-white/80">100+ Named Reactions</p>
-          </div>
-          
-          <button className="self-start px-4 py-1.5 rounded-md bg-white text-green-600 text-xs font-bold">
-            Start
-          </button>
-        </div>
-
-        {/* Card 5: Maths Calculus */}
-        <div className="relative min-w-[270px] h-[135px] overflow-hidden rounded-lg bg-gradient-to-br from-[#e91e63] to-[#f06292] p-4 flex flex-col justify-between shrink-0">
-          <div className="absolute top-2 right-2 opacity-20">
-            <div className="text-4xl">∫</div>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-bold text-white leading-tight">Calculus</h3>
-            <p className="text-lg font-bold text-white">Masterclass</p>
-            <p className="text-[11px] text-white/80">Integration & Differentiation</p>
-          </div>
-          
-          <button className="self-start px-4 py-1.5 rounded-md bg-white text-[#e91e63] text-xs font-bold">
-            Explore
-          </button>
-        </div>
+        {/* 2. Dynamic Study Plan Cards */}
+        {plans.map((plan, i) => {
+          const Icon = getIcon(plan.title);
+          return (
+            <div 
+              key={plan._id}
+              onClick={() => navigate(`/study-plan/${plan._id}`)}
+              className={`relative min-w-[270px] h-[135px] overflow-hidden rounded-xl bg-gradient-to-br ${getGradient(i)} p-5 flex flex-col justify-between shrink-0 cursor-pointer hover:scale-[1.02] transition-transform shadow-lg`}
+            >
+              <div className="absolute -bottom-4 -right-4 opacity-20 rotate-12">
+                <Icon size={100} className="text-white" />
+              </div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-2 mb-1">
+                   <span className="px-2 py-0.5 bg-white/20 backdrop-blur rounded text-[10px] font-bold tracking-wider uppercase text-white">PLAN</span>
+                </div>
+                <h3 className="text-lg font-bold text-white leading-tight line-clamp-1">{plan.title}</h3>
+                <p className="text-xs text-white/90 font-medium mt-1 line-clamp-1">{plan.description}</p>
+              </div>
+              
+              <button className="self-start px-4 py-1.5 rounded-full bg-white/90 text-black/80 text-xs font-bold shadow-sm">
+                Start Learning
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
