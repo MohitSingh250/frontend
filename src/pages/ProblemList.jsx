@@ -137,7 +137,7 @@ export default function ProblemList() {
           <ProblemListSidebar />
 
           {/* 2. MAIN CONTENT (Promo + List) */}
-          <div className="flex-1 min-w-0 pt-12 pr-6">
+          <div className="flex-1 min-w-0 pt-12">
             
             {/* Promo Cards */}
             <PromoCards />
@@ -179,7 +179,7 @@ export default function ProblemList() {
           </div>
 
           {/* 3. RIGHT SIDEBAR (Widgets) */}
-          <aside className="hidden xl:block w-[260px] shrink-0 space-y-4 pt-8 pr-6">
+          <aside className="hidden xl:block w-[260px] shrink-0 space-y-4 pt-8">
              <Calendar />
              <ImportantChapters />
              

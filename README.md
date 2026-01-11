@@ -50,26 +50,39 @@ VITE_GOOGLE_CLIENT_ID=your-google-client-id
 | Route | Page | Description |
 | :--- | :--- | :--- |
 | `/` | Home | Landing page |
+| `/problems` | Problem List | Main problem library with advanced filters |
 | `/daily` | Daily Problem | Daily physics challenge |
 | `/problems/:id` | Problem Detail | Solve a specific problem |
 | `/dashboard` | Dashboard | User stats & heatmap (Protected) |
 | `/contests` | Contest List | Upcoming and past contests |
 | `/contest/:contestId` | Contest Detail | Contest info & registration |
 | `/contest/:contestId/arena` | Contest Arena | Live contest environment (Protected) |
-| `/contest/:contestId/leaderboard` | Contest Leaderboard | Live rankings |
-| `/admin` | Admin Dashboard | Admin controls |
-| `/login` | Login | User authentication |
-| `/signup` | Signup | New user registration |
+| `/list/:listId?` | My Lists | Custom problem collections & favorites |
+| `/notebook` | Notebook | Personal notes on problems |
+| `/progress` | Progress | Detailed analytics and solve statistics |
+| `/points` | Points | OrbitCoin balance and transaction history |
+| `/store` | Store | Redeem OrbitCoins for study materials & swag |
+| `/settings` | Settings | Profile management & customization |
+| `/features` | Beta Lab | Preview upcoming and experimental features |
+| `/premium` | Premium | Subscription plans and benefits |
+| `/discuss` | Discuss | Community discussions and solutions |
+| `/quest` | Quest | Structured learning paths |
+| `/study-plan` | Study Plan | Curated study tracks |
+| `/admin` | Admin Dashboard | Admin controls & content management |
 
 ⭐ Features
 
 - **Daily Problem Feed**: Fresh physics challenges every day.
 - **Interactive Problem Solving**: LaTeX support for equations, markdown descriptions.
-- **Contest System**: Real-time contests with live leaderboards and arenas.
-- **User Dashboard**: Track progress with streak heatmaps and solve statistics.
-- **Authentication**: Secure Google OAuth and JWT-based login.
-- **Responsive Design**: Fully responsive dark-themed UI built with TailwindCSS.
-- **Smooth Animations**: Powered by Framer Motion for a premium feel.
+- **Contest System**: Real-time contests with live leaderboards and auto-scheduling.
+- **Custom Lists**: Create, manage, and fork problem collections (LeetCode-style).
+- **Notebook**: Save and manage personal notes for any problem.
+- **Progress Analytics**: Deep dive into your solve stats, difficulty breakdown, and ranking.
+- **Orbit Store**: Earn OrbitCoins through missions and redeem them for rewards.
+- **Theme Support**: Full compatibility with Light and Dark themes (Pure Black mode available).
+- **Premium Features**: Early access to beta features and exclusive study materials.
+- **Responsive Design**: Optimized for all screen sizes with a premium, modern UI.
+- **Smooth Animations**: Powered by Framer Motion for an interactive user experience.
 
 🛠️ Setup Instructions
 

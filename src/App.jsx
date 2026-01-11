@@ -34,6 +34,11 @@ import GlobalLeaderboard from "./pages/contest/GlobalLeaderboard";
 import ComingSoon from "./pages/ComingSoon";
 import Notebook from "./pages/Notebook";
 import MyLists from "./pages/MyLists";
+import Progress from "./pages/Progress";
+import Points from "./pages/Points";
+import Orders from "./pages/Orders";
+import Settings from "./pages/Settings";
+import Features from "./pages/Features";
 import Store from "./pages/Store";
 import Quest from "./pages/Quest/Quest";
 import QuestDetail from "./pages/Quest/QuestDetail";
@@ -148,12 +153,12 @@ export default function App() {
 
         <Route path="/list/:listId?" element={<MyLists />} />
         <Route path="/notebook" element={<Notebook />} />
-        <Route path="/progress" element={<ComingSoon title="Progress" />} />
-        <Route path="/points" element={<ComingSoon title="Points" />} />
-        <Route path="/features" element={<ComingSoon title="New Features" />} />
-        <Route path="/orders" element={<ComingSoon title="Orders" />} />
+        <Route path="/progress" element={<Progress />} />
+        <Route path="/points" element={<Points />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/orders" element={<Orders />} />
         <Route path="/playgrounds" element={<ComingSoon title="My Playgrounds" />} />
-        <Route path="/settings" element={<ComingSoon title="Settings" />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/store" element={<Store />} />
         <Route path="/earn" element={<EarnCoins />} />
         <Route path="/discuss" element={<Discuss />} />
@@ -174,6 +179,7 @@ export default function App() {
        !useLocation().pathname.startsWith("/login") && 
        !useLocation().pathname.startsWith("/signup") && 
        !useLocation().pathname.includes("/quest/problem") && 
+       !useLocation().pathname.startsWith("/features") && 
        <Footer />}
 
       <CreateListModal 

@@ -145,7 +145,13 @@ export default function Store() {
       <Toaster position="bottom-right" />
       
       {/* Hero Section */}
-      <div className="relative pt-24 pb-20 px-6 overflow-hidden bg-gradient-to-b from-[#282828] to-[var(--bg-primary)] border-b border-[var(--border-primary)]/50">
+      <div className="relative pt-24 pb-20 px-6 overflow-hidden bg-[var(--bg-primary)] border-b border-[var(--border-primary)]/50">
+        <style>{`
+          :root[data-theme="dark"] .store-hero-gradient {
+            background: linear-gradient(to bottom, #282828, var(--bg-primary));
+          }
+        `}</style>
+        <div className="absolute inset-0 store-hero-gradient opacity-100 dark:opacity-100"></div>
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -153,11 +159,11 @@ export default function Store() {
             className="flex justify-center mb-8"
           >
             <div className="relative w-32 h-32 md:w-40 md:h-40">
-               <div className="absolute inset-0 bg-[var(--brand-orange)]/20 blur-3xl rounded-full"></div>
+               <div className="absolute inset-0 bg-[var(--brand-orange)]/10 blur-3xl rounded-full dark:bg-[var(--brand-orange)]/20"></div>
                <img 
                  src="/orbit.png" 
                  alt="Orbit Logo" 
-                 className="relative w-full h-full object-contain brightness-110"
+                 className="relative w-full h-full object-contain brightness-110 dark:brightness-110"
                />
             </div>
           </motion.div>
@@ -189,29 +195,29 @@ export default function Store() {
               onClick={() => setActiveTab('redeem')}
               className={`px-10 py-3.5 rounded-full font-bold text-base transition-all flex items-center gap-3 shadow-lg ${
                 activeTab === 'redeem' 
-                  ? 'bg-white text-black scale-105' 
-                  : 'bg-[#282828] border border-gray-600 text-white hover:bg-[#333]'
+                  ? 'bg-[var(--text-primary)] text-[var(--bg-primary)] scale-105' 
+                  : 'bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
               }`}
             >
-              <Trophy size={20} className={activeTab === 'redeem' ? "text-orange-500 fill-orange-500" : "text-gray-400"} />
+              <Trophy size={20} className={activeTab === 'redeem' ? "text-[var(--brand-orange)] fill-[var(--brand-orange)]" : "text-[var(--text-tertiary)]"} />
               Redeem
             </button>
             <button 
               onClick={() => setActiveTab('earn')}
               className={`px-10 py-3.5 rounded-full font-bold text-base transition-all flex items-center gap-3 shadow-lg ${
                 activeTab === 'earn' 
-                  ? 'bg-white text-black scale-105' 
-                  : 'bg-[#282828] border border-dashed border-gray-500 text-white hover:bg-[#333]'
+                  ? 'bg-[var(--text-primary)] text-[var(--bg-primary)] scale-105' 
+                  : 'bg-[var(--bg-secondary)] border border-dashed border-[var(--border-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
               }`}
             >
-              <Plus size={20} className={activeTab === 'earn' ? "text-orange-500" : "text-gray-400"} />
+              <Plus size={20} className={activeTab === 'earn' ? "text-[var(--brand-orange)]" : "text-[var(--text-tertiary)]"} />
               Earn <span className="text-[var(--brand-orange)]">OrbitCoin</span>
             </button>
             <button 
               onClick={() => navigate('/premium')}
-              className="px-10 py-3.5 rounded-full bg-[#282828] border border-gray-600 text-white font-bold text-base hover:bg-[#333] transition-all flex items-center gap-3 shadow-lg"
+              className="px-10 py-3.5 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[var(--text-primary)] font-bold text-base hover:bg-[var(--bg-tertiary)] transition-all flex items-center gap-3 shadow-lg"
             >
-              <Star size={20} className="text-gray-400" />
+              <Star size={20} className="text-[var(--text-tertiary)]" />
               Premium
             </button>
           </motion.div>
@@ -252,7 +258,7 @@ export default function Store() {
                   className="group bg-[var(--bg-secondary)] rounded-[2.5rem] overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 border border-[var(--border-primary)] flex flex-col"
                 >
                   {/* Image Container */}
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#1A1A1A] p-4 flex items-center justify-center">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-[var(--bg-primary)] p-4 flex items-center justify-center">
                     <img 
                       src={item.image} 
                       alt={item.name}
