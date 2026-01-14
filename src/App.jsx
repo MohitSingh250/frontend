@@ -83,7 +83,10 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <Toaster position="top-center" reverseOrder={false} />
-      {!useLocation().pathname.includes("/arena") && !useLocation().pathname.includes("/quest/problem") && <Header />}
+      {!useLocation().pathname.includes("/arena") && 
+       !useLocation().pathname.includes("/quest/problem") && 
+       useLocation().pathname !== "/" && 
+       <Header />}
 
       <Routes>
         {/* ... existing routes ... */}

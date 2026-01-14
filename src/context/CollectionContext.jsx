@@ -8,6 +8,7 @@ export const CollectionContext = createContext();
 export const CollectionProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
   const [collections, setCollections] = useState([]);
+  const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingList, setEditingList] = useState(null);
@@ -22,8 +23,21 @@ export const CollectionProvider = ({ children }) => {
     }
   };
 
+  const fetchBookmarks = async () => {
+    if (!user) return;
+    try {
+      const res = await api.get("/users/me/bookmarks");
+      setBookmarks(res.data);
+    } catch (err) {
+      console.error("Error fetching bookmarks:", err);
+    }
+  };
+
   useEffect(() => {
-    fetchCollections();
+    if (user) {
+      fetchCollections();
+      fetchBookmarks();
+    }
   }, [user]);
 
   const createCollection = async (data) => {
@@ -54,6 +68,39 @@ export const CollectionProvider = ({ children }) => {
     }
   };
 
+  const addProblemsToCollection = async (listId, problemIds) => {
+    try {
+      await Promise.all(problemIds.map(pid => 
+        api.post(`/collections/${listId}/problems`, { problemId: pid })
+      ));
+      toast.success("Questions added");
+      fetchCollections();
+    } catch (err) {
+      toast.error("Failed to add questions");
+      throw err;
+    }
+  };
+
+  const toggleCollectionPrivacy = async (listId, isPrivate) => {
+    try {
+      await api.put(`/collections/${listId}`, { isPrivate: !isPrivate });
+      toast.success(`List is now ${!isPrivate ? 'private' : 'public'}`);
+      fetchCollections();
+    } catch (err) {
+      toast.error("Failed to update privacy");
+    }
+  };
+
+  const forkCollection = async (listId) => {
+    try {
+      await api.post(`/collections/${listId}/fork`);
+      toast.success("List forked");
+      fetchCollections();
+    } catch (err) {
+      toast.error("Failed to fork list");
+    }
+  };
+
   const openCreateModal = (list = null) => {
     setEditingList(list);
     setIsCreateModalOpen(true);
@@ -67,10 +114,15 @@ export const CollectionProvider = ({ children }) => {
   return (
     <CollectionContext.Provider value={{
       collections,
+      bookmarks,
       loading,
       fetchCollections,
+      fetchBookmarks,
       createCollection,
       deleteCollection,
+      addProblemsToCollection,
+      toggleCollectionPrivacy,
+      forkCollection,
       isCreateModalOpen,
       openCreateModal,
       closeCreateModal,
