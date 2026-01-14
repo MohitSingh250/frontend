@@ -127,7 +127,7 @@ export default function Home() {
             playsInline
             className="w-full h-full object-cover brightness-[1.1] contrast-[1.05] saturate-[1.1]"
           >
-            <source src="/store/11904049_3840_2160_50fps.mp4" type="video/mp4" />
+            <source src="https://res.cloudinary.com/dx6pimg9n/video/upload/f_auto,q_auto/orbit_assets/hero_bg_video.mp4" type="video/mp4" />
           </video>
           {/* Overlays */}
           <div className="absolute inset-0 bg-[var(--bg-primary)]/30"></div>

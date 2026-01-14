@@ -23,4 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 
-.envpublic/store/11904049_3840_2160_50fps.mp4
+.env
+public/store/11904049_3840_2160_50fps.mp4
