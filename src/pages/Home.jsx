@@ -11,18 +11,44 @@ import {
   Atom, 
   Calculator,
   ChevronRight,
+  ChevronDown,
   Users,
   ShieldCheck,
   Sparkles,
-  Rocket
+  Rocket,
+  Quote
 } from 'lucide-react';
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion";
 import api from "../api";
 
 export default function Home() {
   const [stats, setStats] = useState(null);
   const [activeUsers, setActiveUsers] = useState(42);
   const [loading, setLoading] = useState(true);
+  const [subjectIndex, setSubjectIndex] = useState(0);
+  const subjects = ["Physics", "Chemistry", "Mathematics", "JEE"];
+
+  // Mouse Parallax Values
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 25, stiffness: 150 };
+  const textX = useSpring(useTransform(mouseX, [-500, 500], [-15, 15]), springConfig);
+  const textY = useSpring(useTransform(mouseY, [-500, 500], [-15, 15]), springConfig);
+
+  const handleMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    mouseX.set(clientX - innerWidth / 2);
+    mouseY.set(clientY - innerHeight / 2);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSubjectIndex((prev) => (prev + 1) % subjects.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -117,7 +143,10 @@ export default function Home() {
       </header>
 
       {/* 1. Hero Section - LeetCode Style */}
-      <section className="relative min-h-[90vh] flex items-center justify-center pt-20 pb-24 overflow-hidden">
+      <section 
+        onMouseMove={handleMouseMove}
+        className="relative h-screen flex items-center justify-center pt-20 pb-24 overflow-hidden"
+      >
         {/* Video Background */}
         <div className="absolute inset-0">
           <video
@@ -133,6 +162,12 @@ export default function Home() {
           <div className="absolute inset-0 bg-[var(--bg-primary)]/30"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-[var(--bg-primary)]/40"></div>
           <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-primary)]/40 via-transparent to-[var(--bg-primary)]/40"></div>
+          
+          {/* Mouse Following Glow */}
+          <motion.div 
+            style={{ x: mouseX, y: mouseY }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--brand-orange)]/5 blur-[150px] rounded-full pointer-events-none"
+          />
         </div>
 
         <div className="max-w-[1400px] mx-auto px-6 text-center z-10">
@@ -143,11 +178,25 @@ export default function Home() {
             className="space-y-10"
           >
             <motion.h1 
+              style={{ x: textX, y: textY }}
               variants={itemVariants}
               className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9]"
             >
               A New Way to <br />
-              <span className="text-gradient-orange">Master JEE.</span>
+              <span className="inline-flex flex-col h-[1.1em] overflow-hidden align-bottom">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={subjects[subjectIndex]}
+                    initial={{ y: "100%" }}
+                    animate={{ y: "0%" }}
+                    exit={{ y: "-100%" }}
+                    transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                    className="text-gradient-orange"
+                  >
+                    Master {subjects[subjectIndex]}.
+                  </motion.span>
+                </AnimatePresence>
+              </span>
             </motion.h1>
             
             <motion.p 
@@ -157,26 +206,53 @@ export default function Home() {
               The ultimate platform for JEE aspirants. Practice smarter, compete harder, and track your progress with surgical precision.
             </motion.p>
             
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Link 
-                to="/problems"
-                className="btn btn-primary px-12 py-4 rounded-xl text-lg font-bold shadow-[0_0_40px_-10px_var(--brand-orange)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+            <motion.div 
+              variants={itemVariants} 
+              className="flex flex-col sm:flex-row items-center justify-center gap-6"
+              whileHover={{ scale: 1.02 }}
+            >
+              <motion.div
+                whileHover={{ x: useTransform(mouseX, [-500, 500], [-10, 10]), y: useTransform(mouseY, [-500, 500], [-10, 10]) }}
+                transition={{ type: "spring", stiffness: 150, damping: 15 }}
               >
-                Start Exploring
-              </Link>
+                <Link 
+                  to="/problems"
+                  className="btn btn-primary px-12 py-4 rounded-xl text-lg font-bold shadow-[0_0_40px_-10px_var(--brand-orange)] active:scale-[0.98] transition-all"
+                >
+                  Start Exploring
+                </Link>
+              </motion.div>
             </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Ultra-Minimalist Scroll Hint */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2, duration: 2 }}
+            className="flex flex-col items-center"
+          >
+            <div className="w-px h-24 bg-gradient-to-b from-white/20 to-transparent relative overflow-hidden">
+              <motion.div 
+                animate={{ y: [0, 96, 0] }}
+                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent via-[var(--brand-orange)] to-transparent"
+              />
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* 2. Command Center Section */}
-      <section className="py-32 relative overflow-hidden border-y border-white/5 bg-[var(--bg-secondary)]">
+      <section className="py-20 relative overflow-hidden border-y border-white/5 bg-[var(--bg-secondary)]">
         <motion.div 
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={revealVariants}
-          className="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row items-center gap-16"
+          className="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row items-center gap-10"
         >
           <div className="flex-1">
             <h2 className="text-4xl md:text-5xl font-black mb-8 tracking-tight">Your <span className="text-gradient-orange">Command Center</span> for JEE.</h2>
@@ -190,7 +266,7 @@ export default function Home() {
               Get Started <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
-          <div className="flex-1 grid grid-cols-2 gap-6">
+          <div className="flex-1 grid grid-cols-2 gap-4">
             {[
               { 
                 title: "Problem Arena", 
@@ -242,10 +318,10 @@ export default function Home() {
                 )
               }
             ].map((s, i) => (
-              <div key={i} className="p-8 rounded-3xl bg-[var(--bg-primary)] border border-white/5 shadow-2xl group hover:border-[var(--brand-orange)]/30 transition-all hover:-translate-y-2 relative overflow-hidden">
+              <div key={i} className="p-6 rounded-3xl bg-[var(--bg-primary)] border border-white/5 shadow-2xl group hover:border-[var(--brand-orange)]/10 transition-all hover:-translate-y-2 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-orange)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 {s.illustration}
-                <div className="w-14 h-14 rounded-2xl bg-[var(--brand-orange)]/10 flex items-center justify-center mb-6 text-[var(--brand-orange)] group-hover:bg-[var(--brand-orange)] group-hover:text-white transition-all duration-500 relative z-10 shadow-lg">
+                <div className="w-14 h-14 rounded-2xl bg-[var(--brand-orange)]/5 flex items-center justify-center mb-6 text-[var(--brand-orange)] group-hover:bg-[var(--brand-orange)]/80 group-hover:text-white transition-all duration-500 relative z-10 shadow-lg">
                   {React.cloneElement(s.icon, { className: "w-7 h-7" })}
                 </div>
                 <h3 className="text-xl font-black mb-2 relative z-10 tracking-tight">{s.title}</h3>
@@ -358,18 +434,6 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
             </motion.div>
 
-            {/* Floating Stats Badge */}
-            <motion.div 
-              initial={{ x: 20, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="absolute -bottom-6 -left-6 p-6 rounded-2xl bg-[var(--bg-secondary)] border border-white/10 shadow-2xl z-20 backdrop-blur-xl"
-            >
-              <div className="text-3xl font-black text-[var(--brand-orange)] mb-1">
-                {counts.users > 1000 ? (counts.users / 1000).toFixed(1) + 'k+' : counts.users || '10k+'}
-              </div>
-              <div className="text-[10px] uppercase tracking-widest text-[var(--text-tertiary)] font-bold">Active Aspirants</div>
-            </motion.div>
           </div>
         </motion.div>
       </section>
@@ -427,44 +491,91 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* 6. Success Stories Section */}
-      <section className="py-32 bg-[var(--bg-secondary)]/50 border-t border-white/5">
+      {/* 6. Success Stories Section - Ultra-Minimalist Approach */}
+      <section className="py-24 relative overflow-hidden bg-[var(--bg-secondary)]/30">
         <motion.div 
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={revealVariants}
-          className="max-w-[1400px] mx-auto px-6"
+          className="max-w-[1400px] mx-auto px-6 relative z-10"
         >
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">Success <span className="text-gradient-orange">Stories.</span></h2>
-            <p className="text-lg text-[var(--text-secondary)] font-light">From Orbit to IITs. Hear from our top rankers.</p>
+          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-[0.9]">
+                From Orbit to <br />
+                <span className="text-gradient-orange">The Top IITs.</span>
+              </h2>
+            </div>
+            <p className="text-lg text-[var(--text-secondary)] font-light max-w-md md:text-right">
+              Real stories from real aspirants who mastered the JEE with surgical precision.
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { name: "Aryan Sharma", rank: "AIR 42", iit: "IIT Bombay", quote: "The CBT interface was a game changer. It felt exactly like the real exam." },
-              { name: "Priya Gupta", rank: "AIR 156", iit: "IIT Delhi", quote: "Granular analytics helped me identify my weak spots in Physics instantly." },
-              { name: "Ishaan Verma", rank: "AIR 89", iit: "IIT Madras", quote: "The problem arena has the best collection of JEE Advanced level questions." }
+              { 
+                name: "Aryan Sharma", 
+                rank: "AIR 42", 
+                iit: "IIT Bombay", 
+                improvement: "99.98 Percentile",
+                quote: "Orbit's CBT interface was a total game changer. It felt exactly like the real exam, which killed my exam anxiety completely.",
+                delay: 0
+              },
+              { 
+                name: "Priya Gupta", 
+                rank: "AIR 156", 
+                iit: "IIT Delhi", 
+                improvement: "Physics: 100/100",
+                quote: "The granular analytics helped me identify my weak spots in Physics instantly. I went from struggling with Mechanics to a perfect score.",
+                delay: 0.1
+              },
+              { 
+                name: "Ishaan Verma", 
+                rank: "AIR 89", 
+                iit: "IIT Madras", 
+                improvement: "Math: 99.9%ile",
+                quote: "The problem arena has the best collection of JEE Advanced level questions. The adaptive difficulty kept me constantly challenged.",
+                delay: 0.2
+              }
             ].map((story, i) => (
-              <div key={i} className="p-10 rounded-2xl bg-[var(--bg-primary)] border border-white/5 hover:border-[var(--brand-orange)]/20 transition-all group">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--brand-orange)] to-orange-600 flex items-center justify-center text-white font-black">
-                    {story.name[0]}
+              <motion.div 
+                key={i}
+                initial={{ y: 30, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ delay: story.delay, duration: 0.6 }}
+                className="relative p-8 rounded-3xl bg-[var(--bg-primary)] border border-white/5 hover:border-[var(--brand-orange)]/20 transition-all group"
+              >
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 text-lg font-black group-hover:border-[var(--brand-orange)]/30 transition-colors">
+                      {story.name[0]}
+                    </div>
+                    <div className="text-right">
+                      <div className="text-[var(--brand-orange)]/60 text-[10px] font-black uppercase tracking-widest mb-1">
+                        {story.rank}
+                      </div>
+                      <div className="text-[9px] text-[var(--text-tertiary)] font-bold uppercase tracking-wider">{story.iit}</div>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-bold">{story.name}</h4>
-                    <p className="text-[10px] text-[var(--brand-orange)] font-black uppercase tracking-widest">{story.rank} • {story.iit}</p>
+
+                  <div className="mb-6">
+                    <div className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mb-1">Achievement</div>
+                    <div className="text-lg font-black text-white group-hover:text-[var(--brand-orange)] transition-colors">{story.improvement}</div>
                   </div>
+
+                  <p className="text-[var(--text-secondary)] text-sm font-light leading-relaxed italic">
+                    "{story.quote}"
+                  </p>
                 </div>
-                <p className="text-[var(--text-secondary)] font-light italic leading-relaxed">"{story.quote}"</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
       </section>
 
       {/* 7. White Section - Community Focus */}
-      <section className="py-12 bg-white text-black relative overflow-hidden">
+      <section className="py-10 bg-white text-black relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none"></div>
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gray-100 to-transparent"></div>
         
