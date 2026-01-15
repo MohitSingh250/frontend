@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { CalendarDays, BookOpen, ArrowUp } from 'lucide-react';
+import { CalendarDays, BookOpen, ArrowUp, List } from 'lucide-react';
 
 export default function MobileFloatingMenu({ setActiveMobileWidget }) {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
-  // Scroll listener for Back to Top visibility
   useEffect(() => {
     const handleScroll = () => {
       setShowBackToTop(window.pageYOffset > 300);
@@ -18,39 +17,39 @@ export default function MobileFloatingMenu({ setActiveMobileWidget }) {
   };
 
   const fabClass = `
-    flex items-center justify-center w-12 h-12 rounded-full shadow-lg backdrop-blur-md
-    border border-[var(--white)]/10 transition-all duration-300 active:scale-95
+    flex items-center justify-center w-14 h-14 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
+    backdrop-blur-md transition-all duration-300 active:scale-90
   `;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 items-center xl:hidden">
+    <div className="fixed bottom-8 right-6 z-50 flex flex-col gap-4 items-center xl:hidden">
       
-      {/* ⬆️ Back To Top (Conditional) */}
-      <div 
+      {/* ⬆️ Back To Top */}
+      <button 
         onClick={scrollToTop}
         className={`
-          ${fabClass} bg-[var(--dark-pastel-green)] text-white
+          ${fabClass} bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[var(--text-primary)]
           ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}
         `}
       >
-        <ArrowUp size={20} strokeWidth={2.5} />
-      </div>
+        <ArrowUp size={24} />
+      </button>
 
-      {/* 📖 Important Chapters */}
-      <div 
+      {/* 📖 Important Chapters (Blue as requested) */}
+      <button 
         onClick={() => setActiveMobileWidget('chapters')}
-        className={`${fabClass} bg-[var(--dark-slate-gray)]/90 text-[var(--white)] hover:bg-[var(--raisin-black)]`}
+        className={`${fabClass} bg-[#3e90ff] text-white shadow-[#3e90ff]/20`}
       >
-        <BookOpen size={20} className="text-blue-400" />
-      </div>
+        <BookOpen size={24} strokeWidth={2.5} />
+      </button>
 
-      {/* 📅 Calendar */}
-      <div 
+      {/* 📅 Calendar (Green as in screenshot) */}
+      <button 
         onClick={() => setActiveMobileWidget('calendar')}
-        className={`${fabClass} bg-[var(--dark-slate-gray)]/90 text-[var(--white)] hover:bg-[var(--raisin-black)]`}
+        className={`${fabClass} bg-[#2cbb5d] text-white shadow-[#2cbb5d]/20`}
       >
-        <CalendarDays size={20} className="text-[var(--orange-peel)]" />
-      </div>
+        <CalendarDays size={24} strokeWidth={2.5} />
+      </button>
 
     </div>
   );

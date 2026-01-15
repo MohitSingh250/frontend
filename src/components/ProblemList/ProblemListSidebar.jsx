@@ -1,19 +1,28 @@
 import React, { useContext } from "react";
-import { Layout, Zap, BookOpen, Plus, Star, Lock, Globe } from "lucide-react";
+import { Layout, Zap, BookOpen, Plus, Star, Lock, Globe, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { CollectionContext } from "../../context/CollectionContext";
 
-export default function ProblemListSidebar({ onListClick, activeListId }) {
+export default function ProblemListSidebar({ onListClick, activeListId, isOpen, onClose }) {
   const location = useLocation();
   const { collections, openCreateModal } = useContext(CollectionContext);
   
-  return (
-    <div className="w-[240px] shrink-0 hidden lg:block space-y-4 px-4 border-r border-[var(--border-primary)] pt-6 min-h-screen bg-[var(--bg-primary)]">
+  const sidebarContent = (
+    <div className="flex flex-col h-full">
+      {/* Mobile Header */}
+      <div className="flex items-center justify-between mb-6 lg:hidden">
+        <h2 className="text-lg font-bold">Navigation</h2>
+        <button onClick={onClose} className="p-2 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)]">
+          <X size={20} />
+        </button>
+      </div>
+
       {/* Main Navigation */}
       <div className="space-y-1">
         <Link 
           to="/problems"
-          className={`flex items-center gap-3 px-2 py-2 rounded-lg font-semibold text-[15px] cursor-pointer transition-all ${
+          onClick={onClose}
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl lg:rounded-lg font-semibold text-[15px] cursor-pointer transition-all ${
             location.pathname === "/problems" 
               ? "bg-[var(--bg-tertiary)] text-[var(--text-primary)]" 
               : "text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
@@ -25,7 +34,8 @@ export default function ProblemListSidebar({ onListClick, activeListId }) {
         
         <Link
           to="/quest"
-          className={`flex items-center gap-3 px-2 py-2 rounded-lg font-semibold text-[15px] transition-all cursor-pointer ${
+          onClick={onClose}
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl lg:rounded-lg font-semibold text-[15px] transition-all cursor-pointer ${
             location.pathname === "/quest" 
               ? "bg-[var(--bg-tertiary)] text-[var(--text-primary)]" 
               : "text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
@@ -38,7 +48,8 @@ export default function ProblemListSidebar({ onListClick, activeListId }) {
         
         <Link
           to="/study-plan"
-          className={`flex items-center gap-3 px-2 py-2 rounded-lg font-semibold text-[15px] transition-all cursor-pointer ${
+          onClick={onClose}
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl lg:rounded-lg font-semibold text-[15px] transition-all cursor-pointer ${
             location.pathname === "/study-plan" 
               ? "bg-[var(--bg-tertiary)] text-[var(--text-primary)]" 
               : "text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
@@ -50,14 +61,17 @@ export default function ProblemListSidebar({ onListClick, activeListId }) {
       </div>
 
       {/* Divider */}
-      <div className="border-t border-[var(--border-primary)] mx-2"></div>
+      <div className="border-t border-[var(--border-primary)] my-4 mx-2"></div>
 
       {/* My Lists */}
       <div className="space-y-2">
-        <div className="flex items-center justify-between px-2">
+        <div className="flex items-center justify-between px-2 mb-2">
           <span className="text-xs font-semibold text-[var(--text-tertiary)] uppercase tracking-wider">My Lists</span>
           <button 
-            onClick={() => openCreateModal()}
+            onClick={() => {
+              openCreateModal();
+              onClose();
+            }}
             className="p-1 hover:bg-[var(--bg-tertiary)] rounded transition-colors text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
           >
             <Plus size={14} />
@@ -66,7 +80,8 @@ export default function ProblemListSidebar({ onListClick, activeListId }) {
         <div className="space-y-1">
           <Link
             to="/list/favorites"
-            className={`flex items-center gap-3 px-2 py-2 rounded-lg font-medium text-[15px] transition-all cursor-pointer ${
+            onClick={onClose}
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl lg:rounded-lg font-medium text-[15px] transition-all cursor-pointer ${
               (activeListId === 'favorites' || !activeListId) && location.pathname.startsWith('/list')
                 ? "bg-[var(--bg-tertiary)] text-[var(--text-primary)]"
                 : "text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
@@ -81,7 +96,8 @@ export default function ProblemListSidebar({ onListClick, activeListId }) {
             <Link
               key={list._id}
               to={`/list/${list._id}`}
-              className={`flex items-center gap-3 px-2 py-2 rounded-lg font-medium text-[15px] transition-all cursor-pointer ${
+              onClick={onClose}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl lg:rounded-lg font-medium text-[15px] transition-all cursor-pointer ${
                 activeListId === list._id && location.pathname.startsWith('/list')
                   ? "bg-[var(--bg-tertiary)] text-[var(--text-primary)]"
                   : "text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
@@ -101,5 +117,24 @@ export default function ProblemListSidebar({ onListClick, activeListId }) {
         </div>
       </div>
     </div>
+  );
+
+  return (
+    <>
+      {/* Desktop Sidebar */}
+      <div className="w-[240px] shrink-0 hidden lg:block space-y-4 px-4 border-r border-[var(--border-primary)] pt-6 min-h-screen bg-[var(--bg-primary)]">
+        {sidebarContent}
+      </div>
+
+      {/* Mobile Drawer */}
+      {isOpen && (
+        <div className="lg:hidden fixed inset-0 z-[100]">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+          <div className="absolute left-0 top-0 bottom-0 w-[85%] max-w-[300px] bg-[var(--bg-primary)] p-6 shadow-2xl animate-slide-in-left">
+            {sidebarContent}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

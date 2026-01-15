@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Search, ChevronDown, ChevronUp, SlidersHorizontal, ArrowUpDown } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { Search, ChevronDown, ChevronUp, SlidersHorizontal, ArrowUpDown, ChevronsRight } from "lucide-react";
 import api from "../api/index.js";
 
 export default function ProblemFilters({ filters, setFilters, userStats }) {
@@ -12,6 +12,19 @@ export default function ProblemFilters({ filters, setFilters, userStats }) {
   const [loadingSubjects, setLoadingSubjects] = useState(true);
   const [localSearch, setLocalSearch] = useState(filters.q);
   const [showFilters, setShowFilters] = useState(false);
+  const scrollRef = useRef(null);
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      // Check if we are at the end (with a small buffer)
+      if (scrollLeft + clientWidth >= scrollWidth - 5) {
+        scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        scrollRef.current.scrollBy({ left: 200, behavior: "smooth" });
+      }
+    }
+  };
 
   useEffect(() => {
     setLocalSearch(filters.q);
@@ -40,9 +53,19 @@ export default function ProblemFilters({ filters, setFilters, userStats }) {
         setTopics(topicsRes.data);
         setTags(tagsRes.data);
         
+        const priority = ["Physics", "Chemistry", "Maths"];
+        const sortedSubjects = subjectsRes.data.sort((a, b) => {
+          const idxA = priority.indexOf(a);
+          const idxB = priority.indexOf(b);
+          if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+          if (idxA !== -1) return -1;
+          if (idxB !== -1) return 1;
+          return a.localeCompare(b);
+        });
+
         const dynamicSubjects = [
           { id: "", label: "All Subjects" },
-          ...subjectsRes.data.map(s => ({
+          ...sortedSubjects.map(s => ({
             id: s,
             label: s
           }))
@@ -130,27 +153,43 @@ export default function ProblemFilters({ filters, setFilters, userStats }) {
       </div>
 
       {/* Subject Pills */}
-      <div className="flex flex-wrap gap-3 items-center">
-        {loadingSubjects ? (
-          <div className="flex gap-3">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="h-11 w-32 bg-[var(--bg-tertiary)] animate-pulse rounded-full"></div>
-            ))}
-          </div>
-        ) : (
-          subjects.map((sub) => (
-            <button
-              key={sub.id}
-              onClick={() => setFilters({ ...filters, subject: sub.id, page: 1 })}
-              className={`px-5 py-2.5 rounded-full text-base font-medium transition-all flex items-center gap-2 shadow-sm ${
-                filters.subject === sub.id
-                  ? "bg-[var(--text-primary)] text-[var(--bg-primary)]"
-                  : "bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]/80 hover:text-[var(--text-primary)]"
-              }`}
-            >
-              {sub.label}
-            </button>
-          ))
+      <div className="flex items-center gap-2">
+        <div 
+          ref={scrollRef}
+          className="flex gap-3 overflow-x-auto no-scrollbar scroll-smooth flex-nowrap mask-gradient-right"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {loadingSubjects ? (
+            <div className="flex gap-3">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="h-11 w-32 bg-[var(--bg-tertiary)] animate-pulse rounded-full shrink-0"></div>
+              ))}
+            </div>
+          ) : (
+            subjects.map((sub) => (
+              <button
+                key={sub.id}
+                onClick={() => setFilters({ ...filters, subject: sub.id, page: 1 })}
+                className={`px-5 py-2.5 rounded-full text-base font-medium transition-all flex items-center gap-2 shadow-sm whitespace-nowrap shrink-0 ${
+                  filters.subject === sub.id
+                    ? "bg-[var(--text-primary)] text-[var(--bg-primary)]"
+                    : "bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]/80 hover:text-[var(--text-primary)]"
+                }`}
+              >
+                {sub.label}
+              </button>
+            ))
+          )}
+        </div>
+        
+        {/* Scroll Button */}
+        {!loadingSubjects && subjects.length > 3 && (
+          <button 
+            onClick={scrollRight}
+            className="p-2.5 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]/80 transition-all shrink-0 z-10"
+          >
+            <ChevronsRight size={20} />
+          </button>
         )}
       </div>
 

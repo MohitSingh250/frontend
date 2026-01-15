@@ -16,7 +16,9 @@ import {
   ShieldCheck,
   Sparkles,
   Rocket,
-  Quote
+  Quote,
+  Menu,
+  X
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion";
 import api from "../api";
@@ -124,7 +126,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] selection:bg-[var(--brand-orange)]/30">
       {/* Custom Home Header - Absolute Overlay & Branded */}
-      <header className="absolute top-0 left-0 right-0 w-full py-6 px-8 flex items-center justify-between bg-transparent z-50">
+      <header className="absolute top-0 left-0 right-0 w-full py-6 px-4 sm:px-8 flex items-center justify-between bg-transparent z-50">
         <div className="flex items-center">
           <Link to="/" className="flex items-center gap-3 group">
             <img 
@@ -136,9 +138,9 @@ export default function Home() {
           </Link>
         </div>
 
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center gap-3 sm:gap-6">
           <Link to="/login" className="text-sm font-semibold text-white/80 hover:text-white transition-colors">Sign in</Link>
-          <Link to="/signup" className="text-sm font-semibold text-[var(--brand-orange)] border border-[var(--brand-orange)] px-6 py-2 rounded-full hover:bg-[var(--brand-orange)] hover:text-white transition-all shadow-lg shadow-orange-500/10">Register</Link>
+          <Link to="/signup" className="text-sm font-semibold text-[var(--brand-orange)] border border-[var(--brand-orange)] px-4 sm:px-6 py-2 rounded-full hover:bg-[var(--brand-orange)] hover:text-white transition-all shadow-lg shadow-orange-500/10">Register</Link>
         </nav>
       </header>
 
@@ -170,7 +172,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="max-w-[1400px] mx-auto px-6 text-center z-10">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 text-center z-10">
           <motion.div 
             initial="hidden"
             animate="visible"
@@ -180,7 +182,7 @@ export default function Home() {
             <motion.h1 
               style={{ x: textX, y: textY }}
               variants={itemVariants}
-              className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9]"
+              className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter leading-[0.9]"
             >
               A New Way to <br />
               <span className="inline-flex flex-col h-[1.1em] overflow-hidden align-bottom">
@@ -201,7 +203,7 @@ export default function Home() {
             
             <motion.p 
               variants={itemVariants}
-              className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto font-light leading-relaxed"
+              className="text-lg sm:text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto font-light leading-relaxed px-4"
             >
               The ultimate platform for JEE aspirants. Practice smarter, compete harder, and track your progress with surgical precision.
             </motion.p>
@@ -252,11 +254,11 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={revealVariants}
-          className="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row items-center gap-10"
+          className="max-w-[1400px] mx-auto px-4 sm:px-6"
         >
-          <div className="flex-1">
-            <h2 className="text-4xl md:text-5xl font-black mb-8 tracking-tight">Your <span className="text-gradient-orange">Command Center</span> for JEE.</h2>
-            <p className="text-lg text-[var(--text-secondary)] mb-10 leading-relaxed font-light">
+          <div className="max-w-4xl text-left mb-12">
+            <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">Your <span className="text-gradient-orange">Command Center</span> for JEE.</h2>
+            <p className="text-lg text-[var(--text-secondary)] mb-8 leading-relaxed font-light">
               Orbit provides a comprehensive ecosystem designed to streamline your preparation. From adaptive practice to real-time competition, everything you need is at your fingertips.
             </p>
             <Link 
@@ -266,7 +268,7 @@ export default function Home() {
               Get Started <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
-          <div className="flex-1 grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[
               { 
                 title: "Problem Arena", 
@@ -318,14 +320,14 @@ export default function Home() {
                 )
               }
             ].map((s, i) => (
-              <div key={i} className="p-6 rounded-3xl bg-[var(--bg-primary)] border border-white/5 shadow-2xl group hover:border-[var(--brand-orange)]/10 transition-all hover:-translate-y-2 relative overflow-hidden">
+              <div key={i} className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-primary)] border border-white/5 shadow-2xl group hover:border-[var(--brand-orange)]/10 transition-all hover:-translate-y-2 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-orange)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 {s.illustration}
-                <div className="w-14 h-14 rounded-2xl bg-[var(--brand-orange)]/5 flex items-center justify-center mb-6 text-[var(--brand-orange)] group-hover:bg-[var(--brand-orange)]/80 group-hover:text-white transition-all duration-500 relative z-10 shadow-lg">
-                  {React.cloneElement(s.icon, { className: "w-7 h-7" })}
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[var(--brand-orange)]/5 flex items-center justify-center mb-6 text-[var(--brand-orange)] group-hover:bg-[var(--brand-orange)]/80 group-hover:text-white transition-all duration-500 relative z-10 shadow-lg">
+                  {React.cloneElement(s.icon, { className: "w-6 h-6 sm:w-7 sm:h-7" })}
                 </div>
-                <h3 className="text-xl font-black mb-2 relative z-10 tracking-tight">{s.title}</h3>
-                <p className="text-sm text-[var(--text-tertiary)] font-light relative z-10 leading-relaxed">{s.desc}</p>
+                <h3 className="text-lg sm:text-xl font-black mb-2 relative z-10 tracking-tight">{s.title}</h3>
+                <p className="text-xs sm:text-sm text-[var(--text-tertiary)] font-light relative z-10 leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -340,7 +342,7 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={revealVariants}
-          className="max-w-[1400px] mx-auto px-6 relative z-10"
+          className="max-w-[1400px] mx-auto px-4 sm:px-6 relative z-10"
         >
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">Master Every <span className="text-gradient-orange">Subject.</span></h2>
@@ -349,24 +351,24 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
-                icon: <Atom className="w-8 h-8" />,
+                icon: <Atom className="w-6 h-6" />,
                 title: "Physics",
                 desc: "From Mechanics to Modern Physics. Visualize concepts, don't just memorize formulas.",
                 color: "var(--accent-blue)",
                 stats: `${stats?.subjectCounts?.Physics || 0}+ Problems`
               },
               {
-                icon: <FlaskConical className="w-8 h-8" />,
+                icon: <FlaskConical className="w-6 h-6" />,
                 title: "Chemistry",
                 desc: "Master reactions and mechanisms. Organic, Inorganic, and Physical modules for total retention.",
                 color: "var(--color-easy)",
                 stats: `${stats?.subjectCounts?.Chemistry || 0}+ Problems`
               },
               {
-                icon: <Calculator className="w-8 h-8" />,
+                icon: <Calculator className="w-6 h-6" />,
                 title: "Mathematics",
                 desc: "Develop problem-solving intuition. Calculus to Algebra with rigorous logical frameworks.",
                 color: "var(--brand-orange)",
@@ -376,14 +378,14 @@ export default function Home() {
               <motion.div 
                 key={idx}
                 whileHover={{ y: -5 }}
-                className="p-10 rounded-2xl bg-[var(--bg-secondary)] border border-white/5 hover:border-[var(--brand-orange)]/30 transition-all group relative overflow-hidden"
+                className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-secondary)] border border-white/5 hover:border-[var(--brand-orange)]/30 transition-all group relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--brand-orange)]/5 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110 duration-300 relative z-10" style={{ background: `${subject.color}10`, color: `var(--${subject.color.split('--')[1]})` }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110 duration-300 relative z-10" style={{ background: `${subject.color}10`, color: `var(--${subject.color.split('--')[1]})` }}>
                   {subject.icon}
                 </div>
-                <h3 className="text-2xl font-bold mb-4 relative z-10">{subject.title}</h3>
-                <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-8 font-light relative z-10">{subject.desc}</p>
+                <h3 className="text-lg font-bold mb-2 relative z-10">{subject.title}</h3>
+                <p className="text-[var(--text-secondary)] text-[10px] leading-relaxed mb-4 font-light relative z-10">{subject.desc}</p>
                 <div className="flex items-center justify-between pt-6 border-t border-white/5 relative z-10">
                   <span className="text-[10px] font-bold text-[var(--text-tertiary)] uppercase tracking-widest">{subject.stats}</span>
                   <div className="w-10 h-10 rounded-xl bg-[var(--bg-primary)] flex items-center justify-center group-hover:bg-[var(--brand-orange)] group-hover:text-white transition-all shadow-lg">
@@ -403,9 +405,9 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={revealVariants}
-          className="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row-reverse items-center gap-16"
+          className="max-w-[1400px] mx-auto px-4 sm:px-6 flex flex-col md:flex-row-reverse items-center gap-16"
         >
-          <div className="flex-1 text-right md:text-left">
+          <div className="flex-1 text-center md:text-left">
             <h2 className="text-4xl md:text-5xl font-black mb-8 tracking-tight">Practice, Compete & <span className="text-gradient-orange">Succeed.</span></h2>
             <p className="text-lg text-[var(--text-secondary)] mb-10 leading-relaxed font-light">
               Access a massive repository of {stats?.totalProblems || 5000}+ JEE-standard problems. Join a thriving community of aspirants, participate in weekly contests, and climb the global leaderboard to earn exclusive rewards.
@@ -445,10 +447,10 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={revealVariants}
-          className="max-w-[1400px] mx-auto px-6"
+          className="max-w-[1400px] mx-auto px-4 sm:px-6"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
+            <div className="space-y-8 text-center md:text-left">
               <h2 className="text-4xl md:text-5xl font-black tracking-tight">Built for <span className="text-gradient-orange">Precision.</span></h2>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed font-light">
                 Our advanced tools like the CBT Exam Interface and Granular Performance Analytics are engineered to give you a realistic testing experience and deep insights into your preparation.
@@ -498,21 +500,21 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={revealVariants}
-          className="max-w-[1400px] mx-auto px-6 relative z-10"
+          className="max-w-[1400px] mx-auto px-4 sm:px-6 relative z-10"
         >
-          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
+          <div className="flex flex-col md:flex-row items-center md:items-end justify-between mb-16 gap-8 text-center md:text-left">
             <div className="max-w-2xl">
               <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-[0.9]">
                 From Orbit to <br />
                 <span className="text-gradient-orange">The Top IITs.</span>
               </h2>
             </div>
-            <p className="text-lg text-[var(--text-secondary)] font-light max-w-md md:text-right">
+            <p className="text-lg text-[var(--text-secondary)] font-light max-w-md md:text-right mx-auto md:mx-0">
               Real stories from real aspirants who mastered the JEE with surgical precision.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { 
                 name: "Aryan Sharma", 
@@ -584,18 +586,18 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={revealVariants}
-          className="max-w-[1400px] mx-auto px-6 text-center relative z-10"
+          className="max-w-[1400px] mx-auto px-4 sm:px-6 text-center relative z-10"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 text-xs font-bold uppercase tracking-widest mb-2">
             <Users className="w-4 h-4" /> Join the Community
           </div>
           
-          <h2 className="text-5xl md:text-8xl font-black mb-2 tracking-tighter leading-[0.85]">
+          <h2 className="text-4xl sm:text-5xl md:text-8xl font-black mb-2 tracking-tighter leading-[0.85]">
             10,000+ Aspirants <br />
             <span className="text-gray-300">Growing Together.</span>
           </h2>
           
-          <p className="text-xl text-gray-500 max-w-3xl mx-auto font-light leading-relaxed mb-8">
+          <p className="text-lg sm:text-xl text-gray-500 max-w-3xl mx-auto font-light leading-relaxed mb-8 px-4">
             Connect with like-minded students, share insights, and solve doubts in real-time. Orbit is more than just a platform; it's a movement of future engineers.
           </p>
 

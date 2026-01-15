@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import ProfileMenu from "./ProfileMenu";
 import NotificationDropdown from "./NotificationDropdown";
 import { AuthContext } from "../context/AuthContext";
-import { Bell, ChevronDown } from "lucide-react";
+import { Bell, ChevronDown, Menu, X } from "lucide-react";
 
 export default function Header() {
   const { user, logout } = useContext(AuthContext);
@@ -47,7 +48,7 @@ export default function Header() {
         <div className="flex items-center gap-6 h-full">
           <Link to="/" className="flex items-center gap-2">
             <img src="/orbit.png" alt="Orbit" className="w-6 h-6" />
-            <span className="font-bold text-lg tracking-tight text-[var(--text-primary)] hidden sm:block">Orbit</span>
+            <span className="font-bold text-lg tracking-tight text-[var(--text-primary)]">Orbit</span>
           </Link>
 
           <nav className="hidden md:flex items-center h-full">
@@ -111,6 +112,7 @@ export default function Header() {
                 {open && (
                   <ProfileMenu
                     user={user}
+                    onClose={() => setOpen(false)}
                     onSignOut={() => {
                       logout();
                       setOpen(false);
@@ -136,7 +138,7 @@ export default function Header() {
               </Link>
               <Link 
                 to="/signup" 
-                className="text-[var(--brand-orange)] border border-[var(--brand-orange)] hover:bg-[var(--brand-orange)] hover:text-white px-3 py-1.5 rounded-md transition font-medium"
+                className="text-[var(--brand-orange)] border border-[var(--brand-orange)] hover:bg-[var(--brand-orange)] hover:text-white px-3 py-1.5 rounded-md transition font-medium hidden sm:block"
               >
                 Register
               </Link>

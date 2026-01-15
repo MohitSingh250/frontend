@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, X, Calendar as CalendarIcon, Zap } from "luc
 import api from "../api";
 import { AuthContext } from "../context/AuthContext";
 
-export default function OrbitCalendar({ isMobile = false, onClose }) {
+export default function OrbitCalendar({ isMobile = false, onClose, className = "" }) {
   const { user } = useContext(AuthContext);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [streak, setStreak] = useState(null);
@@ -177,21 +177,24 @@ export default function OrbitCalendar({ isMobile = false, onClose }) {
   if (isMobile) {
     return (
       <>
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40" onClick={onClose} />
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[150]" onClick={onClose} />
         <div
           className="
-            fixed bottom-0 left-0 w-full z-50 bg-[var(--bg-secondary)]
-            text-[var(--text-primary)] rounded-t-3xl border-t border-[var(--border-primary)]
-            shadow-2xl animate-slide-up
+            fixed bottom-0 left-0 w-full z-[160] bg-[var(--bg-secondary)]
+            text-[var(--text-primary)] rounded-t-[32px] border-t border-[var(--border-primary)]
+            shadow-2xl animate-slide-up pb-8
           "
         >
-          <div className="p-4 border-b border-[var(--border-primary)] flex justify-between items-center">
-             <h2 className="text-lg font-bold">Daily Streak</h2>
+          <div className="flex flex-col items-center pt-3 pb-1">
+            <div className="w-12 h-1.5 rounded-full bg-[var(--bg-tertiary)] mb-4" />
+          </div>
+          <div className="px-6 pb-4 flex justify-between items-center">
+             <h2 className="text-xl font-bold">Daily Streak</h2>
              <button onClick={onClose} className="p-2 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)]">
                 <X size={20} />
              </button>
           </div>
-          <div className="bg-[var(--bg-secondary)]">
+          <div className="bg-[var(--bg-secondary)] px-2">
              {content}
           </div>
         </div>
@@ -200,7 +203,7 @@ export default function OrbitCalendar({ isMobile = false, onClose }) {
   }
 
   return (
-    <div className="bg-[var(--bg-secondary)] rounded-xl overflow-hidden border border-[var(--border-primary)] shadow-sm">
+    <div className={`bg-[var(--bg-secondary)] rounded-xl overflow-hidden border border-[var(--border-primary)] shadow-sm ${className}`}>
       {content}
     </div>
   );

@@ -107,7 +107,7 @@ export default function Premium() {
 
       {/* Pricing Section */}
       <div className="max-w-[1200px] mx-auto px-6 -mt-12 relative z-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {PLANS.map((plan, i) => (
             <motion.div
               key={plan.name}
@@ -191,11 +191,11 @@ export default function Premium() {
         <div className="p-8 md:p-12 rounded-[2rem] md:rounded-[40px] bg-gradient-to-br from-[var(--brand-orange)]/5 to-transparent border border-[var(--brand-orange)]/10">
           <Globe className="mx-auto text-[var(--brand-orange)] mb-6" size={48} />
           <h2 className="text-2xl md:text-3xl font-bold mb-6">Trusted by 50,000+ Aspirants</h2>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-             <div className="flex items-center gap-2 font-black text-lg md:text-xl tracking-tighter">IIT BOMBAY</div>
-             <div className="flex items-center gap-2 font-black text-lg md:text-xl tracking-tighter">IIT DELHI</div>
-             <div className="flex items-center gap-2 font-black text-lg md:text-xl tracking-tighter">IIT MADRAS</div>
-             <div className="flex items-center gap-2 font-black text-lg md:text-xl tracking-tighter">IIT KANPUR</div>
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-6 md:gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+             <div className="flex items-center gap-2 font-black text-base sm:text-lg md:text-xl tracking-tighter">IIT BOMBAY</div>
+             <div className="flex items-center gap-2 font-black text-base sm:text-lg md:text-xl tracking-tighter">IIT DELHI</div>
+             <div className="flex items-center gap-2 font-black text-base sm:text-lg md:text-xl tracking-tighter">IIT MADRAS</div>
+             <div className="flex items-center gap-2 font-black text-base sm:text-lg md:text-xl tracking-tighter">IIT KANPUR</div>
           </div>
         </div>
       </div>

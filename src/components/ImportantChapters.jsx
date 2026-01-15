@@ -59,12 +59,20 @@ export default function ImportantChapters({ isMobileModal = false, onClose }) {
   if (isMobileModal) {
     return (
       <>
-        <div onClick={onClose} className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-        <div className="fixed bottom-0 left-0 w-full z-50 bg-[var(--bg-secondary)] text-[var(--text-primary)] rounded-t-3xl border-t border-[var(--border-primary)] shadow-2xl animate-slide-up p-6">
-           <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-[var(--bg-tertiary)] rounded-full text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
-              <X size={20} />
-           </button>
-           {content}
+        <div onClick={onClose} className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[150]" />
+        <div className="fixed bottom-0 left-0 w-full z-[160] bg-[var(--bg-secondary)] text-[var(--text-primary)] rounded-t-[32px] border-t border-[var(--border-primary)] shadow-2xl animate-slide-up pb-8">
+           <div className="flex flex-col items-center pt-3 pb-1">
+              <div className="w-12 h-1.5 rounded-full bg-[var(--bg-tertiary)] mb-4" />
+           </div>
+           <div className="px-6 pb-4 flex justify-between items-center">
+              <h2 className="text-xl font-bold">Important Chapters</h2>
+              <button onClick={onClose} className="p-2 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)]">
+                 <X size={20} />
+              </button>
+           </div>
+           <div className="px-6 max-h-[60vh] overflow-y-auto no-scrollbar">
+              {content}
+           </div>
         </div>
       </>
     );

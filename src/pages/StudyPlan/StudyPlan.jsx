@@ -7,6 +7,7 @@ import { ChevronRight, Zap, Trophy, Layers, Sparkles, Lock, Target, Atom, Settin
 export default function StudyPlan() {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAllFeatured, setShowAllFeatured] = useState(false);
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -37,6 +38,10 @@ export default function StudyPlan() {
   const deepDives = plans.filter(p => p.category === 'Deep Dive');
   const intros = plans.filter(p => p.category === 'Intro');
   const featured = plans.filter(p => p.isFeatured);
+  
+  // Determine which list to show in Featured section
+  const featuredList = featured.length > 0 ? featured : challenges;
+  const visibleFeatured = showAllFeatured ? featuredList : featuredList.slice(0, 2);
 
   // Large Vertical Card (Featured) - Matches "LeetCode 75" style
   const FeaturedCard = ({ plan, colorFrom, colorTo, shadowColor }) => {
@@ -110,7 +115,7 @@ export default function StudyPlan() {
           <div className="mb-16">
             <h2 className="text-xl font-bold mb-6 text-[var(--text-primary)]">Featured</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-               {featured.map((plan, i) => (
+               {visibleFeatured.map((plan, i) => (
                   <FeaturedCard 
                      key={plan._id} 
                      plan={plan} 
@@ -119,17 +124,19 @@ export default function StudyPlan() {
                      shadowColor={i % 4 === 0 ? "hover:shadow-blue-900/20" : i % 4 === 1 ? "hover:shadow-teal-900/20" : i % 4 === 2 ? "hover:shadow-purple-900/20" : "hover:shadow-orange-900/20"}
                   />
                ))}
-               {/* Fallback if no featured */}
-               {featured.length === 0 && challenges.slice(0, 2).map((plan, i) => (
-                  <FeaturedCard 
-                     key={plan._id} 
-                     plan={plan} 
-                     colorFrom={i % 2 === 0 ? "from-[#00C7BE]" : "from-[#FF9500]"} 
-                     colorTo={i % 2 === 0 ? "to-[#008F88]" : "to-[#B36900]"}
-                     shadowColor={i % 2 === 0 ? "hover:shadow-teal-900/20" : "hover:shadow-orange-900/20"}
-                  />
-               ))}
             </div>
+            
+            {/* Show More Button */}
+            {featuredList.length > 2 && (
+              <div className="flex justify-center mt-8">
+                 <button 
+                    onClick={() => setShowAllFeatured(!showAllFeatured)}
+                    className="text-[var(--brand-orange)] hover:text-[var(--brand-orange)]/80 font-medium text-sm transition-colors"
+                 >
+                    {showAllFeatured ? "Show Less" : "Show More"}
+                 </button>
+              </div>
+            )}
           </div>
 
           {/* Introduction To */}

@@ -8,9 +8,11 @@ import ImportantChapters from "../components/ImportantChapters";
 import ProblemListSidebar from "../components/ProblemList/ProblemListSidebar";
 import PromoCards from "../components/ProblemList/PromoCards";
 import MobileFloatingMenu from "../components/MobileFloatingMenu";
-import { Loader2 } from "lucide-react";
+import { Loader2, Layout, PanelLeft } from "lucide-react";
+import { useSidebar } from "../context/SidebarContext";
 
 export default function ProblemList() {
+  const { open } = useSidebar();
   const [filters, setFilters] = useState({
     q: "",
     subject: "",
@@ -125,19 +127,25 @@ export default function ProblemList() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [loading, moreData]);
 
-
   return (
     <div className="min-h-screen w-full bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans selection:bg-[var(--brand-orange)]/30 pb-20 transition-colors duration-300">
-      
-      <div className="max-w-full mx-auto">
+      <div className="flex-1 min-w-0 flex flex-col">
+        {/* Mobile Sidebar Toggle (In-Page) */}
+        <div className="lg:hidden px-4 pt-2 pb-0">
+          <button 
+            onClick={open}
+            className="p-1.5 rounded-full bg-[var(--bg-tertiary)]/80 backdrop-blur-sm border border-[var(--border-primary)] text-[var(--text-primary)] hover:opacity-80 transition-all active:scale-95"
+          >
+            <PanelLeft size={16} />
+          </button>
+        </div>
+
+        <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-2">
         
         <div className="flex gap-6">
           
-          {/* 1. LEFT SIDEBAR (Navigation) */}
-          <ProblemListSidebar />
-
-          {/* 2. MAIN CONTENT (Promo + List) */}
-          <div className="flex-1 min-w-0 pt-12">
+          {/* MAIN CONTENT (Promo + List) */}
+          <div className="flex-1 min-w-0 pt-2 md:pt-12">
             
             {/* Promo Cards */}
             <PromoCards />
@@ -178,22 +186,29 @@ export default function ProblemList() {
             </div>
           </div>
 
-          {/* 3. RIGHT SIDEBAR (Widgets) */}
+          {/* RIGHT SIDEBAR (Widgets) */}
           <aside className="hidden xl:block w-[260px] shrink-0 space-y-4 pt-8">
-             <Calendar />
+             <div onClick={() => setActiveMobileWidget('calendar')} className="cursor-pointer hover:opacity-90 transition-opacity">
+                <Calendar className="pointer-events-none" />
+             </div>
              <ImportantChapters />
-             
           </aside>
 
         </div>
+      </div>
       </div>
 
       {/* 📱 Mobile Floating Menu */}
       <MobileFloatingMenu setActiveMobileWidget={setActiveMobileWidget} />
 
-      {/* 📱 Mobile Modals */}
+      {/* 📱 Mobile Modals & Desktop Calendar Modal */}
       {activeMobileWidget === 'calendar' && (
-        <Calendar isMobileModal={true} onClose={() => setActiveMobileWidget(null)} />
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setActiveMobileWidget(null)} />
+           <div className="relative z-10 w-full max-w-md animate-scale-in">
+              <Calendar isMobileModal={true} onClose={() => setActiveMobileWidget(null)} />
+           </div>
+        </div>
       )}
       {activeMobileWidget === 'chapters' && (
         <ImportantChapters isMobileModal={true} onClose={() => setActiveMobileWidget(null)} />

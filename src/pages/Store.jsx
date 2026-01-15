@@ -189,11 +189,11 @@ export default function Store() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-6"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
           >
             <button 
               onClick={() => setActiveTab('redeem')}
-              className={`px-10 py-3.5 rounded-full font-bold text-base transition-all flex items-center gap-3 shadow-lg ${
+              className={`w-full sm:w-auto px-10 py-3.5 rounded-full font-bold text-base transition-all flex items-center justify-center gap-3 shadow-lg ${
                 activeTab === 'redeem' 
                   ? 'bg-[var(--text-primary)] text-[var(--bg-primary)] scale-105' 
                   : 'bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
@@ -204,7 +204,7 @@ export default function Store() {
             </button>
             <button 
               onClick={() => setActiveTab('earn')}
-              className={`px-10 py-3.5 rounded-full font-bold text-base transition-all flex items-center gap-3 shadow-lg ${
+              className={`w-full sm:w-auto px-10 py-3.5 rounded-full font-bold text-base transition-all flex items-center justify-center gap-3 shadow-lg ${
                 activeTab === 'earn' 
                   ? 'bg-[var(--text-primary)] text-[var(--bg-primary)] scale-105' 
                   : 'bg-[var(--bg-secondary)] border border-dashed border-[var(--border-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
@@ -215,7 +215,7 @@ export default function Store() {
             </button>
             <button 
               onClick={() => navigate('/premium')}
-              className="px-10 py-3.5 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[var(--text-primary)] font-bold text-base hover:bg-[var(--bg-tertiary)] transition-all flex items-center gap-3 shadow-lg"
+              className="w-full sm:w-auto px-10 py-3.5 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[var(--text-primary)] font-bold text-base hover:bg-[var(--bg-tertiary)] transition-all flex items-center justify-center gap-3 shadow-lg"
             >
               <Star size={20} className="text-[var(--text-tertiary)]" />
               Premium
@@ -310,7 +310,7 @@ export default function Store() {
               Exclusive Access
             </div>
             <h3 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-8 tracking-tight">Redeem With Code</h3>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-0 max-w-lg mx-auto group">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-0 max-w-lg mx-auto group">
               <input 
                 type="text" 
                 placeholder="Enter Redeem Code"
@@ -330,7 +330,7 @@ export default function Store() {
               <h2 className="text-xl font-medium text-center text-[var(--text-secondary)] mb-12">
                 {category.title}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {category.missions.map((mission) => (
                   <motion.div
                     key={mission.id}

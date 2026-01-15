@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -76,17 +76,28 @@ import Profile from "./pages/Profile";
 import { CollectionContext } from "./context/CollectionContext";
 import CreateListModal from "./components/ProblemList/CreateListModal";
 
+import { Layout, PanelLeft } from "lucide-react";
+import ProblemListSidebar from "./components/ProblemList/ProblemListSidebar";
+import React, { useContext, useState } from "react";
+
+import { SidebarContext } from "./context/SidebarContext";
+
 export default function App() {
   const { user, loading } = useContext(AuthContext);
   const { isCreateModalOpen, closeCreateModal, createCollection, editingList } = useContext(CollectionContext);
+  const { isOpen, close } = useContext(SidebarContext);
+  const location = useLocation();
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
+    <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] relative">
       <Toaster position="top-center" reverseOrder={false} />
-      {!useLocation().pathname.includes("/arena") && 
-       !useLocation().pathname.includes("/quest/problem") && 
-       useLocation().pathname !== "/" && 
+      {!location.pathname.includes("/arena") && 
+       !location.pathname.includes("/quest/problem") && 
+       location.pathname !== "/" && 
        <Header />}
+
+      {/* Global Sidebar Drawer */}
+      <ProblemListSidebar isOpen={isOpen} onClose={close} />
 
       <Routes>
         {/* ... existing routes ... */}
@@ -176,13 +187,13 @@ export default function App() {
         <Route path="/profile/:id" element={<Profile />} />
       </Routes>
 
-      {!useLocation().pathname.includes("/arena") && 
-       !useLocation().pathname.startsWith("/problems") && 
-       !useLocation().pathname.startsWith("/admin") && 
-       !useLocation().pathname.startsWith("/login") && 
-       !useLocation().pathname.startsWith("/signup") && 
-       !useLocation().pathname.includes("/quest/problem") && 
-       !useLocation().pathname.startsWith("/features") && 
+      {!location.pathname.includes("/arena") && 
+       !location.pathname.startsWith("/problems") && 
+       !location.pathname.startsWith("/admin") && 
+       !location.pathname.startsWith("/login") && 
+       !location.pathname.startsWith("/signup") && 
+       !location.pathname.includes("/quest/problem") && 
+       !location.pathname.startsWith("/features") && 
        <Footer />}
 
       <CreateListModal 

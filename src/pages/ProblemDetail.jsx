@@ -5,8 +5,9 @@ import { AuthContext } from "../context/AuthContext";
 import ProblemDescription from "../components/Workspace/ProblemDescription";
 import ProblemEditor from "../components/Workspace/ProblemEditor";
 import ProblemSubmissions from "../components/Workspace/ProblemSubmissions";
-import { FileText, History, List, MessageSquare } from "lucide-react";
+import { FileText, History, List, MessageSquare, Layout } from "lucide-react";
 import DiscussionList from "../components/Discussion/DiscussionList";
+import ProblemListSidebar from "../components/ProblemList/ProblemListSidebar";
 
 export default function ProblemDetail() {
   const { id } = useParams();
@@ -16,6 +17,7 @@ export default function ProblemDetail() {
   const [msg, setMsg] = useState(null);
   const [submissions, setSubmissions] = useState([]);
   const [activeTab, setActiveTab] = useState("description"); // 'description' | 'submissions' | 'discuss'
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     setProblem(null);
@@ -77,7 +79,7 @@ export default function ProblemDetail() {
     );
 
   return (
-    <div className="h-[calc(100vh-60px)] flex flex-col lg:flex-row bg-[var(--bg-primary)] overflow-hidden">
+    <div className="h-[calc(100vh-50px)] flex flex-col lg:flex-row bg-[var(--bg-primary)] overflow-hidden relative">
       
       {/* LEFT PANEL: Tabs (Description, Submissions, Discuss) */}
       <div className="w-full lg:w-1/2 flex flex-col border-r border-[var(--border-secondary)] bg-[var(--bg-secondary)]">
