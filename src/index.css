@@ -52,7 +52,7 @@
 
 :root[data-theme="light"] {
   /* Brand Colors */
-  --brand-orange: #FFA116;
+  --brand-orange: #FFA217;
   --brand-orange-hover: #E59113;
   
   /* Backgrounds */
@@ -258,10 +258,7 @@ a {
 }
 
 .text-gradient-orange {
-  background: linear-gradient(135deg, var(--brand-orange) 0%, #FFC01E 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--brand-orange);
 }
 
 .glow-text {

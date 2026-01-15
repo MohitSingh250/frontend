@@ -26,7 +26,7 @@ export default function Home() {
   const [activeUsers, setActiveUsers] = useState(42);
   const [loading, setLoading] = useState(true);
   const [subjectIndex, setSubjectIndex] = useState(0);
-  const subjects = ["Physics", "Chemistry", "Mathematics", "JEE"];
+  const subjects = ["Physics", "Chemistry", "Mathematics"];
 
   // Mouse Parallax Values
   const mouseX = useMotionValue(0);
@@ -138,7 +138,7 @@ export default function Home() {
 
         <nav className="flex items-center gap-6">
           <Link to="/login" className="text-sm font-semibold text-white/80 hover:text-white transition-colors">Sign in</Link>
-          <Link to="/signup" className="text-sm font-semibold text-white bg-[var(--brand-orange)] px-6 py-2 rounded-full hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/20">Register</Link>
+          <Link to="/signup" className="text-sm font-semibold text-[var(--brand-orange)] border border-[var(--brand-orange)] px-6 py-2 rounded-full hover:bg-[var(--brand-orange)] hover:text-white transition-all shadow-lg shadow-orange-500/10">Register</Link>
         </nav>
       </header>
 
