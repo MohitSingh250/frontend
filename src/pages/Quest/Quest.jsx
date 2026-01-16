@@ -3,7 +3,7 @@ import { Zap, Play, ChevronRight, BookOpen, Atom, FlaskConical, Calculator, Data
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import api from "../../api";
-import ProblemListSidebar from "../../components/ProblemList/ProblemListSidebar";
+
 
 const getIcon = (category) => {
   switch (category) {
@@ -78,11 +78,6 @@ export default function Quest() {
   }
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans selection:bg-[var(--brand-orange)]/30">
-      <div className="max-w-full mx-auto">
-        <div className="flex">
-          {/* 1. LEFT SIDEBAR */}
-          <ProblemListSidebar />
-
           {/* 2. MAIN CONTENT */}
           <div className="flex-1 min-w-0 bg-[var(--bg-secondary)] min-h-screen p-5 md:p-12">
             {/* Hero Section */}
@@ -172,8 +167,6 @@ export default function Quest() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </div>
   );
 }

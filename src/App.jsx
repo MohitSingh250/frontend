@@ -78,6 +78,7 @@ import CreateListModal from "./components/ProblemList/CreateListModal";
 
 import { Layout, PanelLeft } from "lucide-react";
 import ProblemListSidebar from "./components/ProblemList/ProblemListSidebar";
+import SidebarLayout from "./layouts/SidebarLayout";
 import React, { useContext, useState } from "react";
 
 import { SidebarContext } from "./context/SidebarContext";
@@ -96,8 +97,7 @@ export default function App() {
        location.pathname !== "/" && 
        <Header />}
 
-      {/* Global Sidebar Drawer */}
-      <ProblemListSidebar isOpen={isOpen} onClose={close} />
+
 
       <Routes>
         {/* ... existing routes ... */}
@@ -115,9 +115,41 @@ export default function App() {
             )
           } 
         />
-        <Route path="/problems" element={<ProblemList />} />
-        <Route path="/daily" element={<DailyProblem />} />
+        <Route element={<SidebarLayout />}>
+          <Route path="/problems" element={<ProblemList />} />
+          <Route path="/quest" element={<Quest />} />
+          <Route path="/quest/:id" element={<QuestDetail />} />
+          <Route path="/quest/problem/:id" element={<QuestProblem />} />
+          <Route path="/study-plan" element={<StudyPlan />} />
+          <Route path="/study-plan/my" element={<MyStudyPlan />} />
+          <Route path="/study-plan/:id" element={<StudyPlanDetail />} />
+          <Route path="/list/:listId?" element={<MyLists />} />
+        </Route>
+
         <Route path="/problems/:id" element={<ProblemDetail />} />
+        <Route path="/daily" element={<DailyProblem />} />
+        
+        <Route path="/contests" element={<ContestList />} />
+        <Route path="/contest/:contestId" element={<ContestDetail />} />
+        <Route
+          path="/contest/:contestId/leaderboard"
+          element={<ContestLeaderboard />}
+        />
+        <Route path="/leaderboard" element={<GlobalLeaderboard />} />
+        
+        <Route path="/notebook" element={<Notebook />} />
+        <Route path="/progress" element={<Progress />} />
+        <Route path="/points" element={<Points />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/playgrounds" element={<ComingSoon title="My Playgrounds" />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/store" element={<Store />} />
+        <Route path="/earn" element={<EarnCoins />} />
+        <Route path="/discuss" element={<Discuss />} />
+        <Route path="/favorites" element={<ComingSoon title="Favorites" />} />
+        <Route path="/premium" element={<Premium />} />
+        <Route path="/profile/:id" element={<Profile />} />
 
         <Route path="/admin" element={<AdminRoute />}>
           <Route element={<AdminLayout />}>
@@ -137,13 +169,6 @@ export default function App() {
           </Route>
         </Route>
 
-        <Route path="/contests" element={<ContestList />} />
-        <Route path="/contest/:contestId" element={<ContestDetail />} />
-        <Route
-          path="/contest/:contestId/leaderboard"
-          element={<ContestLeaderboard />}
-        />
-        <Route path="/leaderboard" element={<GlobalLeaderboard />} />
         <Route 
           path="/contest/:contestId/arena"
           element={
@@ -164,27 +189,6 @@ export default function App() {
             </PrivateRoute>
           }
         />
-
-        <Route path="/list/:listId?" element={<MyLists />} />
-        <Route path="/notebook" element={<Notebook />} />
-        <Route path="/progress" element={<Progress />} />
-        <Route path="/points" element={<Points />} />
-        <Route path="/features" element={<Features />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/playgrounds" element={<ComingSoon title="My Playgrounds" />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/store" element={<Store />} />
-        <Route path="/earn" element={<EarnCoins />} />
-        <Route path="/discuss" element={<Discuss />} />
-        <Route path="/quest" element={<Quest />} />
-        <Route path="/quest/:id" element={<QuestDetail />} />
-        <Route path="/quest/problem/:id" element={<QuestProblem />} />
-        <Route path="/study-plan" element={<StudyPlan />} />
-        <Route path="/study-plan/my" element={<MyStudyPlan />} />
-        <Route path="/study-plan/:id" element={<StudyPlanDetail />} />
-        <Route path="/favorites" element={<ComingSoon title="Favorites" />} />
-        <Route path="/premium" element={<Premium />} />
-        <Route path="/profile/:id" element={<Profile />} />
       </Routes>
 
       {!location.pathname.includes("/arena") && 

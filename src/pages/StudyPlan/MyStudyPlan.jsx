@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../api";
-import ProblemListSidebar from "../../components/ProblemList/ProblemListSidebar";
+
 import { ChevronLeft, Play, Calendar, Zap, Trophy } from "lucide-react";
 
 export default function MyStudyPlan() {
@@ -24,9 +24,6 @@ export default function MyStudyPlan() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans flex">
-      <ProblemListSidebar />
-      
       <div className="flex-1 p-8 overflow-y-auto h-screen">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -131,6 +128,6 @@ export default function MyStudyPlan() {
 
         </div>
       </div>
-    </div>
+
   );
 }

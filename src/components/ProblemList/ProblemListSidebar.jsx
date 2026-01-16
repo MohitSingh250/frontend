@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { Layout, Zap, BookOpen, Plus, Star, Lock, Globe, X } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { CollectionContext } from "../../context/CollectionContext";
 
-export default function ProblemListSidebar({ onListClick, activeListId, isOpen, onClose }) {
+export default function ProblemListSidebar({ onListClick, activeListId: propActiveListId, isOpen, onClose }) {
   const location = useLocation();
+  const params = useParams();
+  const activeListId = propActiveListId || params.listId;
   const { collections, openCreateModal } = useContext(CollectionContext);
   
   const sidebarContent = (
@@ -122,7 +124,7 @@ export default function ProblemListSidebar({ onListClick, activeListId, isOpen, 
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="w-[240px] shrink-0 hidden lg:block space-y-4 px-4 border-r border-[var(--border-primary)] pt-6 min-h-screen bg-[var(--bg-primary)]">
+      <div className="w-[240px] shrink-0 hidden lg:block space-y-4 px-4 border-r border-[var(--border-primary)] pt-6 h-screen sticky top-10 overflow-y-auto bg-[var(--bg-primary)]">
         {sidebarContent}
       </div>
 

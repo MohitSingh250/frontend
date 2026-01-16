@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import api from "../../api";
 import { AuthContext } from "../../context/AuthContext";
-import ProblemListSidebar from "../../components/ProblemList/ProblemListSidebar";
+
 import StudyPlanModal from "../../components/StudyPlan/StudyPlanModal";
 import { ChevronDown, ChevronRight, CheckCircle, Circle, Play, Lock, Zap, FileText, Award, MoreHorizontal, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -86,9 +86,7 @@ export default function StudyPlanDetail() {
   const progressPercent = totalProblems > 0 ? Math.round((solvedCount / totalProblems) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans flex">
-      <ProblemListSidebar />
-      
+    <>
       <div className="flex-1 overflow-y-auto h-screen">
         <div className="max-w-6xl mx-auto p-8">
             {/* Header / Banner */}
@@ -274,6 +272,6 @@ export default function StudyPlanDetail() {
          onConfirm={handleJoinPlan} 
          planTitle={plan.title}
       />
-    </div>
+    </>
   );
 }

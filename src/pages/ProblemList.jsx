@@ -5,7 +5,7 @@ import ProblemFilters from "../components/ProblemFilters";
 import Calendar from "../components/OrbitCalendar";
 import FeaturedWidgets from "../components/FeaturedWidgets";
 import ImportantChapters from "../components/ImportantChapters";
-import ProblemListSidebar from "../components/ProblemList/ProblemListSidebar";
+
 import PromoCards from "../components/ProblemList/PromoCards";
 import MobileFloatingMenu from "../components/MobileFloatingMenu";
 import { Loader2, Layout, PanelLeft } from "lucide-react";
@@ -140,7 +140,7 @@ export default function ProblemList() {
           </button>
         </div>
 
-        <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-2">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-2">
         
         <div className="flex gap-6">
           

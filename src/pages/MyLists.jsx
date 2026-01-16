@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import ProblemTable from "../components/ProblemTable";
-import ProblemListSidebar from "../components/ProblemList/ProblemListSidebar";
+
 import CreateListModal from "../components/ProblemList/CreateListModal";
 import AddQuestionsModal from "../components/ProblemList/AddQuestionsModal";
 import ListContextMenu from "../components/ProblemList/ListContextMenu";
@@ -137,14 +137,6 @@ export default function MyLists() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
-      <div className="max-w-full mx-auto w-full flex gap-6">
-        
-        {/* Sidebar */}
-        <ProblemListSidebar 
-          activeListId={activeListId}
-          onListClick={(id) => navigate(`/list/${id}`)}
-        />
-
         {/* Main Content */}
         <main className="flex-1 flex flex-col gap-8 min-w-0 pt-12 pr-6">
           
@@ -290,7 +282,7 @@ export default function MyLists() {
             </div>
           </div>
         </main>
-      </div>
+
 
       {/* Modals */}
       <AddQuestionsModal 
